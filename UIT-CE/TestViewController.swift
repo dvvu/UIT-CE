@@ -16,6 +16,7 @@ import MobileCoreServices
 class TestViewController: UIViewController {
     static let identifier = String(TestViewController)
     
+    @IBOutlet weak var testLabel: UILabel!
     @IBOutlet weak var imageSta: UIImageView!
     @IBOutlet weak var imageRes: UIImageView!
     @IBAction func leftMenuButton(sender: AnyObject) {
@@ -27,6 +28,20 @@ class TestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let text = "We tried to make this app as most intuitive."
+        let linkTextWithColor = "e"
+        
+        let range = (text as NSString).rangeOfString(linkTextWithColor)
+        
+        let attributedString = NSMutableAttributedString(string:text)
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor() , range: range)
+
+        testLabel.attributedText = attributedString
+        
+        
+        
         imageRes.image = resizeImage(imageSta.image!,newWidth: 192)
         imageRes.image = blackAndWhiteImage(imageRes.image!)
         intensityValuesFromImage(imageRes.image)
@@ -93,12 +108,12 @@ class TestViewController: UIViewController {
                 pixelValues![i] = 1
             }
         }
-        let aString: String = (pixelValues?.description)!
-        let newString = aString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        let string2 = newString.stringByReplacingOccurrencesOfString("0", withString: "∙", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        let string3 = string2.stringByReplacingOccurrencesOfString("1", withString: "💧", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        print(string3)
-        print(pixelValues?.count)
+//        let aString: String = (pixelValues?.description)!
+//        let newString = aString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+//        let string2 = newString.stringByReplacingOccurrencesOfString("0", withString: "∙", options: NSStringCompareOptions.LiteralSearch, range: nil)
+//        let string3 = string2.stringByReplacingOccurrencesOfString("1", withString: "💧", options: NSStringCompareOptions.LiteralSearch, range: nil)
+//        print(string3)
+//        print(pixelValues?.count)
         return (pixelValues, width, height)
     }
 }
