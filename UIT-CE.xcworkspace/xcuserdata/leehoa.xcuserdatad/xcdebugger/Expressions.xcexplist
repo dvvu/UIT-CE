@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "SocketViewController.posisionItem(CGFloat, y : CGFloat) -&gt; ():SocketViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "image.asString()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "LeftMenuViewController.collectionView(UICollectionView, shouldSelectItemAtIndexPath : NSIndexPath) -&gt; Bool:LeftMenuViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "delegate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

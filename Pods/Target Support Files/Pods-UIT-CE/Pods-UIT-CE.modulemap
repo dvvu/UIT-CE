@@ -1,0 +1,6 @@
+framework module Pods_UIT_CE {
+  umbrella header "Pods-UIT-CE-umbrella.h"
+
+  export *
+  module * { export * }
+}
