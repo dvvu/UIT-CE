@@ -23,7 +23,7 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
            
             let image = UIImage.imageWithLabel(self.textFieldLabel)
             if let imageID = SD.saveUIImage(image) {
-                if let err = SD.executeChange("INSERT INTO SampleImageTable (Name, Image) VALUES (?, ?)", withArgs: ["SampleImageName", imageID]) {
+                if let err = SD.executeChange("INSERT INTO SampleImageTable (Name, Image) VALUES (?, ?)", withArgs: [imageID, imageID]) {
                 }
             }
         }))

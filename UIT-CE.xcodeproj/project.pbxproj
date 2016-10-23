@@ -31,6 +31,7 @@
 		F8B857481D5F9767007FBA45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8B857471D5F9767007FBA45 /* Assets.xcassets */; };
 		F8B8574B1D5F9767007FBA45 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8B857491D5F9767007FBA45 /* LaunchScreen.storyboard */; };
 		F8BC42A41D8164B200F8CE68 /* UITDrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BC42A31D8164B200F8CE68 /* UITDrawViewController.swift */; };
+		F8C934A41DBCE3BF00E30555 /* ClockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C934A31DBCE3BF00E30555 /* ClockViewController.swift */; };
 		F8D727F71DB1E6C700CADD88 /* waterfall.gif in Resources */ = {isa = PBXBuildFile; fileRef = F8D727F61DB1E6C700CADD88 /* waterfall.gif */; };
 		F8E8ACE31D8EE72A0090F8E3 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E8ACE21D8EE72A0090F8E3 /* libsqlite3.0.tbd */; };
 		F8E8ACE91D8EEA030090F8E3 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E8ACE81D8EEA030090F8E3 /* libz.tbd */; };
@@ -69,6 +70,7 @@
 		F8B8574A1D5F9767007FBA45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F8B8574C1D5F9767007FBA45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8BC42A31D8164B200F8CE68 /* UITDrawViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITDrawViewController.swift; sourceTree = "<group>"; };
+		F8C934A31DBCE3BF00E30555 /* ClockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockViewController.swift; sourceTree = "<group>"; };
 		F8D727F61DB1E6C700CADD88 /* waterfall.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = waterfall.gif; sourceTree = "<group>"; };
 		F8E8ACE11D8EE65F0090F8E3 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		F8E8ACE21D8EE72A0090F8E3 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
@@ -213,6 +215,14 @@
 			name = Draw;
 			sourceTree = "<group>";
 		};
+		F8C934A21DBCE3A900E30555 /* Clock */ = {
+			isa = PBXGroup;
+			children = (
+				F8C934A31DBCE3BF00E30555 /* ClockViewController.swift */,
+			);
+			name = Clock;
+			sourceTree = "<group>";
+		};
 		F8FD506F1D8AAD7B00898FF5 /* Socket */ = {
 			isa = PBXGroup;
 			children = (
@@ -228,6 +238,7 @@
 		F8FD50721D8AB0BF00898FF5 /* Function */ = {
 			isa = PBXGroup;
 			children = (
+				F8C934A21DBCE3A900E30555 /* Clock */,
 				F8B354441D9EA9C700518B51 /* Setting */,
 				F8896D9E1D911C0700F93169 /* Test */,
 				F8999F2F1D8CFE0A00971723 /* import Photo */,
@@ -381,6 +392,7 @@
 				F8FD50711D8AAFF700898FF5 /* AppDelegate.swift in Sources */,
 				F8FD50741D8AB18B00898FF5 /* SocketViewController.swift in Sources */,
 				F8E8ACEB1D8EED580090F8E3 /* SwiftData.swift in Sources */,
+				F8C934A41DBCE3BF00E30555 /* ClockViewController.swift in Sources */,
 				F8BC42A41D8164B200F8CE68 /* UITDrawViewController.swift in Sources */,
 				F8999F361D8D007600971723 /* ImportPhotoCell.swift in Sources */,
 				F8999F2E1D8CFCEE00971723 /* DisplayTextViewController.swift in Sources */,
