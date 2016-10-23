@@ -24,7 +24,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)        
-       // SD.deleteTable("Setting")
+        SD.deleteTable("SampleImageTable")
+        //SD.deleteTable("Setting")
         createTable()
     }
     
