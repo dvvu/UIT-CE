@@ -36,6 +36,8 @@ class SettingViewController: UIViewController {
             self.onOff.setTitle("ON", forState: .Normal)
             self.viewContent.userInteractionEnabled = true
         }
+        
+        
     }
     
     @IBAction func applyButton(sender: AnyObject) {
