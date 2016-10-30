@@ -30,16 +30,17 @@ class TestViewController: UIViewController {
         super.viewDidLoad()
         
         
-        let text = "We tried to make this app as most intuitive."
-        let linkTextWithColor = "e"
-        
-        let range = (text as NSString).rangeOfString(linkTextWithColor)
-        
-        let attributedString = NSMutableAttributedString(string:text)
-        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor() , range: range)
-
-        testLabel.attributedText = attributedString
-        
+//        let string = "HELLO WORLD"
+//        var attributedString = NSMutableAttributedString(string:string)
+//        
+//        for i in 0...string.characters.count {
+//            string.characters.indexOf("O")
+//            attributedString.replaceCharactersInRange(string.characters.ra, withAttributedString: <#T##NSAttributedString#>)
+//        }
+//        
+//
+//        testLabel.attributedText = attributedString
+//        
         
         
         imageRes.image = resizeImage(imageSta.image!,newWidth: 192)

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F3F356C6399915A917F6B72D /* Pods_UIT_CE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E7EE763172DAC9C2E576CC5 /* Pods_UIT_CE.framework */; };
+		F8170DCD1DBEFFD000501523 /* ProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8170DCC1DBEFFD000501523 /* ProgressIndicator.swift */; };
 		F85DF47D1D93CD7B00C596F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F85DF47C1D93CD7B00C596F7 /* Main.storyboard */; };
 		F85DF47F1D93D19600C596F7 /* text.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F85DF47E1D93D19600C596F7 /* text.jpg */; };
 		F8721F511D9968DF00BD3A84 /* KDRearrangeableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8721F501D9968DF00BD3A84 /* KDRearrangeableCollectionViewCell.swift */; };
@@ -21,6 +22,7 @@
 		F8999F311D8CFE2500971723 /* ImportPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8999F301D8CFE2500971723 /* ImportPhotoViewController.swift */; };
 		F8999F361D8D007600971723 /* ImportPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8999F341D8D007600971723 /* ImportPhotoCell.swift */; };
 		F8999F371D8D007600971723 /* ImportPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8999F351D8D007600971723 /* ImportPhotoCell.xib */; };
+		F89D8F181DBD1E53000369CF /* DataProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89D8F171DBD1E53000369CF /* DataProviding.swift */; };
 		F8A63DDA1D840FCA00339A13 /* LeftMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A63DD91D840FCA00339A13 /* LeftMenuViewController.swift */; };
 		F8A63DDD1D84510000339A13 /* LeftMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A63DDB1D84510000339A13 /* LeftMenuCell.swift */; };
 		F8A63DDE1D84510000339A13 /* LeftMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8A63DDC1D84510000339A13 /* LeftMenuCell.xib */; };
@@ -45,6 +47,7 @@
 		0BD30FE93E41B372F5F42881 /* Pods-UIT-CE.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIT-CE.release.xcconfig"; path = "Pods/Target Support Files/Pods-UIT-CE/Pods-UIT-CE.release.xcconfig"; sourceTree = "<group>"; };
 		56517864B1F7D23DBE5A6E01 /* Pods-UIT-CE.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIT-CE.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UIT-CE/Pods-UIT-CE.debug.xcconfig"; sourceTree = "<group>"; };
 		7E7EE763172DAC9C2E576CC5 /* Pods_UIT_CE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UIT_CE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8170DCC1DBEFFD000501523 /* ProgressIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressIndicator.swift; sourceTree = "<group>"; };
 		F85DF47C1D93CD7B00C596F7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		F85DF47E1D93D19600C596F7 /* text.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = text.jpg; sourceTree = "<group>"; };
 		F8721F501D9968DF00BD3A84 /* KDRearrangeableCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDRearrangeableCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -58,6 +61,7 @@
 		F8999F301D8CFE2500971723 /* ImportPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportPhotoViewController.swift; sourceTree = "<group>"; };
 		F8999F341D8D007600971723 /* ImportPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportPhotoCell.swift; sourceTree = "<group>"; };
 		F8999F351D8D007600971723 /* ImportPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImportPhotoCell.xib; sourceTree = "<group>"; };
+		F89D8F171DBD1E53000369CF /* DataProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProviding.swift; sourceTree = "<group>"; };
 		F8A63DD81D840F6300339A13 /* UIT-CE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UIT-CE.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A63DD91D840FCA00339A13 /* LeftMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuViewController.swift; sourceTree = "<group>"; };
 		F8A63DDB1D84510000339A13 /* LeftMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuCell.swift; sourceTree = "<group>"; };
@@ -142,6 +146,7 @@
 		F8896D9E1D911C0700F93169 /* Test */ = {
 			isa = PBXGroup;
 			children = (
+				F8896D9F1D911C5000F93169 /* TestViewController.swift */,
 			);
 			name = Test;
 			sourceTree = "<group>";
@@ -210,7 +215,6 @@
 			isa = PBXGroup;
 			children = (
 				F8BC42A31D8164B200F8CE68 /* UITDrawViewController.swift */,
-				F8896D9F1D911C5000F93169 /* TestViewController.swift */,
 			);
 			name = Draw;
 			sourceTree = "<group>";
@@ -246,6 +250,8 @@
 				F8FD506F1D8AAD7B00898FF5 /* Socket */,
 				F8BC42A21D81648600F8CE68 /* Draw */,
 				F8741D041DB2958F00FA5471 /* DetailViewController.swift */,
+				F89D8F171DBD1E53000369CF /* DataProviding.swift */,
+				F8170DCC1DBEFFD000501523 /* ProgressIndicator.swift */,
 			);
 			name = Function;
 			sourceTree = "<group>";
@@ -381,8 +387,10 @@
 				F8A63DDD1D84510000339A13 /* LeftMenuCell.swift in Sources */,
 				F8721F551D996AAB00BD3A84 /* AlbumCollectionViewCell.swift in Sources */,
 				F8B857431D5F9767007FBA45 /* ViewController.swift in Sources */,
+				F8170DCD1DBEFFD000501523 /* ProgressIndicator.swift in Sources */,
 				F89413611D697AE900CE0216 /* ActionButton.swift in Sources */,
 				F8B354431D9EA9BE00518B51 /* SettingViewController.swift in Sources */,
+				F89D8F181DBD1E53000369CF /* DataProviding.swift in Sources */,
 				F8741D051DB2958F00FA5471 /* DetailViewController.swift in Sources */,
 				F8999F2B1D8CF83000971723 /* UIStoryboardExtensions.swift in Sources */,
 				F8B354481D9EB48B00518B51 /* PaddingLabel.swift in Sources */,
