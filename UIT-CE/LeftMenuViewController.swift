@@ -105,7 +105,7 @@ extension LeftMenuViewController: PageDelegate {
         }
             
         else if pageName == "Clock" {
-            if let vc = UIStoryboard.loadLeftMenuSocket() {
+            if let vc = UIStoryboard.loadLeftMenuClock() {
                 vc.title = pageName
                 vc.view.layoutIfNeeded()
                 self.presentViewController(vc, animated: true, completion: nil)

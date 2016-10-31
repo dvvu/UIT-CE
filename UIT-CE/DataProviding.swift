@@ -88,6 +88,8 @@ class DataProviding {
         //        print(pixelValues?.count)
         return (pixelValues, width, height)
     }
+    
+   
 
 
 }

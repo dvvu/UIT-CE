@@ -16,6 +16,10 @@ extension UIStoryboard {
         return mainStoryboard().instantiateViewControllerWithIdentifier(LeftMenuViewController.identifier) as? LeftMenuViewController
     }
     
+    class func clockViewController() -> ClockViewController? {
+        return mainStoryboard().instantiateViewControllerWithIdentifier(ClockViewController.identifier) as? ClockViewController
+    }
+    
     class func detailViewController() -> DetailViewController? {
         return mainStoryboard().instantiateViewControllerWithIdentifier(DetailViewController.identifier) as? DetailViewController
     }
@@ -62,8 +66,22 @@ extension UIStoryboard {
         return nil
     }
     
+    
     static func loadLeftMenuDraw() -> SlideMenuController? {
         if let main = uITDrawViewController() {
+            let leftMenu = leftMenuController()
+            var width = main.view.frame.size.width - 30
+            if main.view.frame.size.width > 450 {
+                width = 450
+            }
+            SlideMenuOptions.leftViewWidth =  width
+            return SlideMenuController(mainViewController: main, leftMenuViewController: leftMenu!)
+        }
+        return nil
+    }
+    
+    static func loadLeftMenuClock() -> SlideMenuController? {
+        if let main = clockViewController() {
             let leftMenu = leftMenuController()
             var width = main.view.frame.size.width - 30
             if main.view.frame.size.width > 450 {

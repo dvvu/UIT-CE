@@ -1034,66 +1034,84 @@
             <point key="canvasLocation" x="1640" y="1393"/>
         </scene>
         <!--Clock View Controller-->
-        <scene sceneID="5Hb-wR-NIB">
+        <scene sceneID="w2f-df-740">
             <objects>
-                <viewController storyboardIdentifier="ClockViewController" id="MtI-N8-4fs" customClass="ClockViewController" customModule="UIT_CE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ClockViewController" id="Sfw-G4-vU1" customClass="ClockViewController" customModule="UIT_CE" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="mmn-kA-uUH"/>
-                        <viewControllerLayoutGuide type="bottom" id="p0r-Xc-oqD"/>
+                        <viewControllerLayoutGuide type="top" id="MJe-8h-l54"/>
+                        <viewControllerLayoutGuide type="bottom" id="OLh-PF-LbC"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="fTI-Ae-bed">
+                    <view key="view" contentMode="scaleToFill" id="RVd-9t-dxn">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vsd-OK-Fuo">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1v-2l-7NV">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="57"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ebM-js-EuT">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8NE-E1-M4n">
                                         <rect key="frame" x="277" y="28" width="47" height="21"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eEZ-yF-Fv4">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DhQ-5r-XEC">
                                         <rect key="frame" x="10" y="28" width="33" height="22"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="eEZ-yF-Fv4" secondAttribute="height" multiplier="3:2" id="SA7-UR-Dfn"/>
+                                            <constraint firstAttribute="width" secondItem="DhQ-5r-XEC" secondAttribute="height" multiplier="3:2" id="Bz3-t1-qEk"/>
                                         </constraints>
                                         <state key="normal" image="ic_hamburger"/>
                                         <connections>
-                                            <action selector="leftMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="T3H-JJ-MkE"/>
-                                            <action selector="leftMenuButton:" destination="3sa-fE-Y4h" eventType="touchUpInside" id="sii-2j-bDi"/>
+                                            <action selector="leftMenuButton:" destination="3sa-fE-Y4h" eventType="touchUpInside" id="13s-l3-0Fh"/>
+                                            <action selector="leftMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zdp-DG-znC"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.3921568627" green="0.61568627450000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="ebM-js-EuT" firstAttribute="centerY" secondItem="vsd-OK-Fuo" secondAttribute="centerY" constant="10" id="DfP-G0-qdO"/>
-                                    <constraint firstItem="eEZ-yF-Fv4" firstAttribute="height" secondItem="vsd-OK-Fuo" secondAttribute="height" multiplier="0.6" constant="-12.199999999999996" id="RsK-5s-65p"/>
-                                    <constraint firstItem="eEZ-yF-Fv4" firstAttribute="leading" secondItem="vsd-OK-Fuo" secondAttribute="leading" constant="10" id="Wpj-JC-z9h"/>
-                                    <constraint firstItem="ebM-js-EuT" firstAttribute="centerX" secondItem="vsd-OK-Fuo" secondAttribute="centerX" id="XxE-my-Bxq"/>
-                                    <constraint firstItem="eEZ-yF-Fv4" firstAttribute="centerY" secondItem="vsd-OK-Fuo" secondAttribute="centerY" constant="10.5" id="ecs-Yd-wYy"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="37" id="gda-p1-ger"/>
-                                    <constraint firstAttribute="height" constant="57" id="hMi-Zx-vCT"/>
+                                    <constraint firstItem="DhQ-5r-XEC" firstAttribute="leading" secondItem="U1v-2l-7NV" secondAttribute="leading" constant="10" id="3Hn-cn-LKI"/>
+                                    <constraint firstItem="DhQ-5r-XEC" firstAttribute="height" secondItem="U1v-2l-7NV" secondAttribute="height" multiplier="0.6" constant="-12.199999999999996" id="804-TJ-DTS"/>
+                                    <constraint firstItem="DhQ-5r-XEC" firstAttribute="centerY" secondItem="U1v-2l-7NV" secondAttribute="centerY" constant="10.5" id="HRb-Id-jKe"/>
+                                    <constraint firstAttribute="height" constant="57" id="buG-o4-HiC"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="37" id="hBB-fW-0d3"/>
+                                    <constraint firstItem="8NE-E1-M4n" firstAttribute="centerX" secondItem="U1v-2l-7NV" secondAttribute="centerX" id="jrm-RT-uFn"/>
+                                    <constraint firstItem="8NE-E1-M4n" firstAttribute="centerY" secondItem="U1v-2l-7NV" secondAttribute="centerY" constant="10" id="yEu-fX-dkt"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="gda-p1-ger"/>
+                                        <exclude reference="hBB-fW-0d3"/>
                                     </mask>
                                 </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DdO-3o-OGa" customClass="BEMAnalogClockView">
+                                <rect key="frame" x="150" y="65" width="300" height="300"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="DdO-3o-OGa" secondAttribute="height" multiplier="1:1" id="Sir-Dy-o04"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadows" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="enableGraduations" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="enableDigit" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="vsd-OK-Fuo" firstAttribute="top" secondItem="mmn-kA-uUH" secondAttribute="bottom" constant="-20" id="Bv7-Zb-0zZ"/>
-                            <constraint firstAttribute="trailing" secondItem="vsd-OK-Fuo" secondAttribute="trailing" id="G23-R6-8Tc"/>
-                            <constraint firstItem="vsd-OK-Fuo" firstAttribute="leading" secondItem="fTI-Ae-bed" secondAttribute="leading" id="x3x-6l-PIU"/>
+                            <constraint firstItem="DdO-3o-OGa" firstAttribute="top" secondItem="U1v-2l-7NV" secondAttribute="bottom" constant="8" id="CS8-29-JAc"/>
+                            <constraint firstItem="DdO-3o-OGa" firstAttribute="centerX" secondItem="RVd-9t-dxn" secondAttribute="centerX" id="KKW-jm-YIB"/>
+                            <constraint firstItem="U1v-2l-7NV" firstAttribute="leading" secondItem="RVd-9t-dxn" secondAttribute="leading" id="c3h-44-5WF"/>
+                            <constraint firstItem="U1v-2l-7NV" firstAttribute="top" secondItem="MJe-8h-l54" secondAttribute="bottom" constant="-20" id="icQ-oD-p4B"/>
+                            <constraint firstAttribute="trailing" secondItem="U1v-2l-7NV" secondAttribute="trailing" id="oBe-7S-Lbr"/>
+                            <constraint firstItem="DdO-3o-OGa" firstAttribute="width" secondItem="RVd-9t-dxn" secondAttribute="width" multiplier="0.5" id="s0k-fx-5IK"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="myClock" destination="DdO-3o-OGa" id="cyq-0f-70a"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nJk-qf-94P" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="83E-JN-BNa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2275" y="1393"/>
+            <point key="canvasLocation" x="2299" y="1393"/>
         </scene>
         <!--Import Photo View Controller-->
         <scene sceneID="Iae-a7-HDD">
