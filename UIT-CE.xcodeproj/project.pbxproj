@@ -183,6 +183,7 @@
 				F8B354471D9EB48B00518B51 /* PaddingLabel.swift */,
 				F8B354421D9EA9BE00518B51 /* SettingViewController.swift */,
 				F8F8224E1D9F663900EC4098 /* extensionUIImage.swift */,
+				F89D8F171DBD1E53000369CF /* DataProviding.swift */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -250,7 +251,6 @@
 				F8FD506F1D8AAD7B00898FF5 /* Socket */,
 				F8BC42A21D81648600F8CE68 /* Draw */,
 				F8741D041DB2958F00FA5471 /* DetailViewController.swift */,
-				F89D8F171DBD1E53000369CF /* DataProviding.swift */,
 				F8170DCC1DBEFFD000501523 /* ProgressIndicator.swift */,
 			);
 			name = Function;

@@ -24,7 +24,7 @@ class ProgressIndicator: UIView {
         self.indicatorColor = indicatorColor
         self.loadingViewColor = loadingViewColor
         self.loadingMessage = msg
-        super.init(frame: CGRectMake(inview.frame.midX - 150, inview.frame.midY - 25 , 300, 50))
+        super.init(frame: CGRectMake(inview.frame.size.width/2 - 50, inview.frame.midY - 25 , 100, 50))
         initalizeCustomIndicator()
         
     }
@@ -58,9 +58,7 @@ class ProgressIndicator: UIView {
         messageFrame.backgroundColor = loadingViewColor
         messageFrame.alpha = 0.8
         messageFrame.addSubview(activityIndicator)
-        messageFrame.addSubview(strLabel)
-        
-        
+        messageFrame.addSubview(strLabel)    
     }
     
     func  start(){

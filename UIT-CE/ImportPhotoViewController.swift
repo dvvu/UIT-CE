@@ -15,11 +15,10 @@ class ImportPhotoViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
 
     var imagePicker = UIImagePickerController()
-    var Image = [UIImage]()
     var images: [UIImage]?
     var indicator:ProgressIndicator?
     var imagesDirectoryPath:String!
-    var numberItems: Int = 0
+    var number: Int = 0
     
     @IBAction func leftMenuButton(sender: AnyObject) {
         self.openLeft()
@@ -42,7 +41,6 @@ class ImportPhotoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         indicator = ProgressIndicator(inview:self.view,loadingViewColor: UIColor.grayColor(), indicatorColor: UIColor.blackColor(), msg: "Loading..")
         indicator!.start()
         self.view.addSubview(indicator!)
@@ -51,6 +49,20 @@ class ImportPhotoViewController: UIViewController {
         self.topView.addGradientWithColor(UIColor.grayColor())
         self.view.addGradientWithColor(UIColor.darkGrayColor())
         collectionView!.registerNib(UINib(nibName: "ImportPhotoCell", bundle: nil), forCellWithReuseIdentifier: "ImportPhotoCell")
+        
+        /* loading data with activity*/
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
+            self.conditionSQLite()
+            self.RepareData()
+
+            dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+                self.layoutCollectiobView()
+                self.collectionView.dataSource = self
+                self.collectionView.delegate = self
+                self.imagePicker.delegate = self
+                self.indicator!.stop()
+            })
+        })
     }
     
     func conditionSQLite() {
@@ -72,51 +84,33 @@ class ImportPhotoViewController: UIViewController {
         }
     }
     
-    func loadData() {
-        let (resultSet, err) = SD.executeQuery("SELECT * FROM ImageData")
-        if err != nil {
-            //there was an error with the query, handle it here
-        } else {
-            numberItems = resultSet.count
-        }
-         self.collectionView.reloadData()
-    }
-    
-    func repareData() {
+    func RepareData() {
+        images?.removeAll()
         images = []
         let (resultSet, err) = SD.executeQuery("SELECT * FROM ImageData")
         if err != nil {
-            //there was an error with the query, handle it here
+            
         } else {
             for row in resultSet {
                 if let image = row["Path"]?.asString() {
-                    print(imagesDirectoryPath)
                     let data = NSFileManager.defaultManager().contentsAtPath(imagesDirectoryPath+image)
+                    
                     let image1 = UIImage(data: data!)
-                    images?.append(image1!)
+                    let image2 = DataProviding.resizeImage(image1!, newWidth: 192)
+//                    let image3 = blackAndWhiteImage(image2)
+                    images?.append(image2)
                 }
             }
         }
+        if let number = images?.count {
+            self.number = number
+        }
         self.collectionView.reloadData()
+
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        /* loading data with activity*/
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
-            self.conditionSQLite()
-            //self.repareData()
-            self.loadData()
-            dispatch_sync(dispatch_get_main_queue(), {() -> Void in
-                self.layoutCollectiobView()
-                self.collectionView.dataSource = self
-                self.collectionView.delegate = self
-                self.imagePicker.delegate = self
-                self.indicator!.stop()
-            })
-        })
-
     }
     
     override func didReceiveMemoryWarning() {
@@ -132,7 +126,6 @@ class ImportPhotoViewController: UIViewController {
         flowLayout.minimumLineSpacing = 1
         collectionView!.setCollectionViewLayout(flowLayout, animated: true)
     }
-    
 }
 
 extension ImportPhotoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -141,7 +134,7 @@ extension ImportPhotoViewController: UICollectionViewDelegate, UICollectionViewD
     }
    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numberItems
+        return number
     }
    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -151,21 +144,9 @@ extension ImportPhotoViewController: UICollectionViewDelegate, UICollectionViewD
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
             
-            let (resultSet, err) = SD.executeQuery("SELECT * FROM ImageData")
-            if err != nil {
-                //there was an error with the query, handle it here
-            } else {
-                if let image = resultSet[indexPath.row]["Path"]?.asString() {
-                    print(self.imagesDirectoryPath)
-                    let data = NSFileManager.defaultManager().contentsAtPath(self.imagesDirectoryPath+image)
-                    let image1 = UIImage(data: data!)
-                  
-                    dispatch_sync(dispatch_get_main_queue(), {() -> Void in
-                        cell.image.image = image1
-                        self.indicator!.stop()
-                    })
-                }
-            }
+                dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+                    cell.image.image = self.images![indexPath.row]
+                })
         })
         
         return cell
@@ -173,15 +154,17 @@ extension ImportPhotoViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
        
-//        let (resultSet, err) = SD.executeQuery("SELECT * FROM SampleImageTable")
-//        if err != nil {
-//        } else {
-////            if let vc = UIStoryboard.detailViewController() {
-////                vc.imageID = resultSet[indexPath.row]["Image"]?.asUIImage()
-////                self.presentViewController(vc, animated: true, completion: nil)
-////            }
-//            
-//        }
+        let (resultSet, err) = SD.executeQuery("SELECT * FROM ImageData")
+        if err != nil {
+        } else {
+            if let image = resultSet[indexPath.row]["Path"]?.asString() {
+                print(image)
+                if let vc = UIStoryboard.detailViewController() {
+                    vc.imageURL = image
+                    self.presentViewController(vc, animated: true, completion: nil)
+                }
+            }
+        }
 //        //Delete image
 ////        let (resultSet, err) = SD.executeQuery("SELECT * FROM SampleImageTable")
 ////        if err != nil {
@@ -207,18 +190,16 @@ extension ImportPhotoViewController: UIImagePickerControllerDelegate, UINavigati
         let success = NSFileManager.defaultManager().createFileAtPath(imagePath, contents: data, attributes: nil)
         dismissViewControllerAnimated(true) { () -> Void in
             self.insertData()
-            self.loadData()
+            self.RepareData()
         }
     }
     
     func insertData() {
         do{
             let titles = try NSFileManager.defaultManager().contentsOfDirectoryAtPath(imagesDirectoryPath)
-            print(titles.description)
             if let err = SD.executeChange("INSERT INTO ImageData (Path) VALUES (?)", withArgs: ["/\(titles[titles.count-1])"]){
                 //there was an error inserting the new row, handle it here
             }
-            
         }catch{
             print("Error")
         }
