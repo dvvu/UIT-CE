@@ -17,8 +17,6 @@ class SocketViewController: UIViewController {
         self.openLeft()
     }
     
-    @IBOutlet weak var testImage: UIImageView!
-    
     var position: NSIndexPath?
     var data : [String]?
     var imagePicker = UIImagePickerController()

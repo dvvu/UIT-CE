@@ -47,11 +47,13 @@ public class ToolBar: UIView
         self.addSubview(button)
         self.clearButton = button
         
-        button = self.button(iconName: "icon_undo")
+        button = self.button(iconName: "undo")
+        button.setImage(UIImage(named: "undo"), forState: .Normal)
         self.addSubview(button)
         self.undoButton = button
         
-        button = self.button(iconName: "icon_redo")
+        button = self.button(iconName: "redo")
+        button.setImage(UIImage(named: "redo"), forState: .Normal)
         self.addSubview(button)
         self.redoButton = button
         
@@ -73,14 +75,14 @@ public class ToolBar: UIView
         self.undoButton?.snp_makeConstraints(closure: { (make) in
             make.left.equalTo(self).offset(15)
             make.centerY.equalTo(self)
-            make.width.equalTo(self).multipliedBy(0.05)
+            make.width.equalTo(self).multipliedBy(0.15)
             make.height.equalTo(self.undoButton!.snp_width)
         })
         
         self.redoButton?.snp_makeConstraints(closure: { (make) in
             make.left.equalTo(self.undoButton!.snp_right).offset(20)
             make.centerY.equalTo(self)
-            make.width.equalTo(self).multipliedBy(0.05)
+            make.width.equalTo(self).multipliedBy(0.15)
             make.height.equalTo(self.redoButton!.snp_width)
         })
         

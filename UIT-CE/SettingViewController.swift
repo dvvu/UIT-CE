@@ -55,6 +55,13 @@ class SettingViewController: UIViewController {
                 SD.executeQuery("UPDATE Setting SET Van = '\(van!.description)',DRow = '\(dRow!.description)', DImage = '\(dImage!.description)', Value = '\(value!.description)', IP = '\(iP)', Port = '\(port!.description)'")
             }
         }
+        
+        let refreshAlert = UIAlertController(title: "Infomation", message: "Setting is changed.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+        }))
+        
+        presentViewController(refreshAlert, animated: true, completion: nil)
     }
     
     @IBAction func defaultButton(sender: AnyObject) {

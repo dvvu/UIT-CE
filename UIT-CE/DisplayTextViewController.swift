@@ -15,6 +15,8 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var textFieldLabel: UILabel!
     @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var characterLabel: UILabel!
+    @IBOutlet weak var allLabel: UILabel!
  
     @IBAction func saveButton(sender: AnyObject) {
         let refreshAlert = UIAlertController(title: "Comfirm", message: "Would you like to save image?", preferredStyle: UIAlertControllerStyle.Alert)
@@ -40,17 +42,73 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
         self.openLeft()
     }
     
+    @IBAction func sendButton(sender: AnyObject) {
+        let refreshAlert = UIAlertController(title: "Sending...", message: "Please, Connect and check with wifi?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+        }))
+        
+        presentViewController(refreshAlert, animated: true, completion: nil)
+    
+    }
+    
+    @IBOutlet weak var characterImage: UIImageView!
+    @IBOutlet weak var allImage: UIImageView!
+    
+    @IBOutlet weak var characterView: UIView!
+    @IBOutlet weak var allView: UIView!
+    var isCharacter: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.topView.clipsToBounds = true
         self.view.clipsToBounds = true
         self.topView.addGradientWithColor(UIColor.grayColor())
         self.view.addGradientWithColor(UIColor.darkGrayColor())
-        
         self.textField.delegate = self
         self.textField.becomeFirstResponder()
+        onTapView()
+    }
+    
+    func onTapView() {        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(SettingViewController.viewTapped(_:)))
         self.view.addGestureRecognizer(tapGesture)
+        
+        characterView.userInteractionEnabled = true
+        characterImage.userInteractionEnabled = true
+        characterLabel.userInteractionEnabled = true
+        let tap1: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(clickView1))
+        characterView.addGestureRecognizer(tap1)
+        let tap2: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(clickView1))
+        allImage.addGestureRecognizer(tap2)
+        let tap3: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(clickView1))
+        allLabel.addGestureRecognizer(tap3)
+        
+        allView.userInteractionEnabled = true
+        allImage.userInteractionEnabled = true
+        allLabel.userInteractionEnabled = true
+        let tap4: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(clickView2))
+        allView.addGestureRecognizer(tap4)
+        let tap5: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(clickView2))
+        allImage.addGestureRecognizer(tap5)
+        let tap6: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(clickView2))
+        allLabel.addGestureRecognizer(tap6)
+
+    }
+    
+    func clickView1() {
+        if isCharacter == false {
+            allImage.image = UIImage(named: "uncheck")
+            characterImage.image = UIImage(named: "checked")
+            isCharacter = true
+        }
+    }
+    func clickView2() {
+        if isCharacter == true {
+            allImage.image = UIImage(named: "checked")
+            characterImage.image = UIImage(named: "uncheck")
+            isCharacter = false
+        }
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
