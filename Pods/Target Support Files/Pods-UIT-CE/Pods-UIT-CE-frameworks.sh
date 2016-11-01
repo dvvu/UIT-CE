@@ -84,6 +84,7 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "$BUILT_PRODUCTS_DIR/BEMAnalogClock/BEMAnalogClock.framework"
   install_framework "$BUILT_PRODUCTS_DIR/NXDrawKit/NXDrawKit.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RSKImageCropper/RSKImageCropper.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SlideMenuControllerSwift/SlideMenuControllerSwift.framework"
@@ -91,6 +92,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Socket.IO-Client-Swift/SocketIO.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "$BUILT_PRODUCTS_DIR/BEMAnalogClock/BEMAnalogClock.framework"
   install_framework "$BUILT_PRODUCTS_DIR/NXDrawKit/NXDrawKit.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RSKImageCropper/RSKImageCropper.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SlideMenuControllerSwift/SlideMenuControllerSwift.framework"

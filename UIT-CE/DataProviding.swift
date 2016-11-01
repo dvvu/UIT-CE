@@ -88,6 +88,41 @@ class DataProviding {
         //        print(pixelValues?.count)
         return (pixelValues, width, height)
     }
-
+    
+    struct PixelData {
+        var a: UInt8 = 0
+        var r: UInt8 = 0
+        var g: UInt8 = 0
+        var b: UInt8 = 0
+    }
+    
+    static func imageFromARGB32Bitmap(pixels:[PixelData], width: Int, height: Int)-> UIImage {
+        let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo:CGBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue)
+        let bitsPerComponent = 8
+        let bitsPerPixel = 32
+        
+        // assert(pixels.count == width * height)
+        
+        var data = pixels // Copy to mutable []
+        let providerRef = CGDataProviderCreateWithCFData(
+            NSData(bytes: &data, length: data.count * sizeof(PixelData))
+        )
+        
+        let cgim = CGImageCreate(
+            width,
+            height,
+            bitsPerComponent,
+            bitsPerPixel,
+            width * Int(sizeof(PixelData)),
+            rgbColorSpace,
+            bitmapInfo,
+            providerRef,
+            nil,
+            true,
+            .RenderingIntentDefault
+        )
+        return UIImage(CGImage: cgim!)
+    }
 
 }

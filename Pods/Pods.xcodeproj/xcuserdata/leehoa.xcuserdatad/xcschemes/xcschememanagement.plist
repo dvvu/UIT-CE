@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>BEMAnalogClock.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>NXDrawKit-NXDrawKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,17 +47,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>3B31BA4BAC20BB229D4EC90F2D6611D9</key>
+		<key>1F3B643ED4A05FC9A40431921C7FCA5A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6768DC6C7DC602CBD3313F35156D8178</key>
+		<key>2F102D323C7AD87FFADF30F56488C366</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>70FBA7D26F7918639D6012E621C12C93</key>
+		<key>3F94A1707F6337ACA4A7A2B9CB3AECCF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,17 +67,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>A93D40A73EF61F52D38BFE9A62E37398</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B3B38C8C39BC8A6A721532DE732E1936</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BC6B7D52E5AC1C0F8AC0BC0ADDC05D2E</key>
+		<key>D417D559FF9DC6C4BCC44395FE368E9E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D417D559FF9DC6C4BCC44395FE368E9E</key>
+		<key>DAA982AC3C83176B5F5A60BDEFC23262</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -9,4 +9,5 @@ target 'UIT-CE' do
     pod 'RSKImageCropper'
     pod 'SlideMenuControllerSwift'
     pod 'Socket.IO-Client-Swift'
+    pod 'BEMAnalogClock'
 end
