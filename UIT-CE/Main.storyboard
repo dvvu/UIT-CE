@@ -1094,19 +1094,51 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="enableDigit" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Time: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zub-em-Q7q">
+                                <rect key="frame" x="277" y="373" width="47" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IrE-Ei-C1x">
+                                <rect key="frame" x="507" y="550" width="73" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="OkL-CD-ejU"/>
+                                    <constraint firstAttribute="width" constant="73" id="zGv-nK-yCg"/>
+                                </constraints>
+                                <state key="normal" title="Capture"/>
+                                <connections>
+                                    <action selector="captureButton:" destination="Sfw-G4-vU1" eventType="touchUpInside" id="6bQ-IR-hUJ"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1BL-Rn-rUH">
+                                <rect key="frame" x="7" y="373" width="210" height="219"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="1BL-Rn-rUH" secondAttribute="height" multiplier="1:1" id="yu7-Kh-ALm"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="DdO-3o-OGa" firstAttribute="top" secondItem="U1v-2l-7NV" secondAttribute="bottom" constant="8" id="CS8-29-JAc"/>
+                            <constraint firstItem="zub-em-Q7q" firstAttribute="centerX" secondItem="RVd-9t-dxn" secondAttribute="centerX" id="FuU-MC-yaY"/>
+                            <constraint firstItem="1BL-Rn-rUH" firstAttribute="leading" secondItem="RVd-9t-dxn" secondAttribute="leading" constant="7" id="HRW-1f-0iI"/>
                             <constraint firstItem="DdO-3o-OGa" firstAttribute="centerX" secondItem="RVd-9t-dxn" secondAttribute="centerX" id="KKW-jm-YIB"/>
+                            <constraint firstItem="IrE-Ei-C1x" firstAttribute="trailing" secondItem="RVd-9t-dxn" secondAttribute="trailingMargin" id="Ucj-7M-y20"/>
                             <constraint firstItem="U1v-2l-7NV" firstAttribute="leading" secondItem="RVd-9t-dxn" secondAttribute="leading" id="c3h-44-5WF"/>
+                            <constraint firstItem="OLh-PF-LbC" firstAttribute="top" secondItem="1BL-Rn-rUH" secondAttribute="bottom" constant="8" id="gH4-B8-K4b"/>
+                            <constraint firstItem="OLh-PF-LbC" firstAttribute="top" secondItem="IrE-Ei-C1x" secondAttribute="bottom" constant="20" id="hcu-v4-Ehv"/>
                             <constraint firstItem="U1v-2l-7NV" firstAttribute="top" secondItem="MJe-8h-l54" secondAttribute="bottom" constant="-20" id="icQ-oD-p4B"/>
                             <constraint firstAttribute="trailing" secondItem="U1v-2l-7NV" secondAttribute="trailing" id="oBe-7S-Lbr"/>
+                            <constraint firstItem="zub-em-Q7q" firstAttribute="top" secondItem="DdO-3o-OGa" secondAttribute="bottom" constant="8" id="pvM-rD-Nxk"/>
                             <constraint firstItem="DdO-3o-OGa" firstAttribute="width" secondItem="RVd-9t-dxn" secondAttribute="width" multiplier="0.5" id="s0k-fx-5IK"/>
+                            <constraint firstItem="1BL-Rn-rUH" firstAttribute="width" secondItem="RVd-9t-dxn" secondAttribute="width" multiplier="0.5" id="wgh-kJ-C3Q"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="image" destination="1BL-Rn-rUH" id="PVe-HX-A3Y"/>
                         <outlet property="myClock" destination="DdO-3o-OGa" id="cyq-0f-70a"/>
+                        <outlet property="timeLabel" destination="zub-em-Q7q" id="EaE-iC-LqT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="83E-JN-BNa" userLabel="First Responder" sceneMemberID="firstResponder"/>

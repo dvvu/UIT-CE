@@ -16,7 +16,15 @@ extension UIImage {
         let img = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return img
-    }    
+    }
+    
+    func imageWithView(view: UIView) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0)
+        view.drawViewHierarchyInRect(view.bounds, afterScreenUpdates: false)
+        var snapshotImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return snapshotImage
+    }
 }
 
 extension UIView {
