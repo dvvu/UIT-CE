@@ -124,5 +124,13 @@ class DataProviding {
         )
         return UIImage(CGImage: cgim!)
     }
+    
+    static func takeSnapshotOfView(view: UIView) -> UIImage {
+        UIGraphicsBeginImageContext(CGSizeMake(view.frame.size.width, view.frame.size.height))
+        view.drawViewHierarchyInRect(CGRectMake(0, 0, view.frame.size.width, view.frame.size.height), afterScreenUpdates: true)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
 
 }

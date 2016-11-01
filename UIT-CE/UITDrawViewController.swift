@@ -65,6 +65,7 @@ class UITDrawViewController: UIViewController
     
     private func setupToolBar() {
         let toolBar = ToolBar()
+        toolBar.loadButton?.hidden = true
         toolBar.undoButton?.addTarget(self, action: #selector(UITDrawViewController.onClickUndoButton), forControlEvents: .TouchUpInside)
         toolBar.redoButton?.addTarget(self, action: #selector(UITDrawViewController.onClickRedoButton), forControlEvents: .TouchUpInside)
         toolBar.loadButton?.addTarget(self, action: #selector(UITDrawViewController.onClickLoadButton), forControlEvents: .TouchUpInside)
