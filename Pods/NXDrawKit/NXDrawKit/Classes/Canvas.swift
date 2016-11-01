@@ -219,6 +219,9 @@ public class Canvas: UIView, UITableViewDelegate
         if self.backgroundImageView.image != nil {
             let rect = self.centeredBackgroundImageRect()
             self.backgroundImageView.image?.drawInRect(rect)            // draw background image
+        } else {
+            self.backgroundImageView.contentMode = UIViewContentMode.ScaleAspectFill
+            self.backgroundImageView.image = UIImage(named: "trang.png")
         }
         
         self.mainImageView.image?.drawInRect(self.bounds)               // draw stroke
@@ -293,6 +296,7 @@ public class Canvas: UIView, UITableViewDelegate
     public func save() {
         self.drawing.stroke = self.mainImageView.image?.copy() as? UIImage
         self.drawing.background = self.backgroundImageView.image
+        self.backgroundColor = UIColor.blueColor()
         self.saved = true
         self.didSaveCanvas()
     }

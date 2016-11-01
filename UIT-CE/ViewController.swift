@@ -35,6 +35,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
         super.viewDidAppear(animated)        
         //SD.deleteTable("SampleImageTable")
         //SD.deleteTable("Setting")
+        SD.deleteTable("ImageData")
         createTable()
     }
     

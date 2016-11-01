@@ -87,6 +87,7 @@ extension LeftMenuViewController: PageDelegate {
             if let vc = UIStoryboard.loadLeftMenuDraw() {
                 vc.title = pageName
                 vc.view.layoutIfNeeded()
+                vc.modalPresentationStyle = .FullScreen
                 self.presentViewController(vc, animated: true, completion: nil)
             }
             

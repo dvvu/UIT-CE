@@ -15,6 +15,9 @@ class ClockViewController: UIViewController {
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var myClock: BEMAnalogClockView!
+    @IBOutlet weak var labelStatus: UILabel!
+    @IBOutlet weak var digitalLabel: UIView!
+    @IBOutlet weak var choiceStatus: UISwitch!
     
     var pixels = [DataProviding.PixelData()]
     let black = DataProviding.PixelData(a: 255, r: 0, g: 0, b: 0)
@@ -31,9 +34,23 @@ class ClockViewController: UIViewController {
         self.myClock.startRealTime()
     }
     
+    @IBAction func choiceButton(sender: AnyObject) {
+        if choiceStatus.on {
+            labelStatus.text = "Analog"
+        } else {
+            labelStatus.text = "Digital"
+        }
+    }
+    
     @IBAction func captureButton(sender: AnyObject) {
         pixels = []
-        let image1 = takeSnapshotOfView(myClock)
+        var image1 = UIImage()
+        
+        if choiceStatus.on {
+            image1 = DataProviding.takeSnapshotOfView(myClock)
+        } else {
+            image1 = DataProviding.takeSnapshotOfView(digitalLabel)
+        }
         let image2 = DataProviding.resizeImage(image1,newWidth: 192)
         let result = DataProviding.intensityValuesFromImage(image2)
         for i in 0..<Int((result.pixelValues?.count)!) {
@@ -45,15 +62,6 @@ class ClockViewController: UIViewController {
         }
         image.image = DataProviding.imageFromARGB32Bitmap(pixels, width: 192, height: result.height)
     }
-        
-    func takeSnapshotOfView(view: UIView) -> UIImage {
-        UIGraphicsBeginImageContext(CGSizeMake(view.frame.size.width, view.frame.size.height))
-        view.drawViewHierarchyInRect(CGRectMake(0, 0, view.frame.size.width, view.frame.size.height), afterScreenUpdates: true)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image
-    }
-    
 }
 
 extension ClockViewController: BEMAnalogClockDelegate {
