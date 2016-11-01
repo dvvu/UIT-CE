@@ -964,13 +964,15 @@
                                 <rect key="frame" x="0.0" y="129" width="600" height="471"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="uit_logo" translatesAutoresizingMaskIntoConstraints="NO" id="G0b-13-tsO">
-                                        <rect key="frame" x="8" y="0.0" width="584" height="463"/>
+                                        <rect key="frame" x="8" y="0.0" width="584" height="584"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="G0b-13-tsO" secondAttribute="height" multiplier="1:1" id="2f4-hF-bCZ"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="G0b-13-tsO" firstAttribute="leading" secondItem="CSh-qU-jUA" secondAttribute="leading" constant="8" id="5Zg-Kv-Dwg"/>
-                                    <constraint firstAttribute="bottom" secondItem="G0b-13-tsO" secondAttribute="bottom" constant="8" id="9Xz-me-oJp"/>
                                     <constraint firstAttribute="trailing" secondItem="G0b-13-tsO" secondAttribute="trailing" constant="8" id="IjL-T8-1QF"/>
                                     <constraint firstItem="G0b-13-tsO" firstAttribute="top" secondItem="CSh-qU-jUA" secondAttribute="top" id="ywu-zR-Qqn"/>
                                 </constraints>

@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,16 +18,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="waterfall.gif" translatesAutoresizingMaskIntoConstraints="NO" id="Kw5-A0-m13">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="war-gc-Kqv">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Water Fall" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1EK-a3-b3A">
+                                <rect key="frame" x="225" y="279" width="151" height="42"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Kw5-A0-m13" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="CPK-m4-rXL"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="Kw5-A0-m13" secondAttribute="bottom" id="Gga-Bx-dAP"/>
-                            <constraint firstItem="Kw5-A0-m13" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="-20" id="N7Z-py-WFG"/>
-                            <constraint firstAttribute="trailing" secondItem="Kw5-A0-m13" secondAttribute="trailing" id="ccQ-dk-jcC"/>
+                            <constraint firstItem="1EK-a3-b3A" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="0BC-W9-0di"/>
+                            <constraint firstItem="war-gc-Kqv" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="-20" id="9ve-Kf-tCb"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="war-gc-Kqv" secondAttribute="bottom" id="NlA-ef-XjM"/>
+                            <constraint firstAttribute="trailing" secondItem="war-gc-Kqv" secondAttribute="trailing" id="Qv9-TY-sT6"/>
+                            <constraint firstItem="1EK-a3-b3A" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="hgW-8e-edd"/>
+                            <constraint firstItem="war-gc-Kqv" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="vaY-Cz-MRJ"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -36,6 +45,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="waterfall.gif" width="428" height="640"/>
+        <image name="launchScreen" width="418" height="640"/>
     </resources>
 </document>

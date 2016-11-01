@@ -55,7 +55,8 @@ public class Canvas: UIView, UITableViewDelegate
     
     // MARK: - Private Methods
     private func initialize() {
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.blackColor()
+        self.mainImageView.image = UIImage(named: "trang.png")
         
         self.addSubview(self.backgroundImageView)
         self.backgroundImageView.contentMode = .ScaleAspectFit
@@ -220,8 +221,9 @@ public class Canvas: UIView, UITableViewDelegate
             let rect = self.centeredBackgroundImageRect()
             self.backgroundImageView.image?.drawInRect(rect)            // draw background image
         } else {
-            self.backgroundImageView.contentMode = UIViewContentMode.ScaleAspectFill
-            self.backgroundImageView.image = UIImage(named: "trang.png")
+            
+            self.backgroundImageView.frame = self.frame
+            self.backgroundImageView.image?.drawInRect(self.frame)
         }
         
         self.mainImageView.image?.drawInRect(self.bounds)               // draw stroke
@@ -291,12 +293,12 @@ public class Canvas: UIView, UITableViewDelegate
         self.updateByLastSession()
         self.saved = true
         self.didUpdateCanvas()
+        self.mainImageView.image = UIImage(named: "trang.png")
     }
     
     public func save() {
         self.drawing.stroke = self.mainImageView.image?.copy() as? UIImage
         self.drawing.background = self.backgroundImageView.image
-        self.backgroundColor = UIColor.blueColor()
         self.saved = true
         self.didSaveCanvas()
     }
