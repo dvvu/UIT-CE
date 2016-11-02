@@ -56,7 +56,7 @@ public class Canvas: UIView, UITableViewDelegate
     // MARK: - Private Methods
     private func initialize() {
         self.backgroundColor = UIColor.blackColor()
-        self.mainImageView.image = UIImage(named: "trang.png")
+        self.mainImageView.image = UIImage(named: "trang")
         
         self.addSubview(self.backgroundImageView)
         self.backgroundImageView.contentMode = .ScaleAspectFit
@@ -293,7 +293,7 @@ public class Canvas: UIView, UITableViewDelegate
         self.updateByLastSession()
         self.saved = true
         self.didUpdateCanvas()
-        self.mainImageView.image = UIImage(named: "trang.png")
+        self.mainImageView.image = UIImage(named: "trang")
     }
     
     public func save() {

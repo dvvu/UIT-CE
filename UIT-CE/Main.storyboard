@@ -1373,34 +1373,33 @@
                                 <rect key="frame" x="0.0" y="57" width="600" height="543"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bfY-il-JCQ">
-                                        <rect key="frame" x="472" y="8" width="120" height="120"/>
+                                        <rect key="frame" x="310" y="8" width="282" height="282"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text2.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="dIs-UJ-ODg">
+                                        <rect key="frame" x="8" y="8" width="282" height="282"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="bfY-il-JCQ" secondAttribute="height" multiplier="1:1" id="46g-qt-IOr"/>
+                                            <constraint firstAttribute="width" secondItem="dIs-UJ-ODg" secondAttribute="height" multiplier="1:1" id="bub-yz-KUg"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cut" translatesAutoresizingMaskIntoConstraints="NO" id="dIs-UJ-ODg">
-                                        <rect key="frame" x="8" y="8" width="120" height="120"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="dIs-UJ-ODg" secondAttribute="height" multiplier="1:1" id="kFv-d3-It3"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tuo-6m-45f">
-                                        <rect key="frame" x="279" y="261" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="127" minValue="0.0" maxValue="255" translatesAutoresizingMaskIntoConstraints="NO" id="Zwa-ja-Nul">
+                                        <rect key="frame" x="88" y="306" width="424" height="31"/>
+                                        <connections>
+                                            <action selector="sliderAction:" destination="Nws-Ov-LAW" eventType="valueChanged" id="wTG-JU-tPx"/>
+                                        </connections>
+                                    </slider>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="dIs-UJ-ODg" firstAttribute="width" secondItem="Ln2-9p-RGh" secondAttribute="width" multiplier="0.2" id="1yT-LW-hq6"/>
-                                    <constraint firstItem="bfY-il-JCQ" firstAttribute="top" secondItem="Ln2-9p-RGh" secondAttribute="top" constant="8" id="8CZ-pu-zBj"/>
-                                    <constraint firstItem="Tuo-6m-45f" firstAttribute="centerY" secondItem="Ln2-9p-RGh" secondAttribute="centerY" id="CyM-2L-meW"/>
-                                    <constraint firstItem="bfY-il-JCQ" firstAttribute="width" secondItem="dIs-UJ-ODg" secondAttribute="width" id="iZP-JP-V40"/>
-                                    <constraint firstItem="dIs-UJ-ODg" firstAttribute="leading" secondItem="Ln2-9p-RGh" secondAttribute="leading" constant="8" id="ilb-6n-fFw"/>
-                                    <constraint firstAttribute="trailing" secondItem="bfY-il-JCQ" secondAttribute="trailing" constant="8" id="jgk-ge-7BM"/>
-                                    <constraint firstItem="Tuo-6m-45f" firstAttribute="centerX" secondItem="Ln2-9p-RGh" secondAttribute="centerX" id="otF-NO-CCQ"/>
-                                    <constraint firstItem="dIs-UJ-ODg" firstAttribute="top" secondItem="Ln2-9p-RGh" secondAttribute="top" constant="8" id="tA3-kD-Q97"/>
+                                    <constraint firstItem="Zwa-ja-Nul" firstAttribute="width" secondItem="Ln2-9p-RGh" secondAttribute="width" multiplier="0.7" id="77b-Pv-dsF"/>
+                                    <constraint firstItem="bfY-il-JCQ" firstAttribute="height" secondItem="dIs-UJ-ODg" secondAttribute="height" id="AGI-Kn-FMY"/>
+                                    <constraint firstItem="dIs-UJ-ODg" firstAttribute="top" secondItem="Ln2-9p-RGh" secondAttribute="top" constant="8" id="Eoy-Ul-d4W"/>
+                                    <constraint firstItem="bfY-il-JCQ" firstAttribute="top" secondItem="Ln2-9p-RGh" secondAttribute="top" constant="8" id="STq-AY-Sea"/>
+                                    <constraint firstItem="dIs-UJ-ODg" firstAttribute="leading" secondItem="Ln2-9p-RGh" secondAttribute="leading" constant="8" id="TLH-Lu-vvz"/>
+                                    <constraint firstItem="Zwa-ja-Nul" firstAttribute="centerX" secondItem="Ln2-9p-RGh" secondAttribute="centerX" id="TUT-7z-eAQ"/>
+                                    <constraint firstItem="dIs-UJ-ODg" firstAttribute="width" secondItem="Ln2-9p-RGh" secondAttribute="width" multiplier="0.47" id="ZQS-n5-16O"/>
+                                    <constraint firstItem="Zwa-ja-Nul" firstAttribute="top" secondItem="dIs-UJ-ODg" secondAttribute="bottom" constant="16" id="kd4-ts-Gmy"/>
+                                    <constraint firstItem="bfY-il-JCQ" firstAttribute="width" secondItem="dIs-UJ-ODg" secondAttribute="width" id="mWg-xU-0JJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="bfY-il-JCQ" secondAttribute="trailing" constant="8" id="tRE-Lq-BbA"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bXH-0z-9bb">
@@ -1449,7 +1448,7 @@
                     <connections>
                         <outlet property="imageRes" destination="bfY-il-JCQ" id="jFd-KQ-lN1"/>
                         <outlet property="imageSta" destination="dIs-UJ-ODg" id="YCP-sb-b92"/>
-                        <outlet property="testLabel" destination="Tuo-6m-45f" id="0aM-SI-NGU"/>
+                        <outlet property="slidervalue" destination="Zwa-ja-Nul" id="0Pf-lh-aqt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HAW-j4-s1a" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1582,12 +1581,12 @@
     </scenes>
     <resources>
         <image name="checked" width="26" height="26"/>
-        <image name="cut" width="236" height="267"/>
         <image name="ic1" width="550" height="413"/>
         <image name="ic_add1" width="128" height="128"/>
         <image name="ic_hamburger" width="38" height="28"/>
         <image name="ic_uit" width="220" height="220"/>
         <image name="send" width="600" height="296"/>
+        <image name="text2.jpg" width="1000" height="1000"/>
         <image name="uit_logo" width="180" height="90"/>
         <image name="uncheck" width="26" height="26"/>
     </resources>

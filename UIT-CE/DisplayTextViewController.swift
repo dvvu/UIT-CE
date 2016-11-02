@@ -17,50 +17,17 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var characterLabel: UILabel!
     @IBOutlet weak var allLabel: UILabel!
- 
-    @IBAction func saveButton(sender: AnyObject) {
-        let refreshAlert = UIAlertController(title: "Comfirm", message: "Would you like to save image?", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-           
-            let image = UIImage.imageWithLabel(self.textFieldLabel)
-            if let imageID = SD.saveUIImage(image) {
-                if let err = SD.executeChange("INSERT INTO SampleImageTable (Name, Image) VALUES (?, ?)", withArgs: [imageID, imageID]) {
-                }
-            }
-        }))
-        
-        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction!) in
-            print("Handle Cancel Logic here")
-        }))
-        
-        presentViewController(refreshAlert, animated: true, completion: nil)
-        
-    }
-    
-    @IBAction func leftMenuButton(sender: AnyObject) {
-        self.openLeft()
-    }
-    
-    @IBAction func sendButton(sender: AnyObject) {
-        let refreshAlert = UIAlertController(title: "Sending...", message: "Please, Connect and check with wifi?", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-        }))
-        
-        presentViewController(refreshAlert, animated: true, completion: nil)
-    
-    }
-    
     @IBOutlet weak var characterImage: UIImageView!
     @IBOutlet weak var allImage: UIImageView!
-    
     @IBOutlet weak var characterView: UIView!
     @IBOutlet weak var allView: UIView!
+    
+    var imagesDirectoryPath:String!
     var isCharacter: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        conditionSQLite()
         self.topView.clipsToBounds = true
         self.view.clipsToBounds = true
         self.topView.addGradientWithColor(UIColor.grayColor())
@@ -94,6 +61,36 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
         let tap6: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(clickView2))
         allLabel.addGestureRecognizer(tap6)
 
+    }
+    
+    func conditionSQLite() {
+        /*Condition to have path*/
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        // Get the Document directory path
+        let documentDirectorPath:String = paths[0]
+        // Create a new path for the new images folder
+        imagesDirectoryPath = documentDirectorPath.stringByAppendingString("/ImagePicker")
+        var objcBool:ObjCBool = true
+        let isExist = NSFileManager.defaultManager().fileExistsAtPath(imagesDirectoryPath, isDirectory: &objcBool)
+        // If the folder with the given path doesn't exist already, create it
+        if isExist == false{
+            do{
+                try NSFileManager.defaultManager().createDirectoryAtPath(imagesDirectoryPath, withIntermediateDirectories: true, attributes: nil)
+            }catch{
+                print("Something went wrong while creating a new folder")
+            }
+        }
+    }
+    
+    func insertData() {
+        do{
+            let titles = try NSFileManager.defaultManager().contentsOfDirectoryAtPath(imagesDirectoryPath)
+            if let err = SD.executeChange("INSERT INTO ImageData (Path) VALUES (?)", withArgs: ["/\(titles[titles.count-1])"]){
+                //there was an error inserting the new row, handle it here
+            }
+        }catch{
+            print("Error")
+        }
     }
     
     func clickView1() {
@@ -164,5 +161,42 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
         return true;
     }
 
+    /*Action Button*/
+    @IBAction func saveButton(sender: AnyObject) {
+        let refreshAlert = UIAlertController(title: "Comfirm", message: "Would you like to save image?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+            
+            let image = UIImage.imageWithLabel(self.textFieldLabel)
+            
+            var imagePath = NSDate().description
+            imagePath = imagePath.stringByReplacingOccurrencesOfString(" ", withString: "")
+            imagePath = self.imagesDirectoryPath.stringByAppendingString("/\(imagePath).png")
+            let data = UIImagePNGRepresentation(image)
+            let success = NSFileManager.defaultManager().createFileAtPath(imagePath, contents: data, attributes: nil)
+            self.insertData()
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction!) in
+            print("Handle Cancel Logic here")
+        }))
+        
+        presentViewController(refreshAlert, animated: true, completion: nil)
+        
+    }
+    
+    @IBAction func leftMenuButton(sender: AnyObject) {
+        self.openLeft()
+    }
+    
+    @IBAction func sendButton(sender: AnyObject) {
+        let refreshAlert = UIAlertController(title: "Sending...", message: "Please, Connect and check with wifi?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+        }))
+        
+        presentViewController(refreshAlert, animated: true, completion: nil)
+        
+    }
 
 }
