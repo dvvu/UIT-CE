@@ -7,11 +7,7 @@
 //
 
 import UIKit
-import SnapKit
-import NXDrawKit
-import RSKImageCropper
-import AVFoundation
-import MobileCoreServices
+import SocketIO
 
 class TestViewController: UIViewController {
     static let identifier = String(TestViewController)
@@ -23,18 +19,14 @@ class TestViewController: UIViewController {
     var pixels = [PixelData]()
     let black = PixelData(a: 255, r: 0, g: 0, b: 0)
     let white = PixelData(a: 255, r: 255, g: 255, b: 255)
+    var newString: String?
     
     @IBAction func leftMenuButton(sender: AnyObject) {
         self.openLeft()
     }
     
-    @IBAction func saveButton(sender: AnyObject) {
-    
-    }
-    
     @IBAction func sliderAction(sender: AnyObject) {
         let value = slidervalue.value
-        print(UInt8(value))
         imageRes.image = DataProviding.resizeImage(imageSta.image!,newWidth: 192)
         pixels = []
         let result = intensityValuesFromImage1(imageRes.image, value: UInt8(value))
@@ -46,13 +38,21 @@ class TestViewController: UIViewController {
             }
         }
         imageRes.image = imageFromARGB32Bitmap(pixels, width: 192, height: result.height)
+        //newString = result.pixelValues?.description
+    }
+    
+    @IBAction func sendButton(sender: AnyObject) {
+//         socket1 = SocketIOClient(socketURL: NSURL(string: "http://localhost:8080")!, config: [.log(true), .forcePolling(true)])
+        let socket = SocketIOClient(socketURL: NSURL(string: "http://lees-macbook-pro.local/")!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
+        socket.on("connect") {data, ack in
+            print("socket connected")
+        }
+        socket.connect()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
-    
     
     func intensityValuesFromImage1(image: UIImage?, value: UInt8) -> (pixelValues: [UInt8]?, width: Int, height: Int) {
         var width = 0
@@ -83,6 +83,7 @@ class TestViewController: UIViewController {
                 pixelValues![i] = 1
             }
         }
+        
         //        let aString: String = (pixelValues?.description)!
         //        let newString = aString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         //        let string2 = newString.stringByReplacingOccurrencesOfString("0", withString: "∙", options: NSStringCompareOptions.LiteralSearch, range: nil)

@@ -22,6 +22,7 @@ class DetailViewController: UIViewController {
     var textField: UITextField?
     var imageURL: String?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         conditionSQLite()
@@ -39,10 +40,26 @@ class DetailViewController: UIViewController {
                 pixels.append(black)
             }
         }
-        image.image = DataProviding.imageFromARGB32Bitmap(pixels, width: 192, height: result.height)
-  
+        self.image.image = DataProviding.imageFromARGB32Bitmap(self.pixels, width: 192, height: result.height)
+ 
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
+            let aString: String = (result.pixelValues!.description)
+            let newString = aString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            let lineNumber = newString.characters.count/192
+            if lineNumber > 0 {
+                for i in 1...lineNumber+1 {
+                    if (192*i + i) < newString.characters.count {
+                        newString.insert("\n", ind: 192*i + i)
+                    }
+                }
+            }
+
+            dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+              print(newString)
+            })
+        })
+
     }
-    
     
     /* Button action*/
     @IBAction func backButton(sender: AnyObject) {
@@ -60,17 +77,21 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func demoButton(sender: AnyObject) {
-        let refreshAlert = UIAlertController(title: "Demo", message: "Checked it again!", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-            
-        }))
-        
-        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction!) in
-            
-        }))
-        
-        presentViewController(refreshAlert, animated: true, completion: nil)
+        self.image.frame.origin.y = -self.middleView.frame.size.height
+        UIView.animateWithDuration(3.0, delay: 2.0, options: [.Repeat, .CurveEaseOut], animations: {
+            self.image.frame.origin.y += 2*self.middleView.frame.size.height
+            }, completion: nil)
+//        let refreshAlert = UIAlertController(title: "Demo", message: "Checked it again!", preferredStyle: UIAlertControllerStyle.Alert)
+//        
+//        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+//            
+//        }))
+//        
+//        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction!) in
+//            
+//        }))
+//        
+//        presentViewController(refreshAlert, animated: true, completion: nil)
     }
     
     /*func*/
