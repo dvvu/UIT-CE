@@ -10,10 +10,13 @@ import UIKit
 
 class DetailViewController: UIViewController {
     static let identifier = String(DetailViewController)
-    @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var middleView: UIView!
     @IBOutlet weak var delayTextField: UITextField!
+    @IBOutlet weak var imageLabel: UILabel!
+    @IBOutlet weak var demoString: UIButton!
+    @IBOutlet weak var sliderValue: UISlider!
+    @IBOutlet weak var demoImage: UIImageView!
     
     var pixels = [DataProviding.PixelData()]
     let black = DataProviding.PixelData(a: 255, r: 0, g: 0, b: 0)
@@ -21,6 +24,9 @@ class DetailViewController: UIViewController {
     var imagesDirectoryPath:String!
     var textField: UITextField?
     var imageURL: String?
+    var image1 = UIImage()
+    var image2 = UIImage()
+    var isClick: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,23 +34,60 @@ class DetailViewController: UIViewController {
         layOutTap()
         
         let data = NSFileManager.defaultManager().contentsAtPath(imagesDirectoryPath+imageURL!)
-        let image1 = UIImage(data: data!)
-        let image2 = DataProviding.resizeImage(image1!, newWidth: 192)
-        
-        let result = DataProviding.intensityValuesFromImage(image2)
-        for i in 0..<Int((result.pixelValues?.count)!) {
-            if result.pixelValues![i] == 1 {
-                pixels.append(white)
-            } else {
-                pixels.append(black)
-            }
-        }
-        image.image = DataProviding.imageFromARGB32Bitmap(pixels, width: 192, height: result.height)
-  
+         image1 = UIImage(data: data!)!
+         image2 = DataProviding.resizeImage(image1, newWidth: 192)
+        let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(sliderValue.value))
+        loadString()
+    }
+    
+    /* Button action*/
+    @IBAction func slider(sender: AnyObject) {
+        loadString()
     }
     
     
-    /* Button action*/
+    func loadColor() {
+        
+    }
+    
+    func loadString() {
+        
+        let attributedString = NSMutableAttributedString(string:"")
+        let string = "_"
+        
+        for i in 0..<string.characters.count {
+            let smallString = string.startIndex.advancedBy(i)
+            print(string[smallString])
+            let newString = DataProviding.createAttributedString(String(string[smallString]), fullStringColor: UIColor.blackColor(), subString: "_", subStringColor: UIColor.redColor())
+            attributedString.appendAttributedString(newString)
+        }
+        
+        let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(sliderValue.value))
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
+            
+            let aString: String = (result.pixelValues!.description)
+        
+            let newString = aString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            let newString2 = newString.stringByReplacingOccurrencesOfString("0", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        
+            let aString11: NSMutableString = NSMutableString(string: newString2)
+            
+            let lineNumber = aString11.length/192
+            if lineNumber > 0 {
+                for i in 1...lineNumber+1 {
+                    if (192*i + i) < aString11.length {
+                        aString11.insertString("\n", atIndex: 192*i + i)
+                    }
+                }
+            }
+            dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+                self.imageLabel.text = aString11 as String
+            })
+        })
+
+    }
+    
     @IBAction func backButton(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -60,21 +103,23 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func demoButton(sender: AnyObject) {
-        let refreshAlert = UIAlertController(title: "Demo", message: "Checked it again!", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-            
-        }))
-        
-        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction!) in
-            
-        }))
-        
-        presentViewController(refreshAlert, animated: true, completion: nil)
+        if isClick == true {
+            sliderValue.hidden = true
+            self.imageLabel.frame.origin.y = -self.middleView.frame.size.height
+            UIView.animateWithDuration(3.0, delay: 2.0, options: [.Repeat, .CurveEaseOut], animations: {
+                self.imageLabel.frame.origin.y += 2*self.middleView.frame.size.height
+                }, completion: nil)
+            isClick = false
+            demoString.setTitle("Stop", forState: .Normal)
+        } else {
+            self.imageLabel.layer.removeAllAnimations()
+            sliderValue.hidden = false
+            isClick = true
+            demoString.setTitle("Start", forState: .Normal)
+        }
     }
     
     /*func*/
-    
     func layOutTap() {
         self.topView.clipsToBounds = true
         self.view.clipsToBounds = true
@@ -110,6 +155,7 @@ class DetailViewController: UIViewController {
         }
     }
 }
+
 extension DetailViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(textField: UITextField) {
         self.textField = textField
@@ -127,7 +173,6 @@ extension DetailViewController: UITextFieldDelegate {
             return newLength <= 0
         }
     }
-
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         switch textField {

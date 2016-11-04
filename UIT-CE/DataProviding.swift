@@ -89,6 +89,45 @@ class DataProviding {
         return (pixelValues, width, height)
     }
     
+    static func intensityValuesFromImage1(image: UIImage?, value: UInt8) -> (pixelValues: [UInt8]?, width: Int, height: Int) {
+        var width = 0
+        var height = 0
+        var pixelValues: [UInt8]?
+        if (image != nil) {
+            let imageRef = image!.CGImage
+            width = CGImageGetWidth(imageRef)
+            height = CGImageGetHeight(imageRef)
+            
+            let bytesPerPixel = 1
+            // let bytesPerPixel = 3
+            let bytesPerRow = bytesPerPixel * width
+            let bitsPerComponent = 8
+            let totalBytes = width * height * bytesPerPixel
+            
+            let colorSpace = CGColorSpaceCreateDeviceGray()
+            pixelValues = [UInt8](count: totalBytes, repeatedValue: 0)
+            
+            let contextRef = CGBitmapContextCreate(&pixelValues!, width, height, bitsPerComponent, bytesPerRow, colorSpace, 0)
+            CGContextDrawImage(contextRef, CGRectMake(0.0, 0.0, CGFloat(width), CGFloat(height)), imageRef)
+        }
+        
+        for i in 0..<Int((pixelValues?.count)!) {
+            if pixelValues![i] < value {
+                pixelValues![i] = 0
+            } else {
+                pixelValues![i] = 1
+            }
+        }
+        
+        //        let aString: String = (pixelValues?.description)!
+        //        let newString = aString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        //        let string2 = newString.stringByReplacingOccurrencesOfString("0", withString: "∙", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        //        let string3 = string2.stringByReplacingOccurrencesOfString("1", withString: "💧", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        //        print(string3)
+        //        print(pixelValues?.count)
+        return (pixelValues, width, height)
+    }
+    
     struct PixelData {
         var a: UInt8 = 0
         var r: UInt8 = 0
