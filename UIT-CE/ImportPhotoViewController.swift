@@ -97,7 +97,6 @@ class ImportPhotoViewController: UIViewController {
                     
                     let image1 = UIImage(data: data!)
                     let image2 = DataProviding.resizeImage(image1!, newWidth: 192)
-//                    let image3 = blackAndWhiteImage(image2)
                     images?.append(image2)
                 }
             }

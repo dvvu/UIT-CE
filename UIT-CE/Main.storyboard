@@ -876,16 +876,42 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CSh-qU-jUA">
                                 <rect key="frame" x="0.0" y="129" width="600" height="471"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G0b-13-tsO">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="471"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="500" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sz2-9B-UEW">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="413"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="1"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="127" minValue="0.0" maxValue="255" translatesAutoresizingMaskIntoConstraints="NO" id="nFZ-m2-CRA">
+                                        <rect key="frame" x="18" y="421" width="564" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="at7-T8-1pu"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="slider:" destination="H7Q-rB-Zq6" eventType="valueChanged" id="aKf-Va-h8Z"/>
+                                        </connections>
+                                    </slider>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XY2-13-X5R">
+                                        <rect key="frame" x="8" y="0.0" width="584" height="413"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="G0b-13-tsO" firstAttribute="height" secondItem="CSh-qU-jUA" secondAttribute="height" id="WwC-gY-0eI"/>
-                                    <constraint firstItem="G0b-13-tsO" firstAttribute="centerX" secondItem="CSh-qU-jUA" secondAttribute="centerX" id="ZRS-XE-qDx"/>
-                                    <constraint firstAttribute="bottom" secondItem="G0b-13-tsO" secondAttribute="bottom" id="oy9-ye-tnG"/>
-                                    <constraint firstItem="G0b-13-tsO" firstAttribute="width" secondItem="CSh-qU-jUA" secondAttribute="width" id="thI-j0-dIH"/>
+                                    <constraint firstAttribute="bottom" secondItem="nFZ-m2-CRA" secondAttribute="bottom" constant="20" id="0iJ-8w-CnA"/>
+                                    <constraint firstAttribute="trailing" secondItem="Sz2-9B-UEW" secondAttribute="trailing" id="7Mf-P1-75n"/>
+                                    <constraint firstItem="Sz2-9B-UEW" firstAttribute="top" secondItem="CSh-qU-jUA" secondAttribute="top" id="FmV-7f-Huv"/>
+                                    <constraint firstAttribute="trailing" secondItem="Sz2-9B-UEW" secondAttribute="trailing" id="HpA-ds-3kr"/>
+                                    <constraint firstItem="Sz2-9B-UEW" firstAttribute="leading" secondItem="CSh-qU-jUA" secondAttribute="leading" id="JK2-Vd-mSf"/>
+                                    <constraint firstItem="Sz2-9B-UEW" firstAttribute="leading" secondItem="CSh-qU-jUA" secondAttribute="leading" id="KLy-gQ-s3d"/>
+                                    <constraint firstItem="XY2-13-X5R" firstAttribute="top" secondItem="CSh-qU-jUA" secondAttribute="top" id="LCh-nT-ExI"/>
+                                    <constraint firstAttribute="trailing" secondItem="nFZ-m2-CRA" secondAttribute="trailing" constant="20" id="MBD-AZ-7yT"/>
+                                    <constraint firstItem="nFZ-m2-CRA" firstAttribute="top" secondItem="Sz2-9B-UEW" secondAttribute="bottom" constant="8" id="UPV-O9-YrS"/>
+                                    <constraint firstAttribute="trailing" secondItem="XY2-13-X5R" secondAttribute="trailing" constant="8" id="Xcm-fF-aKQ"/>
+                                    <constraint firstItem="Sz2-9B-UEW" firstAttribute="top" secondItem="CSh-qU-jUA" secondAttribute="top" id="d4F-Kk-C44"/>
+                                    <constraint firstItem="XY2-13-X5R" firstAttribute="leading" secondItem="CSh-qU-jUA" secondAttribute="leading" constant="8" id="eVp-wc-a4T"/>
+                                    <constraint firstItem="nFZ-m2-CRA" firstAttribute="top" secondItem="XY2-13-X5R" secondAttribute="bottom" constant="8" id="lqe-Za-16x"/>
+                                    <constraint firstItem="nFZ-m2-CRA" firstAttribute="leading" secondItem="CSh-qU-jUA" secondAttribute="leading" constant="20" id="rtE-8P-cHU"/>
+                                    <constraint firstItem="nFZ-m2-CRA" firstAttribute="top" secondItem="Sz2-9B-UEW" secondAttribute="bottom" constant="8" id="vBF-LA-RKf"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3sw-nd-z7Z">
@@ -958,7 +984,7 @@
                                     <constraint firstAttribute="height" constant="30" id="TOL-1I-7og"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Demo">
+                                <state key="normal" title="Start">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -1011,8 +1037,11 @@
                     </view>
                     <connections>
                         <outlet property="delayTextField" destination="06L-Ny-rKk" id="snb-K2-Ghi"/>
-                        <outlet property="image" destination="G0b-13-tsO" id="A1c-Gg-tRz"/>
+                        <outlet property="demoImage" destination="XY2-13-X5R" id="tEe-6D-AO1"/>
+                        <outlet property="demoString" destination="ONy-uz-Gbm" id="TFx-YY-6fh"/>
+                        <outlet property="imageLabel" destination="Sz2-9B-UEW" id="WyL-eY-oaw"/>
                         <outlet property="middleView" destination="CSh-qU-jUA" id="Jf0-DI-kJC"/>
+                        <outlet property="sliderValue" destination="nFZ-m2-CRA" id="2Eu-I8-gKe"/>
                         <outlet property="topView" destination="bPQ-Kh-2iZ" id="RSW-7G-iPk"/>
                     </connections>
                 </viewController>
