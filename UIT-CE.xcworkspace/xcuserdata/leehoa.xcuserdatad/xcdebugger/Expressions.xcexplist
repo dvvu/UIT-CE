@@ -18,5 +18,21 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "ImportPhotoViewController.RepareData() -&gt; ():ImportPhotoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "images?.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ImportPhotoViewController.collectionView(UICollectionView, numberOfItemsInSection : Int) -&gt; Int:ImportPhotoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "images?.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

@@ -19,6 +19,8 @@ class ImportPhotoViewController: UIViewController {
     var indicator:ProgressIndicator?
     var imagesDirectoryPath:String!
     var number: Int = 0
+    var isLoadMore: Bool = false
+    var pageNumber: Int = 1
     
     @IBAction func leftMenuButton(sender: AnyObject) {
         self.openLeft()
@@ -164,18 +166,31 @@ extension ImportPhotoViewController: UICollectionViewDelegate, UICollectionViewD
                 }
             }
         }
-//        //Delete image
-////        let (resultSet, err) = SD.executeQuery("SELECT * FROM SampleImageTable")
-////        if err != nil {
-////        } else {
-////            if let name = resultSet[indexPath.row]["Name"]!.asString() {
-////                print(name)
-////                SD.executeQuery("DELETE FROM SampleImageTable WHERE Name='\(name)'")
-////            }
-////        }
-////        self.collectionView.reloadData()
+        //Delete image
+//        let (resultSet, err) = SD.executeQuery("SELECT * FROM ImageData")
+//        if err != nil {
+//        } else {
+//            if let name = resultSet[indexPath.row]["Path"]!.asString() {
+//                print(name)
+//                SD.executeQuery("DELETE FROM ImageData WHERE Path='\(name)'")
+//            }
+//        }
+//        self.RepareData()
+//        self.collectionView.reloadData()
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if collectionView.contentOffset.y > (self.view.frame.size.width-1)*2*CGFloat(pageNumber) {
+            pageNumber += 1
+            print("load  more")
+//            indicator = ProgressIndicator(inview:self.view,loadingViewColor: UIColor.grayColor(), indicatorColor: UIColor.blackColor(), msg: "Loading..")
+//            self.view.addSubview(indicator!)
+//            indicator!.start()
+//            collectionView.userInteractionEnabled = false
+        }
+        print(collectionView.contentOffset.y)
+        print((self.view.frame.size.width-1)*2*CGFloat(pageNumber))
+    }
 
 }
 
