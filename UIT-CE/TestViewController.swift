@@ -15,16 +15,35 @@ class TestViewController: UIViewController {
     @IBOutlet weak var imageSta: UIImageView!
     @IBOutlet weak var imageRes: UIImageView!
     @IBOutlet weak var slidervalue: UISlider!
+    @IBOutlet weak var sendTextField: UITextField!
     
     var pixels = [PixelData]()
     let black = PixelData(a: 255, r: 0, g: 0, b: 0)
     let white = PixelData(a: 255, r: 255, g: 255, b: 255)
+    var socket: SocketIOClient?
+    var textField: UITextField?
     var newString: String?
+    var url: String?
     
-    let socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.0.179:3000")!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loaddingSetting()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(TestViewController.viewTapped(_:)))
+        self.view.addGestureRecognizer(tapGesture)
+    }
     
+    /*Button Action*/
     @IBAction func leftMenuButton(sender: AnyObject) {
         self.openLeft()
+    }
+    
+    @IBAction func connectButton(sender: AnyObject) {
+        socket = SocketIOClient(socketURL: NSURL(string: url!)!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
+        socket!.on("connect") {data, ack in
+            print(ack)
+            print("socket connected")
+        }
+        socket!.connect()
     }
     
     @IBAction func sliderAction(sender: AnyObject) {
@@ -43,44 +62,43 @@ class TestViewController: UIViewController {
         //newString = result.pixelValues?.description
     }
     @IBAction func sendButton(sender: AnyObject) {
-//        let socket = SocketIOClient(socketURL: NSURL(string: "192.168.3.1:9999")!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
-//        socket.on("connect") {data, ack in
-//            print("socket connected")
-//        }
-//        
-//        socket.on("currentAmount") {data, ack in
-//            if let cur = data[0] as? Double {
-//                socket.emitWithAck("canUpdate", cur)(timeoutAfter: 0) {data in
-//                    socket.emit("update", ["amount": cur + 2.50])
-//                }
-//                
-//                ack.with("Got your currentAmount", "dude")
-//            }
-//        }
-//        socket.engineDidOpen("HELLO")
-//        socket.connect()
-//        let url = NSURL(string: "localhost:5000")!
-//        let socket = SocketIOClient(socketURL: url, config: ["log": true, "forcePolling": true])
-       
-        
-        socket.on("connect") {data, ack in
-            print(ack)
-            print("socket connected")
+        //        let socket = SocketIOClient(socketURL: NSURL(string: "192.168.3.1:9999")!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
+        //        socket.on("connect") {data, ack in
+        //            print("socket connected")
+        //        }
+        //
+        //        socket.on("currentAmount") {data, ack in
+        //            if let cur = data[0] as? Double {
+        //                socket.emitWithAck("canUpdate", cur)(timeoutAfter: 0) {data in
+        //                    socket.emit("update", ["amount": cur + 2.50])
+        //                }
+        //
+        //                ack.with("Got your currentAmount", "dude")
+        //            }
+        //        }
+        //        socket.engineDidOpen("HELLO")
+        //        socket.connect()
+        //        let url = NSURL(string: "localhost:5000")!
+        //        let socket = SocketIOClient(socketURL: url, config: ["log": true, "forcePolling": true])
+        if let data = sendTextField.text {
+            socket!.emit("message", data)
         }
-        socket.emit("message", " HELLO WORLD")
-//        socket.on("currentAmount", callback: {(data: [AnyObject], ack: SocketAckEmitter) -> Void in
-//            let cur = data[0] as? Double
-//            socket.emitWithAck("canUpdate", withItems: [(cur)!])(timeoutAfter: 0, callback: {(data: [AnyObject]) -> Void in
-//                socket.emit("update", withItems: [["amount": (cur! + 2.50)]])
-//            })
-//            ack.with(["Got your currentAmount, ", "dude"])
-//        })
-        socket.connect()
+
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    /*Action*/
+    func loaddingSetting() {
+        url = "http://"
+        let (resultSet, err) = SD.executeQuery("SELECT * FROM Setting")
+        if err != nil {
+            print(" Error in loading Data")
+        } else {
+            url =  url! + (resultSet[0]["IP"]?.asString())! + ":"
+            url = url! + (resultSet[0]["Port"]?.asInt()?.description)!
+        }
+        print(url)
     }
+
     
     func intensityValuesFromImage1(image: UIImage?, value: UInt8) -> (pixelValues: [UInt8]?, width: Int, height: Int) {
         var width = 0
@@ -157,7 +175,28 @@ class TestViewController: UIViewController {
         return UIImage(CGImage: cgim!)
     }
     
+    func viewTapped(sender: UITapGestureRecognizer? = nil) {
+        if let tf = textField {
+            tf.resignFirstResponder()
+        }
+    }
+}
 
+extension TestViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(textField: UITextField) {
+        self.textField = textField
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        switch textField {
+        case sendTextField:
+            textField.resignFirstResponder()
+        // TODO: handle login here
+        default:
+            textField.resignFirstResponder()
+        }
+        return true;
+    }
 }
 
 
