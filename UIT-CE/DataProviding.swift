@@ -113,9 +113,9 @@ class DataProviding {
         
         for i in 0..<Int((pixelValues?.count)!) {
             if pixelValues![i] < value {
-                pixelValues![i] = 0
-            } else {
                 pixelValues![i] = 1
+            } else {
+                pixelValues![i] = 0
             }
         }
         

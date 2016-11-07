@@ -16,7 +16,6 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var imageLabel: UILabel!
     @IBOutlet weak var demoString: UIButton!
     @IBOutlet weak var sliderValue: UISlider!
-    @IBOutlet weak var demoImage: UIImageView!
     var vanNumber: Int = 192
     
     var pixels = [DataProviding.PixelData()]
@@ -131,10 +130,14 @@ class DetailViewController: UIViewController {
         
         for i in 0..<string.characters.count {
             let smallString = string.startIndex.advancedBy(i)
-            print(string[smallString])
+            
             let newString = DataProviding.createAttributedString(String(string[smallString]), fullStringColor: UIColor.blackColor(), subString: "_", subStringColor: UIColor.redColor())
+            
             attributedString.appendAttributedString(newString)
         }
+        
+    
+        
         
         let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(sliderValue.value))
         
