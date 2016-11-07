@@ -877,9 +877,10 @@
                                 <rect key="frame" x="0.0" y="129" width="600" height="471"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="500" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sz2-9B-UEW">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="413"/>
+                                        <rect key="frame" x="299" y="235" width="3" height="2"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="1"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="127" minValue="0.0" maxValue="255" translatesAutoresizingMaskIntoConstraints="NO" id="nFZ-m2-CRA">
@@ -891,27 +892,14 @@
                                             <action selector="slider:" destination="H7Q-rB-Zq6" eventType="valueChanged" id="aKf-Va-h8Z"/>
                                         </connections>
                                     </slider>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XY2-13-X5R">
-                                        <rect key="frame" x="8" y="0.0" width="584" height="413"/>
-                                    </imageView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="nFZ-m2-CRA" secondAttribute="bottom" constant="20" id="0iJ-8w-CnA"/>
-                                    <constraint firstAttribute="trailing" secondItem="Sz2-9B-UEW" secondAttribute="trailing" id="7Mf-P1-75n"/>
-                                    <constraint firstItem="Sz2-9B-UEW" firstAttribute="top" secondItem="CSh-qU-jUA" secondAttribute="top" id="FmV-7f-Huv"/>
-                                    <constraint firstAttribute="trailing" secondItem="Sz2-9B-UEW" secondAttribute="trailing" id="HpA-ds-3kr"/>
-                                    <constraint firstItem="Sz2-9B-UEW" firstAttribute="leading" secondItem="CSh-qU-jUA" secondAttribute="leading" id="JK2-Vd-mSf"/>
-                                    <constraint firstItem="Sz2-9B-UEW" firstAttribute="leading" secondItem="CSh-qU-jUA" secondAttribute="leading" id="KLy-gQ-s3d"/>
-                                    <constraint firstItem="XY2-13-X5R" firstAttribute="top" secondItem="CSh-qU-jUA" secondAttribute="top" id="LCh-nT-ExI"/>
                                     <constraint firstAttribute="trailing" secondItem="nFZ-m2-CRA" secondAttribute="trailing" constant="20" id="MBD-AZ-7yT"/>
-                                    <constraint firstItem="nFZ-m2-CRA" firstAttribute="top" secondItem="Sz2-9B-UEW" secondAttribute="bottom" constant="8" id="UPV-O9-YrS"/>
-                                    <constraint firstAttribute="trailing" secondItem="XY2-13-X5R" secondAttribute="trailing" constant="8" id="Xcm-fF-aKQ"/>
-                                    <constraint firstItem="Sz2-9B-UEW" firstAttribute="top" secondItem="CSh-qU-jUA" secondAttribute="top" id="d4F-Kk-C44"/>
-                                    <constraint firstItem="XY2-13-X5R" firstAttribute="leading" secondItem="CSh-qU-jUA" secondAttribute="leading" constant="8" id="eVp-wc-a4T"/>
-                                    <constraint firstItem="nFZ-m2-CRA" firstAttribute="top" secondItem="XY2-13-X5R" secondAttribute="bottom" constant="8" id="lqe-Za-16x"/>
+                                    <constraint firstItem="Sz2-9B-UEW" firstAttribute="centerY" secondItem="CSh-qU-jUA" secondAttribute="centerY" id="daD-FO-BkO"/>
+                                    <constraint firstItem="Sz2-9B-UEW" firstAttribute="centerX" secondItem="CSh-qU-jUA" secondAttribute="centerX" id="hLY-OH-gNO"/>
                                     <constraint firstItem="nFZ-m2-CRA" firstAttribute="leading" secondItem="CSh-qU-jUA" secondAttribute="leading" constant="20" id="rtE-8P-cHU"/>
-                                    <constraint firstItem="nFZ-m2-CRA" firstAttribute="top" secondItem="Sz2-9B-UEW" secondAttribute="bottom" constant="8" id="vBF-LA-RKf"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3sw-nd-z7Z">
@@ -1037,7 +1025,6 @@
                     </view>
                     <connections>
                         <outlet property="delayTextField" destination="06L-Ny-rKk" id="snb-K2-Ghi"/>
-                        <outlet property="demoImage" destination="XY2-13-X5R" id="tEe-6D-AO1"/>
                         <outlet property="demoString" destination="ONy-uz-Gbm" id="TFx-YY-6fh"/>
                         <outlet property="imageLabel" destination="Sz2-9B-UEW" id="WyL-eY-oaw"/>
                         <outlet property="middleView" destination="CSh-qU-jUA" id="Jf0-DI-kJC"/>

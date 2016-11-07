@@ -40,14 +40,41 @@ class TestViewController: UIViewController {
         imageRes.image = imageFromARGB32Bitmap(pixels, width: 192, height: result.height)
         //newString = result.pixelValues?.description
     }
-    
+    var socket: SocketIOClient?
     @IBAction func sendButton(sender: AnyObject) {
-//         socket1 = SocketIOClient(socketURL: NSURL(string: "http://localhost:8080")!, config: [.log(true), .forcePolling(true)])
-        let socket = SocketIOClient(socketURL: NSURL(string: "http://lees-macbook-pro.local/")!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
-        socket.on("connect") {data, ack in
+//        let socket = SocketIOClient(socketURL: NSURL(string: "192.168.3.1:9999")!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
+//        socket.on("connect") {data, ack in
+//            print("socket connected")
+//        }
+//        
+//        socket.on("currentAmount") {data, ack in
+//            if let cur = data[0] as? Double {
+//                socket.emitWithAck("canUpdate", cur)(timeoutAfter: 0) {data in
+//                    socket.emit("update", ["amount": cur + 2.50])
+//                }
+//                
+//                ack.with("Got your currentAmount", "dude")
+//            }
+//        }
+//        socket.engineDidOpen("HELLO")
+//        socket.connect()
+        let url = NSURL(string: "192.168.3.1:9999")!
+        let socket = SocketIOClient(socketURL: url, config: ["log": true, "forcePolling": true])
+        socket.on("connect", callback: {(data: [AnyObject], ack: SocketAckEmitter) -> Void in
             print("socket connected")
-        }
+           
+        })
+        socket.on("currentAmount", callback: {(data: [AnyObject], ack: SocketAckEmitter) -> Void in
+            let cur = data[0] as? Double
+            socket.emitWithAck("canUpdate", withItems: [(cur)!])(timeoutAfter: 0, callback: {(data: [AnyObject]) -> Void in
+                socket.emit("update", withItems: [["amount": (cur! + 2.50)]])
+            })
+            ack.with(["Got your currentAmount, ", "dude"])
+        })
         socket.connect()
+        
+        
+         socket.emit("HELLO", "Vu")
     }
     
     override func viewDidLoad() {

@@ -16,7 +16,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var imageLabel: UILabel!
     @IBOutlet weak var demoString: UIButton!
     @IBOutlet weak var sliderValue: UISlider!
-    @IBOutlet weak var demoImage: UIImageView!
+    var vanNumber: Int = 192
     
     var pixels = [DataProviding.PixelData()]
     let black = DataProviding.PixelData(a: 255, r: 0, g: 0, b: 0)
@@ -31,61 +31,20 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         conditionSQLite()
+        loaddingSetting()
         layOutTap()
         
         let data = NSFileManager.defaultManager().contentsAtPath(imagesDirectoryPath+imageURL!)
          image1 = UIImage(data: data!)!
-         image2 = DataProviding.resizeImage(image1, newWidth: 192)
+         image2 = DataProviding.resizeImage(image1, newWidth: CGFloat(vanNumber))
         let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(sliderValue.value))
+        print(result.pixelValues?.count)
         loadString()
     }
     
     /* Button action*/
     @IBAction func slider(sender: AnyObject) {
         loadString()
-    }
-    
-    
-    func loadColor() {
-        
-    }
-    
-    func loadString() {
-        
-        let attributedString = NSMutableAttributedString(string:"")
-        let string = "_"
-        
-        for i in 0..<string.characters.count {
-            let smallString = string.startIndex.advancedBy(i)
-            print(string[smallString])
-            let newString = DataProviding.createAttributedString(String(string[smallString]), fullStringColor: UIColor.blackColor(), subString: "_", subStringColor: UIColor.redColor())
-            attributedString.appendAttributedString(newString)
-        }
-        
-        let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(sliderValue.value))
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
-            
-            let aString: String = (result.pixelValues!.description)
-        
-            let newString = aString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            let newString2 = newString.stringByReplacingOccurrencesOfString("0", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        
-            let aString11: NSMutableString = NSMutableString(string: newString2)
-            
-            let lineNumber = aString11.length/192
-            if lineNumber > 0 {
-                for i in 1...lineNumber+1 {
-                    if (192*i + i) < aString11.length {
-                        aString11.insertString("\n", atIndex: 192*i + i)
-                    }
-                }
-            }
-            dispatch_sync(dispatch_get_main_queue(), {() -> Void in
-                self.imageLabel.text = aString11 as String
-            })
-        })
-
     }
     
     @IBAction func backButton(sender: AnyObject) {
@@ -153,6 +112,57 @@ class DetailViewController: UIViewController {
         if let tf = textField {
             tf.resignFirstResponder()
         }
+    }
+    
+    func loaddingSetting() {
+        let (resultSet, err) = SD.executeQuery("SELECT * FROM Setting")
+        if err != nil {
+            print(" Error in loading Data")
+        } else {
+            vanNumber = (resultSet[0]["Van"]?.asInt())!
+        }
+    }
+    
+    func loadString() {
+        
+        let attributedString = NSMutableAttributedString(string:"")
+        let string = "_"
+        
+        for i in 0..<string.characters.count {
+            let smallString = string.startIndex.advancedBy(i)
+            
+            let newString = DataProviding.createAttributedString(String(string[smallString]), fullStringColor: UIColor.blackColor(), subString: "_", subStringColor: UIColor.redColor())
+            
+            attributedString.appendAttributedString(newString)
+        }
+        
+    
+        
+        
+        let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(sliderValue.value))
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
+            
+            let aString: String = (result.pixelValues!.description)
+            
+            let newString = aString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            let newString2 = newString.stringByReplacingOccurrencesOfString("0", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            
+            let aString11: NSMutableString = NSMutableString(string: newString2)
+            
+            let lineNumber = aString11.length/self.vanNumber
+            if lineNumber > 0 {
+                for i in 1...lineNumber+1 {
+                    if (self.vanNumber*i + i) < aString11.length {
+                        aString11.insertString("\n", atIndex: self.vanNumber*i + i)
+                    }
+                }
+            }
+            dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+                self.imageLabel.text = aString11 as String
+            })
+        })
+        
     }
 }
 
