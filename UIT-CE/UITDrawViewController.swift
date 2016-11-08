@@ -28,11 +28,11 @@ class UITDrawViewController: UIViewController
     weak var paletteView: Palette?
     weak var toolBar: ToolBar?
     @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var connectStatus: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.topView.clipsToBounds = true
-        self.topView.addGradientWithColor(UIColor.grayColor())
+        self.topView.backgroundColor = Colors.primaryBlue()
         self.initialize()
     }
     
@@ -40,6 +40,9 @@ class UITDrawViewController: UIViewController
         self.openLeft()
     }
     
+    @IBAction func connectButton(sender: AnyObject) {
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

@@ -34,5 +34,16 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "DetailViewController.viewDidLoad() -&gt; ():DetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "imageURL">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DisplayTextViewController.detailButton(AnyObject) -&gt; ():DisplayTextViewController.swift">
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

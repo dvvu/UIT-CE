@@ -21,6 +21,7 @@ class TestViewController: UIViewController {
     let black = PixelData(a: 255, r: 0, g: 0, b: 0)
     let white = PixelData(a: 255, r: 255, g: 255, b: 255)
     var socket: SocketIOClient?
+    var indicator:ProgressIndicator?
     var textField: UITextField?
     var newString: String?
     var url: String?
@@ -40,10 +41,13 @@ class TestViewController: UIViewController {
     @IBAction func connectButton(sender: AnyObject) {
         socket = SocketIOClient(socketURL: NSURL(string: url!)!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
         socket!.on("connect") {data, ack in
-            print(ack)
             print("socket connected")
         }
         socket!.connect()
+        socket!.on("server", callback: {
+            data, ack in
+            print(data)
+        })
     }
     
     @IBAction func sliderAction(sender: AnyObject) {

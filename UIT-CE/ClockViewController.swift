@@ -25,7 +25,8 @@ class ClockViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.clipsToBounds = true
+        self.view.addGradientWithColor(UIColor.whiteColor())
         self.myClock.realTime = true
         self.myClock.currentTime = true
         self.myClock.setClockToCurrentTimeAnimated(true)
