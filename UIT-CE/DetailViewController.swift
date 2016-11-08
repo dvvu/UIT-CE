@@ -35,6 +35,7 @@ class DetailViewController: UIViewController {
         layOutTap()
         
         let data = NSFileManager.defaultManager().contentsAtPath(imagesDirectoryPath+imageURL!)
+        print(data)
          image1 = UIImage(data: data!)!
          image2 = DataProviding.resizeImage(image1, newWidth: CGFloat(vanNumber))
         let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(sliderValue.value))
@@ -80,10 +81,9 @@ class DetailViewController: UIViewController {
     
     /*func*/
     func layOutTap() {
-        self.topView.clipsToBounds = true
         self.view.clipsToBounds = true
-        self.topView.addGradientWithColor(UIColor.grayColor())
-        self.view.addGradientWithColor(UIColor.darkGrayColor())
+        self.topView.backgroundColor = Colors.primaryBlue()
+        self.view.addGradientWithColor(UIColor.whiteColor())
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.viewTapped(_:)))
         self.view.addGestureRecognizer(tapGesture)

@@ -80,9 +80,9 @@ class SettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.topView.clipsToBounds = true
-        self.bottomView.clipsToBounds = true
-        self.topView.addGradientWithColor(UIColor.grayColor())
-        self.bottomView.addGradientWithColor(UIColor.darkGrayColor())
+        self.view.clipsToBounds = true
+        self.topView.addGradientWithColor(Colors.primaryBlue())
+        self.view.addGradientWithColor(UIColor.whiteColor())
         
         picketView.dataSource = self
         picketView.delegate = self

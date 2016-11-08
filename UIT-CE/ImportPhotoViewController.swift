@@ -13,6 +13,7 @@ class ImportPhotoViewController: UIViewController {
     
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var connectStatus: UIButton!
 
     var imagePicker = UIImagePickerController()
     var images: [UIImage]?
@@ -21,18 +22,24 @@ class ImportPhotoViewController: UIViewController {
     var number: Int = 0
     var isLoadMore: Bool = false
     var pageNumber: Int = 1
+    var isDelete: Bool = false
     
     @IBAction func leftMenuButton(sender: AnyObject) {
         self.openLeft()
     }
     
-    @IBAction func sendButton(sender: AnyObject) {
-        let refreshAlert = UIAlertController(title: "Sending...", message: "Please, Connect and check with wifi?", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-        }))
-        
-        presentViewController(refreshAlert, animated: true, completion: nil)
+    @IBAction func connectButton(sender: AnyObject) {
+   
+    }
+    
+    @IBAction func deleteButton(sender: AnyObject) {
+        if isDelete == true {
+            isDelete = false
+            self.collectionView.backgroundColor = UIColor.whiteColor()
+        } else {
+            isDelete = true
+            self.collectionView.backgroundColor = UIColor.redColor()
+        }
     }
     
     @IBAction func addButton(sender: AnyObject) {
@@ -48,8 +55,8 @@ class ImportPhotoViewController: UIViewController {
         self.view.addSubview(indicator!)
         self.topView.clipsToBounds = true
         self.view.clipsToBounds = true
-        self.topView.addGradientWithColor(UIColor.grayColor())
-        self.view.addGradientWithColor(UIColor.darkGrayColor())
+        self.topView.addGradientWithColor(Colors.primaryBlue())
+        self.view.addGradientWithColor(UIColor.whiteColor())
         collectionView!.registerNib(UINib(nibName: "ImportPhotoCell", bundle: nil), forCellWithReuseIdentifier: "ImportPhotoCell")
         
         /* loading data with activity*/
@@ -154,29 +161,46 @@ extension ImportPhotoViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-       
-        let (resultSet, err) = SD.executeQuery("SELECT * FROM ImageData")
-        if err != nil {
+        
+        if isDelete == true {
+            let refreshAlert = UIAlertController(title: "Delete", message: "Do you want to delete this immage?", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction!) in
+                self.deleteImage(indexPath.row)
+                self.isDelete = false
+                self.collectionView.backgroundColor = UIColor.whiteColor()
+            }))
+            
+            refreshAlert.addAction(UIAlertAction(title: "No", style: .Default, handler: { (action: UIAlertAction!) in
+            }))
+            
+            presentViewController(refreshAlert, animated: true, completion: nil)
         } else {
-            if let image = resultSet[indexPath.row]["Path"]?.asString() {
-                print(image)
-                if let vc = UIStoryboard.detailViewController() {
-                    vc.imageURL = image
-                    self.presentViewController(vc, animated: true, completion: nil)
+            let (resultSet, err) = SD.executeQuery("SELECT * FROM ImageData")
+            if err != nil {
+            } else {
+                if let image = resultSet[indexPath.row]["Path"]?.asString() {
+                    print(image)
+                    if let vc = UIStoryboard.detailViewController() {
+                        vc.imageURL = image
+                        self.presentViewController(vc, animated: true, completion: nil)
+                    }
                 }
             }
         }
+    }
+    
+    func deleteImage(index: Int) {
         //Delete image
-//        let (resultSet, err) = SD.executeQuery("SELECT * FROM ImageData")
-//        if err != nil {
-//        } else {
-//            if let name = resultSet[indexPath.row]["Path"]!.asString() {
-//                print(name)
-//                SD.executeQuery("DELETE FROM ImageData WHERE Path='\(name)'")
-//            }
-//        }
-//        self.RepareData()
-//        self.collectionView.reloadData()
+        let (resultSet, err) = SD.executeQuery("SELECT * FROM ImageData")
+        if err != nil {
+        } else {
+            if let name = resultSet[index]["Path"]!.asString() {
+                SD.executeQuery("DELETE FROM ImageData WHERE Path='\(name)'")
+            }
+        }
+        self.RepareData()
+        self.collectionView.reloadData()
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {

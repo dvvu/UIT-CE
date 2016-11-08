@@ -12,7 +12,8 @@ import SlideMenuControllerSwift
 
 class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINavigationControllerDelegate
     static let identifier = String(ViewController)
-    @IBOutlet weak var randomImage: UIImageView!
+   
+    @IBOutlet weak var conectStatus: UIButton!
     @IBOutlet var view1: UIView!
     @IBOutlet weak var view2: UIView!
     @IBOutlet weak var viewMain: UIView!
@@ -30,9 +31,11 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     var left: LeftMenuViewController?
     var indicator:ProgressIndicator?
     var Image = [UIImage]()
+    var imagesDirectoryPath:String!
     
     override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)        
+        super.viewDidAppear(animated)
+       
         //SD.deleteTable("SampleImageTable")
         //SD.deleteTable("Setting")
         //SD.deleteTable("ImageData")
@@ -41,10 +44,13 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view2.clipsToBounds = true
-        self.viewMain.clipsToBounds = true
-        self.view2.addGradientWithColor(UIColor.grayColor())
-        self.viewMain.addGradientWithColor(UIColor.darkGrayColor())
+        conditionSQLite()
+        self.view1.clipsToBounds = true
+        self.view1.addGradientWithColor(UIColor.whiteColor())
+        self.view2.backgroundColor = Colors.primaryBlue()
+//        self.viewMain.clipsToBounds = true
+//        self.view2.addGradientWithColor(UIColor.whiteColor())
+//        self.viewMain.addGradientWithColor(Colors.primaryBlue())
         collectionView!.registerNib(UINib(nibName: "ImportPhotoCell", bundle: nil), forCellWithReuseIdentifier: "ImportPhotoCell")
         layoutCollectiobView()
         
@@ -81,18 +87,44 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     }
     
     func loaddingData() {
+        Image.removeAll()
         Image = []
-        let (resultSet, err) = SD.executeQuery("SELECT * FROM SampleImageTable")
+        let (resultSet, err) = SD.executeQuery("SELECT * FROM ImageData")
         if err != nil {
-            //there was an error with the query, handle it here
+            
         } else {
             for row in resultSet {
-                if let image = row["Image"]?.asUIImage() {
-                    Image += [image]
+                if let image = row["Path"]?.asString() {
+                    let data = NSFileManager.defaultManager().contentsAtPath(imagesDirectoryPath+image)
+                    
+                    let image1 = UIImage(data: data!)
+                    let image2 = DataProviding.resizeImage(image1!, newWidth: 192)
+                    Image.append(image2)
                 }
             }
         }
+
+        self.collectionView.reloadData()
         indicator!.stop()
+    }
+    
+    func conditionSQLite() {
+        /*Condition to have path*/
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        // Get the Document directory path
+        let documentDirectorPath:String = paths[0]
+        // Create a new path for the new images folder
+        imagesDirectoryPath = documentDirectorPath.stringByAppendingString("/ImagePicker")
+        var objcBool:ObjCBool = true
+        let isExist = NSFileManager.defaultManager().fileExistsAtPath(imagesDirectoryPath, isDirectory: &objcBool)
+        // If the folder with the given path doesn't exist already, create it
+        if isExist == false{
+            do{
+                try NSFileManager.defaultManager().createDirectoryAtPath(imagesDirectoryPath, withIntermediateDirectories: true, attributes: nil)
+            }catch{
+                print("Something went wrong while creating a new folder")
+            }
+        }
     }
     
     func createTable() {
@@ -103,19 +135,6 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
         } else {
             
         }
-        
-        /*Table image*/
-        if let err = SD.createTable("SampleImageTable", withColumnNamesAndTypes: ["Name": .StringVal, "Image": .UIImageVal]) {
-            print("Error: Do it again!")
-        } else {
-            let image = UIImage(named:"ic1")
-            if let imageID = SD.saveUIImage(image!) {
-                if let err = SD.executeChange("INSERT INTO SampleImageTable (Name, Image) VALUES (?, ?)", withArgs: ["ic1", imageID]) {
-                    //there was an error inserting the new row, handle it here
-                }
-            }
-        }
-        
         /*Table setting*/
         if let err = SD.createTable("Setting", withColumnNamesAndTypes: ["Van": .IntVal, "DRow": .IntVal, "DImage": .IntVal, "Value": .IntVal, "IP": .StringVal, "Port": .IntVal]) {
             print("Error: Do it again!")
@@ -167,7 +186,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
         self.openLeft()
     }
     
-    @IBAction func RamdomButton(sender: AnyObject) {
+    @IBAction func connectButton(sender: AnyObject) {
         
     }
     
@@ -200,7 +219,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        randomImage.image = Image[indexPath.row]
+
         return true
     }
     

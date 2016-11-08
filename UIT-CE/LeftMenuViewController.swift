@@ -28,10 +28,13 @@ class LeftMenuViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.topView.clipsToBounds = true
+//        self.topView.clipsToBounds = true
         self.view.clipsToBounds = true
-        self.topView.addGradientWithColor(UIColor.grayColor())
-        self.view.addGradientWithColor(UIColor.darkGrayColor())
+//        self.topView.addGradientWithColor(UIColor.grayColor())
+        self.view.addGradientWithColor(UIColor.whiteColor())
+        
+        self.topView.backgroundColor = Colors.primaryBlue()
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView!.registerNib(UINib(nibName: "LeftMenuCell", bundle: nil), forCellWithReuseIdentifier: "LeftMenuCell")

@@ -21,6 +21,7 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var allImage: UIImageView!
     @IBOutlet weak var characterView: UIView!
     @IBOutlet weak var allView: UIView!
+    @IBOutlet weak var connectStatus: UIButton!
     
     var imagesDirectoryPath:String!
     var isCharacter: Bool = false
@@ -30,8 +31,8 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
         conditionSQLite()
         self.topView.clipsToBounds = true
         self.view.clipsToBounds = true
-        self.topView.addGradientWithColor(UIColor.grayColor())
-        self.view.addGradientWithColor(UIColor.darkGrayColor())
+        self.topView.addGradientWithColor(Colors.primaryBlue())
+        self.view.addGradientWithColor(UIColor.whiteColor())
         self.textField.delegate = self
         self.textField.becomeFirstResponder()
         onTapView()
@@ -168,7 +169,6 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
         refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
             
             let image = UIImage.imageWithLabel(self.textFieldLabel)
-            
             var imagePath = NSDate().description
             imagePath = imagePath.stringByReplacingOccurrencesOfString(" ", withString: "")
             imagePath = self.imagesDirectoryPath.stringByAppendingString("/\(imagePath).png")
@@ -189,14 +189,27 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
         self.openLeft()
     }
     
-    @IBAction func sendButton(sender: AnyObject) {
-        let refreshAlert = UIAlertController(title: "Sending...", message: "Please, Connect and check with wifi?", preferredStyle: UIAlertControllerStyle.Alert)
+    @IBAction func detailButton(sender: AnyObject) {
+//        let image = UIImage.imageWithLabel(self.textFieldLabel)
+//        var imagePath = NSDate().description
+//        imagePath = imagePath.stringByReplacingOccurrencesOfString(" ", withString: "")
+//        imagePath = self.imagesDirectoryPath.stringByAppendingString("/\(imagePath).png")
+//        let data = UIImagePNGRepresentation(image)
+//        let success = NSFileManager.defaultManager().createFileAtPath(imagePath, contents: data, attributes: nil)
+//    
+//        do{
+//            let titles = try NSFileManager.defaultManager().contentsOfDirectoryAtPath(imagesDirectoryPath)
+//            if let vc = UIStoryboard.detailViewController() {
+//                vc.imageURL = String(titles[titles.count-1]).debugDescription
+//                self.presentViewController(vc, animated: true, completion: nil)
+//            }
+//        }catch{
+//            print("Error")
+//        }
         
-        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-        }))
-        
-        presentViewController(refreshAlert, animated: true, completion: nil)
-        
+    }
+
+    @IBAction func connectButton(sender: AnyObject) {
     }
 
 }

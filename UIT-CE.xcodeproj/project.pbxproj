@@ -37,6 +37,8 @@
 		F8BC42A41D8164B200F8CE68 /* UITDrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BC42A31D8164B200F8CE68 /* UITDrawViewController.swift */; };
 		F8C934A41DBCE3BF00E30555 /* ClockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C934A31DBCE3BF00E30555 /* ClockViewController.swift */; };
 		F8D727F71DB1E6C700CADD88 /* waterfall.gif in Resources */ = {isa = PBXBuildFile; fileRef = F8D727F61DB1E6C700CADD88 /* waterfall.gif */; };
+		F8E7A08C1DD1803C00DC3164 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E7A08B1DD1803C00DC3164 /* Colors.swift */; };
+		F8E7A08E1DD1815800DC3164 /* SwiftHEXColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E7A08D1DD1815800DC3164 /* SwiftHEXColors.swift */; };
 		F8E8ACE31D8EE72A0090F8E3 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E8ACE21D8EE72A0090F8E3 /* libsqlite3.0.tbd */; };
 		F8E8ACE91D8EEA030090F8E3 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E8ACE81D8EEA030090F8E3 /* libz.tbd */; };
 		F8E8ACEB1D8EED580090F8E3 /* SwiftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E8ACEA1D8EED580090F8E3 /* SwiftData.swift */; };
@@ -80,6 +82,8 @@
 		F8BC42A31D8164B200F8CE68 /* UITDrawViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITDrawViewController.swift; sourceTree = "<group>"; };
 		F8C934A31DBCE3BF00E30555 /* ClockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockViewController.swift; sourceTree = "<group>"; };
 		F8D727F61DB1E6C700CADD88 /* waterfall.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = waterfall.gif; sourceTree = "<group>"; };
+		F8E7A08B1DD1803C00DC3164 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		F8E7A08D1DD1815800DC3164 /* SwiftHEXColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftHEXColors.swift; sourceTree = "<group>"; };
 		F8E8ACE11D8EE65F0090F8E3 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		F8E8ACE21D8EE72A0090F8E3 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		F8E8ACE81D8EEA030090F8E3 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -136,6 +140,7 @@
 				F8B354471D9EB48B00518B51 /* PaddingLabel.swift */,
 				F8F8224E1D9F663900EC4098 /* extensionUIImage.swift */,
 				F89D8F171DBD1E53000369CF /* DataProviding.swift */,
+				F8E7A08B1DD1803C00DC3164 /* Colors.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -188,6 +193,7 @@
 			children = (
 				F894135F1D697AE900CE0216 /* ActionButton.swift */,
 				F89413601D697AE900CE0216 /* ActionButtonItem.swift */,
+				F8E7A08D1DD1815800DC3164 /* SwiftHEXColors.swift */,
 			);
 			name = FloatingButton;
 			sourceTree = "<group>";
@@ -413,6 +419,7 @@
 				F8B857431D5F9767007FBA45 /* ViewController.swift in Sources */,
 				F8170DCD1DBEFFD000501523 /* ProgressIndicator.swift in Sources */,
 				F89413611D697AE900CE0216 /* ActionButton.swift in Sources */,
+				F8E7A08C1DD1803C00DC3164 /* Colors.swift in Sources */,
 				F8B354431D9EA9BE00518B51 /* SettingViewController.swift in Sources */,
 				F89D8F181DBD1E53000369CF /* DataProviding.swift in Sources */,
 				F8741D051DB2958F00FA5471 /* DetailViewController.swift in Sources */,
@@ -427,6 +434,7 @@
 				F8C934A41DBCE3BF00E30555 /* ClockViewController.swift in Sources */,
 				F8BC42A41D8164B200F8CE68 /* UITDrawViewController.swift in Sources */,
 				F8999F361D8D007600971723 /* ImportPhotoCell.swift in Sources */,
+				F8E7A08E1DD1815800DC3164 /* SwiftHEXColors.swift in Sources */,
 				F8999F2E1D8CFCEE00971723 /* DisplayTextViewController.swift in Sources */,
 				F8B354411D9E9BF900518B51 /* KDRearrangeableCollectionViewFlowLayout.swift in Sources */,
 				F8A63DDA1D840FCA00339A13 /* LeftMenuViewController.swift in Sources */,
