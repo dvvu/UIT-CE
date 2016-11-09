@@ -11,10 +11,26 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "ImportPhotoViewController.collectionView(UICollectionView, numberOfItemsInSection : Int) -&gt; Int:ImportPhotoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "images?.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "LeftMenuViewController.collectionView(UICollectionView, shouldSelectItemAtIndexPath : NSIndexPath) -&gt; Bool:LeftMenuViewController.swift">
          <PersistentStrings>
             <PersistentString
                value = "delegate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DetailViewController.viewDidLoad() -&gt; ():DetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "imageURL">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -27,18 +43,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ImportPhotoViewController.collectionView(UICollectionView, numberOfItemsInSection : Int) -&gt; Int:ImportPhotoViewController.swift">
+         contextName = "ViewController.collectionView(UICollectionView, numberOfItemsInSection : Int) -&gt; Int:ViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "images?.count">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "DetailViewController.viewDidLoad() -&gt; ():DetailViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "imageURL">
+               value = "ListImage.count">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

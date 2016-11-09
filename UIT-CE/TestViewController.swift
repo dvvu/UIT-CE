@@ -16,6 +16,7 @@ class TestViewController: UIViewController {
     @IBOutlet weak var imageRes: UIImageView!
     @IBOutlet weak var slidervalue: UISlider!
     @IBOutlet weak var sendTextField: UITextField!
+    @IBOutlet weak var connectStatus: UIButton!
     
     var pixels = [PixelData]()
     let black = PixelData(a: 255, r: 0, g: 0, b: 0)
@@ -29,6 +30,9 @@ class TestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loaddingSetting()
+        self.view.addGradientWithColor(UIColor.whiteColor())
+        indicator = ProgressIndicator(inview:self.view,loadingViewColor: UIColor.grayColor(), indicatorColor: UIColor.blackColor(), msg: "Loading..")
+        self.view.addSubview(indicator!)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(TestViewController.viewTapped(_:)))
         self.view.addGestureRecognizer(tapGesture)
     }
@@ -39,14 +43,27 @@ class TestViewController: UIViewController {
     }
     
     @IBAction func connectButton(sender: AnyObject) {
+        indicator!.start()
+        
         socket = SocketIOClient(socketURL: NSURL(string: url!)!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
         socket!.on("connect") {data, ack in
             print("socket connected")
         }
         socket!.connect()
-        socket!.on("server", callback: {
+        
+        socket!.on("message", callback: {
             data, ack in
-            print(data)
+            if let msg:String = (data[0] as! String) {
+                 print("data ne: \(msg)")
+            }
+        })
+        
+        socket?.onAny({ (event) in
+            if event.event == "New_Client" {
+                print("string of event: \(event.event)")
+            }
+            
+            self.indicator!.stop()
         })
     }
     

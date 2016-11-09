@@ -84,7 +84,7 @@ class ImportPhotoViewController: UIViewController {
         var objcBool:ObjCBool = true
         let isExist = NSFileManager.defaultManager().fileExistsAtPath(imagesDirectoryPath, isDirectory: &objcBool)
         // If the folder with the given path doesn't exist already, create it
-        if isExist == false{
+        if isExist == false {
             do{
                 try NSFileManager.defaultManager().createDirectoryAtPath(imagesDirectoryPath, withIntermediateDirectories: true, attributes: nil)
             }catch{
@@ -169,6 +169,7 @@ extension ImportPhotoViewController: UICollectionViewDelegate, UICollectionViewD
                 self.deleteImage(indexPath.row)
                 self.isDelete = false
                 self.collectionView.backgroundColor = UIColor.whiteColor()
+               
             }))
             
             refreshAlert.addAction(UIAlertAction(title: "No", style: .Default, handler: { (action: UIAlertAction!) in
@@ -197,6 +198,14 @@ extension ImportPhotoViewController: UICollectionViewDelegate, UICollectionViewD
         } else {
             if let name = resultSet[index]["Path"]!.asString() {
                 SD.executeQuery("DELETE FROM ImageData WHERE Path='\(name)'")
+                do {
+                    print(name)
+                    try NSFileManager.defaultManager().removeItemAtPath(imagesDirectoryPath + name)
+                    print("old image has been removed")
+                } catch {
+                    print("an error during a removing")
+                }
+                
             }
         }
         self.RepareData()
@@ -215,7 +224,6 @@ extension ImportPhotoViewController: UICollectionViewDelegate, UICollectionViewD
         print(collectionView.contentOffset.y)
         print((self.view.frame.size.width-1)*2*CGFloat(pageNumber))
     }
-
 }
 
 extension ImportPhotoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -242,5 +250,5 @@ extension ImportPhotoViewController: UIImagePickerControllerDelegate, UINavigati
             print("Error")
         }
     }
-    
 }
+

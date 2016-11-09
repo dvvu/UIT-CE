@@ -35,7 +35,6 @@ class DetailViewController: UIViewController {
         layOutTap()
         
         let data = NSFileManager.defaultManager().contentsAtPath(imagesDirectoryPath+imageURL!)
-        print(data)
          image1 = UIImage(data: data!)!
          image2 = DataProviding.resizeImage(image1, newWidth: CGFloat(vanNumber))
         let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(sliderValue.value))
@@ -135,9 +134,6 @@ class DetailViewController: UIViewController {
             
             attributedString.appendAttributedString(newString)
         }
-        
-    
-        
         
         let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(sliderValue.value))
         

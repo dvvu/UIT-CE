@@ -90,19 +90,24 @@ extension LeftMenuViewController: PageDelegate {
             if let vc = UIStoryboard.loadLeftMenuDraw() {
                 vc.title = pageName
                 vc.view.layoutIfNeeded()
-                vc.modalPresentationStyle = .FullScreen
+                vc.modalPresentationStyle = .PageSheet
+                vc.modalTransitionStyle = .CrossDissolve
                 self.presentViewController(vc, animated: true, completion: nil)
             }
             
         } else if pageName == "Home" {
             if let vc = UIStoryboard.slideMenuViewController() {
                 vc.title = pageName
+                vc.modalPresentationStyle = .PageSheet
+                vc.modalTransitionStyle = .CrossDissolve
                 vc.view.layoutIfNeeded()
                 self.presentViewController(vc, animated: true, completion: nil)
             }
         } else if pageName == "Setting" {
             if let vc = UIStoryboard.loadLeftMenuSetting() {
                 vc.title = pageName
+                vc.modalPresentationStyle = .PageSheet
+                vc.modalTransitionStyle = .CrossDissolve
                 vc.view.layoutIfNeeded()
                 self.presentViewController(vc, animated: true, completion: nil)
             }
@@ -111,6 +116,8 @@ extension LeftMenuViewController: PageDelegate {
         else if pageName == "Clock" {
             if let vc = UIStoryboard.loadLeftMenuClock() {
                 vc.title = pageName
+                vc.modalPresentationStyle = .PageSheet
+                vc.modalTransitionStyle = .CrossDissolve
                 vc.view.layoutIfNeeded()
                 self.presentViewController(vc, animated: true, completion: nil)
             }
@@ -119,6 +126,8 @@ extension LeftMenuViewController: PageDelegate {
         else if pageName == "Dislay Text" {
             if let vc = UIStoryboard.loadLeftMenuDisplayText() {
                 vc.title = pageName
+                vc.modalPresentationStyle = .PageSheet
+                vc.modalTransitionStyle = .CrossDissolve
                 vc.view.layoutIfNeeded()
                 self.presentViewController(vc, animated: true, completion: nil)
             }
@@ -127,6 +136,8 @@ extension LeftMenuViewController: PageDelegate {
         else if pageName == "Import Photo" {
             if let vc = UIStoryboard.loadLeftMenuImportPhoto() {
                 vc.title = pageName
+                vc.modalPresentationStyle = .PageSheet
+                vc.modalTransitionStyle = .CrossDissolve
                 vc.view.layoutIfNeeded()
                 self.presentViewController(vc, animated: true, completion: nil)
             }
@@ -135,6 +146,8 @@ extension LeftMenuViewController: PageDelegate {
         else if pageName == "Test" {
             if let vc = UIStoryboard.loadLeftMenuTest() {
                 vc.title = pageName
+                vc.modalPresentationStyle = .PageSheet
+                vc.modalTransitionStyle = .CrossDissolve
                 vc.view.layoutIfNeeded()
                 self.presentViewController(vc, animated: true, completion: nil)
             }
