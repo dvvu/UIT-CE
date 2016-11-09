@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SocketIO
 
 class SettingViewController: UIViewController {
     static let identifier = String(SettingViewController)
@@ -18,6 +19,12 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var textField3: UITextField!
     @IBOutlet weak var textField4: UITextField!
     @IBOutlet weak var textField5: UITextField!
+    
+    var textField: UITextField?
+    var pickerData = ["192","164","128", "96", "64", "32"]
+    var indicator:ProgressIndicator?
+    var url: String?
+    
     @IBAction func leftMenuButton(sender: AnyObject) {
         self.openLeft()
     }
@@ -74,15 +81,43 @@ class SettingViewController: UIViewController {
         textField5.text = "8080"
     }
     
-    var textField: UITextField?
-    var pickerData = ["192","164","128", "96", "64", "32"]
-    
+    @IBAction func connectButton(sender: AnyObject) {
+        indicator!.start()
+        
+        socket = SocketIOClient(socketURL: NSURL(string: url!)!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
+        socket!.on("connect") {data, ack in
+            print("socket connected")
+            isConnected = true
+        }
+        socket!.connect()
+        
+        socket!.on("message", callback: {
+            data, ack in
+            if let msg:String = (data[0] as! String) {
+                print("data ne: \(msg)")
+            }
+        })
+        
+        socket?.onAny({ (event) in
+            if event.event == "New_Client" {
+                print("string of event: \(event.event)")
+            }
+            
+            self.indicator!.stop()
+        })
+
+    }
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         self.topView.clipsToBounds = true
         self.view.clipsToBounds = true
         self.topView.addGradientWithColor(Colors.primaryBlue())
         self.view.addGradientWithColor(UIColor.whiteColor())
+        
+        loaddingSetting()
+        indicator = ProgressIndicator(inview:self.view,loadingViewColor: UIColor.grayColor(), indicatorColor: UIColor.blackColor(), msg: "Loading..")
+        self.view.addSubview(indicator!)
         
         picketView.dataSource = self
         picketView.delegate = self
@@ -112,6 +147,18 @@ class SettingViewController: UIViewController {
             textField5.text = resultSet[0]["Port"]?.asInt()?.description
         }
 
+    }
+    
+    func loaddingSetting() {
+        url = "http://"
+        let (resultSet, err) = SD.executeQuery("SELECT * FROM Setting")
+        if err != nil {
+            print(" Error in loading Data")
+        } else {
+            url =  url! + (resultSet[0]["IP"]?.asString())! + ":"
+            url = url! + (resultSet[0]["Port"]?.asInt()?.description)!
+        }
+        print(url)
     }
     
     func borderText(textField: UITextField) {

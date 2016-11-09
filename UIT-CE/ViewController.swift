@@ -8,7 +8,9 @@
 
 import UIKit
 import SlideMenuControllerSwift
-
+import SocketIO
+var socket: SocketIOClient?
+var isConnected: Bool = false
 
 class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINavigationControllerDelegate
     static let identifier = String(ViewController)
@@ -18,6 +20,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     @IBOutlet weak var view2: UIView!
     @IBOutlet weak var viewMain: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var listImageCollectionView: UICollectionView!
 
     @IBOutlet weak var vans: UILabel!
     @IBOutlet weak var port: UILabel!
@@ -25,40 +28,47 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     @IBOutlet weak var iDelay: UILabel!
     @IBOutlet weak var ip: UILabel!
     
-    
-//    var actionButton: ActionButton!
-//    var imagePicker = UIImagePickerController()
     var left: LeftMenuViewController?
     var indicator:ProgressIndicator?
     var Image = [UIImage]()
+    var ListImage = [UIImage]()
     var imagesDirectoryPath:String!
+    var pixels = [DataProviding.PixelData()]
+    let black = DataProviding.PixelData(a: 255, r: 0, g: 0, b: 0)
+    let white = DataProviding.PixelData(a: 255, r: 255, g: 255, b: 255)
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
        
         //SD.deleteTable("SampleImageTable")
         //SD.deleteTable("Setting")
-        //SD.deleteTable("ImageData")
+        
         createTable()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         conditionSQLite()
+        SD.deleteTable("ListImageData")
         self.view1.clipsToBounds = true
         self.view1.addGradientWithColor(UIColor.whiteColor())
         self.view2.backgroundColor = Colors.primaryBlue()
-//        self.viewMain.clipsToBounds = true
-//        self.view2.addGradientWithColor(UIColor.whiteColor())
-//        self.viewMain.addGradientWithColor(Colors.primaryBlue())
         collectionView!.registerNib(UINib(nibName: "ImportPhotoCell", bundle: nil), forCellWithReuseIdentifier: "ImportPhotoCell")
-        layoutCollectiobView()
+        listImageCollectionView!.registerNib(UINib(nibName: "ImportPhotoCell", bundle: nil), forCellWithReuseIdentifier: "ImportPhotoCell")
+        layoutCollectiobView(self.collectionView)
+        layoutCollectiobView(self.listImageCollectionView)
         
         indicator = ProgressIndicator(inview:self.view,loadingViewColor: UIColor.grayColor(), indicatorColor: UIColor.blackColor(), msg: "Loading..")
         self.view.addSubview(indicator!)
         indicator!.start()
-        loaddingData()
+        loaddingDataBase()
+        loaddingListImageData()
         loaddingSetting()
+        if isConnected == true {
+            conectStatus.setImage(UIImage(named: "on"), forState: .Normal)
+            socket?.emit("message", "Home Page")
+        }
+        
     }
     
     func loaddingSetting() {
@@ -76,17 +86,17 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
         }
     }
     
-    func layoutCollectiobView() {
+    func layoutCollectiobView(collectionView: UICollectionView) {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         flowLayout.itemSize = CGSize(width: (self.view.frame.size.width-1)/2, height: (self.view.frame.size.width-1)/2)
         flowLayout.minimumInteritemSpacing = 1
         flowLayout.minimumLineSpacing = 1
         flowLayout.scrollDirection = .Horizontal
-        collectionView!.setCollectionViewLayout(flowLayout, animated: true)
+        collectionView.setCollectionViewLayout(flowLayout, animated: true)
     }
     
-    func loaddingData() {
+    func loaddingDataBase() {
         Image.removeAll()
         Image = []
         let (resultSet, err) = SD.executeQuery("SELECT * FROM ImageData")
@@ -105,6 +115,39 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
         }
 
         self.collectionView.reloadData()
+        indicator!.stop()
+    }
+    
+    func loaddingListImageData() {
+        ListImage.removeAll()
+        ListImage = []
+        let (resultSet, err) = SD.executeQuery("SELECT * FROM ListImageData")
+        if err != nil {
+            
+        } else {
+            for row in resultSet {
+                if let image = row["Path"]?.asString() {
+                    let data = NSFileManager.defaultManager().contentsAtPath(imagesDirectoryPath+image)
+                    
+                    let image1 = UIImage(data: data!)
+                    let image2 = DataProviding.resizeImage(image1!, newWidth: 192)
+                    let result = DataProviding.intensityValuesFromImage(image2)
+                    pixels = []
+                    for i in 0..<Int((result.pixelValues?.count)!) {
+                        if result.pixelValues![i] == 1 {
+                            pixels.append(white)
+                        } else {
+                            pixels.append(black)
+                        }
+                    }
+                    
+                    let image3 = DataProviding.imageFromARGB32Bitmap(pixels, width: 192, height: result.height)
+                    ListImage.append(image3)
+                }
+            }
+        }
+        
+        self.listImageCollectionView.reloadData()
         indicator!.stop()
     }
     
@@ -128,12 +171,9 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     }
     
     func createTable() {
-        
         /*Table image*/
         if let err = SD.createTable("ImageData", withColumnNamesAndTypes: ["Path": .StringVal]) {
             print("Error: Do it again!")
-        } else {
-            
         }
         /*Table setting*/
         if let err = SD.createTable("Setting", withColumnNamesAndTypes: ["Van": .IntVal, "DRow": .IntVal, "DImage": .IntVal, "Value": .IntVal, "IP": .StringVal, "Port": .IntVal]) {
@@ -142,38 +182,11 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
             if let err = SD.executeChange("INSERT INTO Setting (Van, DRow, DImage, Value, IP, Port) VALUES (?, ?, ?, ?, ?, ?)", withArgs: [168,500,1000,127,"192.168.1.1",90]) {
             }
         }
+        
+        if let err = SD.createTable("ListImageData", withColumnNamesAndTypes: ["Path": .StringVal]) {
+            print("Error: Do it again!")
+        }
     }
-//    func floatingMenu() {
-//        /*add brower for SQLite*/
-//        let twitterImage = UIImage(named: "clock_ic")!
-//        let twitter = ActionButtonItem(title: "Brower", image: twitterImage)
-//        twitter.action = { item in print("Path into forder")
-//            
-//            self.imagePicker.allowsEditing = false
-//            self.imagePicker.sourceType = .SavedPhotosAlbum
-//            self.presentViewController(self.imagePicker, animated: true, completion: nil)
-//            self.imagePicker.delegate = self
-//        }
-//        
-//        /*add show picture*/
-//        let plusImage1 = UIImage(named: "clock_ic")!
-//        let drawNew = ActionButtonItem(title: "Draw picture", image: plusImage1)
-//        drawNew.action = { item in
-//            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//            let vc: UIViewController = storyboard.instantiateViewControllerWithIdentifier("UITDrawViewController") as! UITDrawViewController
-//            self.presentViewController(vc, animated: true, completion: nil)
-//        }
-//        
-//        actionButton = ActionButton(attachedToView: self.view, items: [twitter,drawNew])
-//        actionButton.action = { button in button.toggleMenu() }
-//        actionButton.setTitle("+", forState: .Normal)
-//        actionButton.backgroundColor = UIColor(red: 238.0/255.0, green: 130.0/255.0, blue: 34.0/255.0, alpha:1.0)
-//    }
-//    
-//    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!) {
-//        let selectedImage : UIImage = image
-//        print(selectedImage)
-//    }
     
     static func loadLeftMenu() -> SlideMenuController {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -188,6 +201,13 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     
     @IBAction func connectButton(sender: AnyObject) {
         
+    }
+    @IBAction func gotoSetting(sender: AnyObject) {
+        if let vc = UIStoryboard.loadLeftMenuSetting() {
+            vc.view.layoutIfNeeded()
+            self.presentViewController(vc, animated: true, completion: nil)
+        }
+
     }
     
     @IBAction func sendButton(sender: AnyObject) {
@@ -207,19 +227,37 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Image.count
+        if collectionView == listImageCollectionView {
+            return ListImage.count
+        } else {
+            return Image.count
+        }
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ImportPhotoCell = collectionView.dequeueReusableCellWithReuseIdentifier("ImportPhotoCell", forIndexPath: indexPath) as! ImportPhotoCell
-        cell.image.image = Image[indexPath.row]
-        cell.frame.size = CGSize(width: self.collectionView.frame.size.width, height: self.collectionView.frame.size.height)
-        
+        if collectionView == listImageCollectionView {
+            cell.image.image = ListImage[indexPath.row]
+            cell.frame.size = CGSize(width: self.collectionView.frame.size.width, height: self.collectionView.frame.size.height)
+        } else {
+            cell.image.image = Image[indexPath.row]
+            cell.frame.size = CGSize(width: self.collectionView.frame.size.width, height: self.collectionView.frame.size.height)
+        }
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-
+        if self.collectionView == collectionView {
+            do{
+                let titles = try NSFileManager.defaultManager().contentsOfDirectoryAtPath(imagesDirectoryPath)
+                if let err = SD.executeChange("INSERT INTO ListImageData (Path) VALUES (?)", withArgs: ["/\(titles[indexPath.row])"]){
+                    //there was an error inserting the new row, handle it here
+                }
+            }catch{
+                print("Error")
+            }
+            loaddingListImageData()
+        }
         return true
     }
     

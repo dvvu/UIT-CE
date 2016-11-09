@@ -36,6 +36,10 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
         self.textField.delegate = self
         self.textField.becomeFirstResponder()
         onTapView()
+        if isConnected == true {
+            connectStatus.setImage(UIImage(named: "on"), forState: .Normal)
+            socket?.emit("message", "Display Text")
+        }
     }
     
     func onTapView() {        

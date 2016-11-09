@@ -42,3 +42,4 @@ extension String {
         return  String(self.characters.prefix(ind)) + string + String(self.characters.suffix(self.characters.count-ind))
     }
 }
+
