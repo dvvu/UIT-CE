@@ -72,6 +72,10 @@ class ImportPhotoViewController: UIViewController {
                 self.indicator!.stop()
             })
         })
+        if isConnected == true {
+            connectStatus.setImage(UIImage(named: "on"), forState: .Normal)
+            socket?.emit("message", "Importphoto")
+        }
     }
     
     func conditionSQLite() {

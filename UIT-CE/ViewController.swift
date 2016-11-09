@@ -10,6 +10,7 @@ import UIKit
 import SlideMenuControllerSwift
 import SocketIO
 var socket: SocketIOClient?
+var isConnected: Bool = false
 
 class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINavigationControllerDelegate
     static let identifier = String(ViewController)
@@ -63,6 +64,11 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
         loaddingDataBase()
         loaddingListImageData()
         loaddingSetting()
+        if isConnected == true {
+            conectStatus.setImage(UIImage(named: "on"), forState: .Normal)
+            socket?.emit("message", "Home Page")
+        }
+        
     }
     
     func loaddingSetting() {

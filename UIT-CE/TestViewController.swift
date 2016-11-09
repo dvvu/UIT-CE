@@ -17,6 +17,7 @@ class TestViewController: UIViewController {
     @IBOutlet weak var slidervalue: UISlider!
     @IBOutlet weak var sendTextField: UITextField!
     @IBOutlet weak var connectStatus: UIButton!
+    @IBOutlet weak var textChatLabel: UILabel!
     
     var pixels = [PixelData]()
     let black = PixelData(a: 255, r: 0, g: 0, b: 0)
@@ -26,6 +27,7 @@ class TestViewController: UIViewController {
     var textField: UITextField?
     var newString: String?
     var url: String?
+    var textChat: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +57,8 @@ class TestViewController: UIViewController {
             data, ack in
             if let msg:String = (data[0] as! String) {
                  print("data ne: \(msg)")
+                self.textChat += ("Server:  \(msg)")
+                self.textChatLabel.text = self.textChat
             }
         })
         
@@ -103,6 +107,8 @@ class TestViewController: UIViewController {
         //        let socket = SocketIOClient(socketURL: url, config: ["log": true, "forcePolling": true])
         if let data = sendTextField.text {
             socket!.emit("message", data)
+            textChat += ("Client:  \(data) \n")
+            textChatLabel.text = textChat
         }
 
     }

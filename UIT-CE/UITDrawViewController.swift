@@ -34,6 +34,10 @@ class UITDrawViewController: UIViewController
         super.viewDidLoad()
         self.topView.backgroundColor = Colors.primaryBlue()
         self.initialize()
+        if isConnected == true {
+            connectStatus.setImage(UIImage(named: "on"), forState: .Normal)
+            socket?.emit("message", "Draw Image Page")
+        }
     }
     
     @IBAction func leftMenuButton(sender: AnyObject) {
