@@ -11,6 +11,31 @@ import UIKit
 
 class DataProviding {
     
+    static func statusConnection(connectStatus : UIButton) -> Bool {
+        if socket?.status != nil {
+            switch socket!.status {
+            case .Connected:
+                connectStatus.setImage(UIImage(named: "on"), forState: .Normal)
+                print("status: connected")
+                return true
+            case .Connecting:
+                print("status: connecting")
+                return false
+            case .Disconnected:
+                connectStatus.setImage(UIImage(named: "off"), forState: .Normal)
+                print("status: disconnected")
+                return false
+            case .NotConnected:
+                connectStatus.setImage(UIImage(named: "off"), forState: .Normal)
+                print("status: notconnected")
+                return false
+            }
+        } else {
+            connectStatus.setImage(UIImage(named: "off"), forState: .Normal)
+            return false
+        }
+    }
+    
     static func createAttributedString(fullString: String, fullStringColor: UIColor, subString: String, subStringColor: UIColor) -> NSMutableAttributedString
     {
         let range = (fullString as NSString).rangeOfString(subString)

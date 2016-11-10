@@ -18,10 +18,16 @@ class ClockViewController: UIViewController {
     @IBOutlet weak var labelStatus: UILabel!
     @IBOutlet weak var digitalLabel: UIView!
     @IBOutlet weak var choiceStatus: UISwitch!
+    @IBOutlet weak var connectStatus: UIButton!
     
     var pixels = [DataProviding.PixelData()]
     let black = DataProviding.PixelData(a: 255, r: 0, g: 0, b: 0)
     let white = DataProviding.PixelData(a: 255, r: 255, g: 255, b: 255)
+    var rHours: String = ""
+    var rMinutes: String = ""
+    var rSeconds: String = ""
+    var myTimer: NSTimer = NSTimer()
+    var isStart: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +39,7 @@ class ClockViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.myClock.delegate = self
         self.myClock.startRealTime()
+        DataProviding.statusConnection(connectStatus)
     }
     
     @IBAction func choiceButton(sender: AnyObject) {
@@ -44,32 +51,69 @@ class ClockViewController: UIViewController {
     }
     
     @IBAction func captureButton(sender: AnyObject) {
-        pixels = []
-        var image1 = UIImage()
-        
-        if choiceStatus.on {
-            image1 = DataProviding.takeSnapshotOfView(myClock)
+        if isStart == true {
+            StartTimer()
+            isStart = false
         } else {
-            image1 = DataProviding.takeSnapshotOfView(digitalLabel)
+            StopTimer()
+            isStart = true
         }
-        let image2 = DataProviding.resizeImage(image1,newWidth: 192)
-        let result = DataProviding.intensityValuesFromImage(image2)
-        for i in 0..<Int((result.pixelValues?.count)!) {
-            if result.pixelValues![i] == 1 {
-                pixels.append(white)
-            } else {
-                pixels.append(black)
-            }
-        }
-        image.image = DataProviding.imageFromARGB32Bitmap(pixels, width: 192, height: result.height)
     }
+    
+    func StartTimer() {
+        myTimer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(ClockViewController.updateTimer), userInfo: nil, repeats: true)
+    }
+    
+    func StopTimer() {
+        myTimer.invalidate()
+    }
+    
+    func updateTimer() {
+    
+        if self.isViewLoaded() && (self.view.window != nil) {
+            // viewController is visible
+            pixels = []
+            var image1 = UIImage()
+            
+            if choiceStatus.on {
+                image1 = DataProviding.takeSnapshotOfView(myClock)
+            } else {
+                image1 = DataProviding.takeSnapshotOfView(digitalLabel)
+            }
+            let image2 = DataProviding.resizeImage(image1,newWidth: 192)
+            let result = DataProviding.intensityValuesFromImage(image2)
+            for i in 0..<Int((result.pixelValues?.count)!) {
+                if result.pixelValues![i] == 1 {
+                    pixels.append(white)
+                } else {
+                    pixels.append(black)
+                }
+            }
+            image.image = DataProviding.imageFromARGB32Bitmap(pixels, width: 192, height: result.height)
+        }
+    }
+       
 }
 
 extension ClockViewController: BEMAnalogClockDelegate {
     @objc(currentTimeOnClock:Hours:Minutes:Seconds:)
     func currentTimeOnClock(clock: BEMAnalogClockView!, hours: String!, minutes: String!, seconds: String!) {
-        
-        self.timeLabel.text = "Time: "+hours+":"+minutes+":"+seconds
+        if Int(hours) < 9 {
+            rHours = "0" + hours
+        } else {
+            rHours = hours
+        }
+        if Int(minutes) < 9 {
+            rMinutes = "0" + minutes
+        } else {
+            rMinutes = minutes
+        }
+        if Int(seconds) < 9 {
+            rSeconds = "0" + seconds
+        } else {
+            rSeconds = seconds
+        }
+        self.timeLabel.text = "Time: "+rHours+":"+rMinutes+":"+rSeconds
     }
 }
 

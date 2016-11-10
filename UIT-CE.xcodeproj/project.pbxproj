@@ -9,9 +9,8 @@
 /* Begin PBXBuildFile section */
 		F3F356C6399915A917F6B72D /* Pods_UIT_CE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E7EE763172DAC9C2E576CC5 /* Pods_UIT_CE.framework */; };
 		F8170DCD1DBEFFD000501523 /* ProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8170DCC1DBEFFD000501523 /* ProgressIndicator.swift */; };
-		F8217D9D1DC8A2BF00A3C4AC /* trang.png in Resources */ = {isa = PBXBuildFile; fileRef = F8217D9C1DC8A2BF00A3C4AC /* trang.png */; };
+		F84460871DD3175D004D8628 /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84460861DD3175D004D8628 /* HRToast+UIView.swift */; };
 		F85DF47D1D93CD7B00C596F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F85DF47C1D93CD7B00C596F7 /* Main.storyboard */; };
-		F85DF47F1D93D19600C596F7 /* text.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F85DF47E1D93D19600C596F7 /* text.jpg */; };
 		F8721F511D9968DF00BD3A84 /* KDRearrangeableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8721F501D9968DF00BD3A84 /* KDRearrangeableCollectionViewCell.swift */; };
 		F8721F551D996AAB00BD3A84 /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8721F541D996AAB00BD3A84 /* AlbumCollectionViewCell.swift */; };
 		F8741D051DB2958F00FA5471 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8741D041DB2958F00FA5471 /* DetailViewController.swift */; };
@@ -52,9 +51,8 @@
 		56517864B1F7D23DBE5A6E01 /* Pods-UIT-CE.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIT-CE.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UIT-CE/Pods-UIT-CE.debug.xcconfig"; sourceTree = "<group>"; };
 		7E7EE763172DAC9C2E576CC5 /* Pods_UIT_CE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UIT_CE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8170DCC1DBEFFD000501523 /* ProgressIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressIndicator.swift; sourceTree = "<group>"; };
-		F8217D9C1DC8A2BF00A3C4AC /* trang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trang.png; sourceTree = "<group>"; };
+		F84460861DD3175D004D8628 /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HRToast+UIView.swift"; sourceTree = "<group>"; };
 		F85DF47C1D93CD7B00C596F7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		F85DF47E1D93D19600C596F7 /* text.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = text.jpg; sourceTree = "<group>"; };
 		F8721F501D9968DF00BD3A84 /* KDRearrangeableCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDRearrangeableCollectionViewCell.swift; sourceTree = "<group>"; };
 		F8721F541D996AAB00BD3A84 /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		F8741D041DB2958F00FA5471 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +127,7 @@
 		F8217D961DC8993500A3C4AC /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				F84460861DD3175D004D8628 /* HRToast+UIView.swift */,
 				F89413651D697CFF00CE0216 /* FloatingButton */,
 				F8170DCC1DBEFFD000501523 /* ProgressIndicator.swift */,
 				F8721F501D9968DF00BD3A84 /* KDRearrangeableCollectionViewCell.swift */,
@@ -167,12 +166,10 @@
 		F873B3201D698C1C007F4D7D /* launchScreen */ = {
 			isa = PBXGroup;
 			children = (
-				F8217D9C1DC8A2BF00A3C4AC /* trang.png */,
 				F8D727F61DB1E6C700CADD88 /* waterfall.gif */,
 				F8999F2A1D8CF83000971723 /* UIStoryboardExtensions.swift */,
 				F8FD50701D8AAFF700898FF5 /* AppDelegate.swift */,
 				F89238311DC997950095CB57 /* text2.jpg */,
-				F85DF47E1D93D19600C596F7 /* text.jpg */,
 				F8B857471D5F9767007FBA45 /* Assets.xcassets */,
 				F8B857491D5F9767007FBA45 /* LaunchScreen.storyboard */,
 				F8B8574C1D5F9767007FBA45 /* Info.plist */,
@@ -346,13 +343,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8217D9D1DC8A2BF00A3C4AC /* trang.png in Resources */,
 				F8B8574B1D5F9767007FBA45 /* LaunchScreen.storyboard in Resources */,
 				F85DF47D1D93CD7B00C596F7 /* Main.storyboard in Resources */,
 				F8B857481D5F9767007FBA45 /* Assets.xcassets in Resources */,
 				F8A63DDE1D84510000339A13 /* LeftMenuCell.xib in Resources */,
 				F8D727F71DB1E6C700CADD88 /* waterfall.gif in Resources */,
-				F85DF47F1D93D19600C596F7 /* text.jpg in Resources */,
 				F8999F371D8D007600971723 /* ImportPhotoCell.xib in Resources */,
 				F89238321DC997950095CB57 /* text2.jpg in Resources */,
 			);
@@ -436,6 +431,7 @@
 				F8999F361D8D007600971723 /* ImportPhotoCell.swift in Sources */,
 				F8E7A08E1DD1815800DC3164 /* SwiftHEXColors.swift in Sources */,
 				F8999F2E1D8CFCEE00971723 /* DisplayTextViewController.swift in Sources */,
+				F84460871DD3175D004D8628 /* HRToast+UIView.swift in Sources */,
 				F8B354411D9E9BF900518B51 /* KDRearrangeableCollectionViewFlowLayout.swift in Sources */,
 				F8A63DDA1D840FCA00339A13 /* LeftMenuViewController.swift in Sources */,
 				F8F8224F1D9F663900EC4098 /* extensionUIImage.swift in Sources */,

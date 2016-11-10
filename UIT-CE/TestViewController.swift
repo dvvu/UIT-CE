@@ -18,11 +18,11 @@ class TestViewController: UIViewController {
     @IBOutlet weak var sendTextField: UITextField!
     @IBOutlet weak var connectStatus: UIButton!
     @IBOutlet weak var textChatLabel: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var pixels = [PixelData]()
     let black = PixelData(a: 255, r: 0, g: 0, b: 0)
     let white = PixelData(a: 255, r: 255, g: 255, b: 255)
-    var socket: SocketIOClient?
     var indicator:ProgressIndicator?
     var textField: UITextField?
     var newString: String?
@@ -31,12 +31,36 @@ class TestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        scrollView.contentSize.width = 100
         loaddingSetting()
         self.view.addGradientWithColor(UIColor.whiteColor())
         indicator = ProgressIndicator(inview:self.view,loadingViewColor: UIColor.grayColor(), indicatorColor: UIColor.blackColor(), msg: "Loading..")
         self.view.addSubview(indicator!)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(TestViewController.viewTapped(_:)))
         self.view.addGestureRecognizer(tapGesture)
+        
+        if DataProviding.statusConnection(connectStatus) == true {
+            socket!.on("message", callback: {
+                data, ack in
+                if let msg:String = (data[0] as! String) {
+                    print("data ne: \(msg)")
+                    self.textChat += ("Server:  \(msg)")
+                    self.textChatLabel.text = self.textChat
+                }
+            })
+
+        }
+//        if isConnected == true {
+//            connectStatus.setImage(UIImage(named: "on"), forState: .Normal)
+//            socket!.on("message", callback: {
+//                data, ack in
+//                if let msg:String = (data[0] as! String) {
+//                    print("data ne: \(msg)")
+//                    self.textChat += ("Server:  \(msg)")
+//                    self.textChatLabel.text = self.textChat
+//                }
+//            })
+//        }
     }
     
     /*Button Action*/
@@ -45,30 +69,23 @@ class TestViewController: UIViewController {
     }
     
     @IBAction func connectButton(sender: AnyObject) {
-        indicator!.start()
-        
-        socket = SocketIOClient(socketURL: NSURL(string: url!)!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
-        socket!.on("connect") {data, ack in
-            print("socket connected")
-        }
-        socket!.connect()
-        
-        socket!.on("message", callback: {
-            data, ack in
-            if let msg:String = (data[0] as! String) {
-                 print("data ne: \(msg)")
-                self.textChat += ("Server:  \(msg)")
-                self.textChatLabel.text = self.textChat
-            }
-        })
-        
-        socket?.onAny({ (event) in
-            if event.event == "New_Client" {
-                print("string of event: \(event.event)")
-            }
-            
-            self.indicator!.stop()
-        })
+//        indicator!.start()
+//        
+//        socket = SocketIOClient(socketURL: NSURL(string: url!)!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
+//        socket!.on("connect") {data, ack in
+//            print("socket connected")
+//            //self.view.makeToast(message: "Connect success!")
+//            self.view.makeToast(message: "Congatulate, connect success!", duration: 0.5, position: HRToastPositionCenter)
+//        }
+//        socket!.connect()
+//        
+//        socket?.onAny({ (event) in
+//            if event.event == "New_Client" {
+//                print("string of event: \(event.event)")
+//                self.indicator!.stop()
+//            }
+//
+//        })
     }
     
     @IBAction func sliderAction(sender: AnyObject) {
@@ -156,13 +173,6 @@ class TestViewController: UIViewController {
                 pixelValues![i] = 1
             }
         }
-        
-        //        let aString: String = (pixelValues?.description)!
-        //        let newString = aString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        //        let string2 = newString.stringByReplacingOccurrencesOfString("0", withString: "∙", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        //        let string3 = string2.stringByReplacingOccurrencesOfString("1", withString: "💧", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        //        print(string3)
-        //        print(pixelValues?.count)
         return (pixelValues, width, height)
     }
     

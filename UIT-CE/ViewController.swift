@@ -10,7 +10,6 @@ import UIKit
 import SlideMenuControllerSwift
 import SocketIO
 var socket: SocketIOClient?
-var isConnected: Bool = false
 
 class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINavigationControllerDelegate
     static let identifier = String(ViewController)
@@ -39,10 +38,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-       
         //SD.deleteTable("SampleImageTable")
-        //SD.deleteTable("Setting")
-        
         createTable()
     }
     
@@ -64,11 +60,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
         loaddingDataBase()
         loaddingListImageData()
         loaddingSetting()
-        if isConnected == true {
-            conectStatus.setImage(UIImage(named: "on"), forState: .Normal)
-            socket?.emit("message", "Home Page")
-        }
-        
+        DataProviding.statusConnection(conectStatus)
     }
     
     func loaddingSetting() {
@@ -172,18 +164,18 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     
     func createTable() {
         /*Table image*/
-        if let err = SD.createTable("ImageData", withColumnNamesAndTypes: ["Path": .StringVal]) {
+        if let _ = SD.createTable("ImageData", withColumnNamesAndTypes: ["Path": .StringVal]) {
             print("Error: Do it again!")
         }
         /*Table setting*/
-        if let err = SD.createTable("Setting", withColumnNamesAndTypes: ["Van": .IntVal, "DRow": .IntVal, "DImage": .IntVal, "Value": .IntVal, "IP": .StringVal, "Port": .IntVal]) {
+        if let _ = SD.createTable("Setting", withColumnNamesAndTypes: ["Van": .IntVal, "DRow": .IntVal, "DImage": .IntVal, "Value": .IntVal, "IP": .StringVal, "Port": .IntVal]) {
             print("Error: Do it again!")
         } else {
-            if let err = SD.executeChange("INSERT INTO Setting (Van, DRow, DImage, Value, IP, Port) VALUES (?, ?, ?, ?, ?, ?)", withArgs: [168,500,1000,127,"192.168.1.1",90]) {
+            if let _ = SD.executeChange("INSERT INTO Setting (Van, DRow, DImage, Value, IP, Port) VALUES (?, ?, ?, ?, ?, ?)", withArgs: [168,500,1000,127,"192.168.1.1",90]) {
             }
         }
         
-        if let err = SD.createTable("ListImageData", withColumnNamesAndTypes: ["Path": .StringVal]) {
+        if let _ = SD.createTable("ListImageData", withColumnNamesAndTypes: ["Path": .StringVal]) {
             print("Error: Do it again!")
         }
     }
@@ -250,7 +242,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
         if self.collectionView == collectionView {
             do{
                 let titles = try NSFileManager.defaultManager().contentsOfDirectoryAtPath(imagesDirectoryPath)
-                if let err = SD.executeChange("INSERT INTO ListImageData (Path) VALUES (?)", withArgs: ["/\(titles[indexPath.row])"]){
+                if let _ = SD.executeChange("INSERT INTO ListImageData (Path) VALUES (?)", withArgs: ["/\(titles[indexPath.row])"]){
                     //there was an error inserting the new row, handle it here
                 }
             }catch{
