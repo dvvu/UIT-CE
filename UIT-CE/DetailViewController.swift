@@ -16,6 +16,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var imageLabel: UILabel!
     @IBOutlet weak var demoString: UIButton!
     @IBOutlet weak var sliderValue: UISlider!
+    @IBOutlet weak var connectStatus: UIButton!
     var vanNumber: Int = 192
     
     var pixels = [DataProviding.PixelData()]
@@ -40,6 +41,7 @@ class DetailViewController: UIViewController {
         let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(sliderValue.value))
         print(result.pixelValues?.count)
         loadString()
+        DataProviding.statusConnection(connectStatus)
     }
     
     /* Button action*/

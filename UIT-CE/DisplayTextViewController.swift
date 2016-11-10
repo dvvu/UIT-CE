@@ -36,12 +36,9 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
         self.textField.delegate = self
         self.textField.becomeFirstResponder()
         onTapView()
-        if isConnected == true {
-            connectStatus.setImage(UIImage(named: "on"), forState: .Normal)
-            socket?.emit("message", "Display Text")
-        }
+        DataProviding.statusConnection(connectStatus)
     }
-    
+
     func onTapView() {        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(SettingViewController.viewTapped(_:)))
         self.view.addGestureRecognizer(tapGesture)

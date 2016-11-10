@@ -166,11 +166,20 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hl9-lq-Xs0">
                                         <rect key="frame" x="154" y="560" width="75" height="40"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="75" id="M5D-Qn-miU"/>
                                             <constraint firstAttribute="height" constant="40" id="aVW-52-Evh"/>
                                         </constraints>
-                                        <state key="normal" image="send"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                        <state key="normal" title="Send">
+                                            <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="sendButton:" destination="Bmq-kC-CgZ" eventType="touchUpInside" id="JPi-S6-B0Q"/>
                                             <action selector="sendButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oiD-WN-99i"/>
@@ -650,7 +659,7 @@
                                             <constraint firstAttribute="height" constant="70" id="5VB-lc-1yN"/>
                                         </constraints>
                                     </pickerView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="192" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G4z-ee-6Gi" customClass="PaddingLabel" customModule="UIT_CE" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="192" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G4z-ee-6Gi" customClass="PaddingLabel" customModule="UIT_CE" customModuleProvider="target">
                                         <rect key="frame" x="137" y="3" width="42" height="31"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -921,6 +930,7 @@
                     </view>
                     <connections>
                         <outlet property="bottomView" destination="Xsi-yH-gnw" id="kYB-1j-4m8"/>
+                        <outlet property="connecTitle" destination="ngy-fd-NDK" id="mzS-BT-Vil"/>
                         <outlet property="onOff" destination="5fC-RN-OqM" id="M4x-T1-H1M"/>
                         <outlet property="picketView" destination="adB-p3-coP" id="bcU-sW-XXj"/>
                         <outlet property="textField1" destination="dcC-L3-ZLL" id="Mli-Bz-h6H"/>
@@ -1070,9 +1080,6 @@
                                         <state key="normal" image="off">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="connectButton:" destination="29b-bA-2W8" eventType="touchUpInside" id="wgm-D5-2Qz"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.3921568627" green="0.61568627450000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -1117,6 +1124,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="connectStatus" destination="RwW-jn-ADQ" id="VWf-GY-daQ"/>
                         <outlet property="demoString" destination="ONy-uz-Gbm" id="TFx-YY-6fh"/>
                         <outlet property="imageLabel" destination="Sz2-9B-UEW" id="WyL-eY-oaw"/>
                         <outlet property="middleView" destination="CSh-qU-jUA" id="Jf0-DI-kJC"/>
@@ -1168,9 +1176,6 @@
                                         <state key="normal" image="off">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="connectButton:" destination="29b-bA-2W8" eventType="touchUpInside" id="WM0-Pp-Lmf"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.3921568627" green="0.61568627450000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -1193,26 +1198,41 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DdO-3o-OGa" customClass="BEMAnalogClockView">
                                 <rect key="frame" x="150" y="65" width="300" height="300"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="DdO-3o-OGa" secondAttribute="height" multiplier="1:1" id="Sir-Dy-o04"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadows" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadows" value="NO"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="enableGraduations" value="YES"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="enableDigit" value="YES"/>
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="faceBackgroundColor">
+                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="digitColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IrE-Ei-C1x">
                                 <rect key="frame" x="507" y="550" width="73" height="30"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="OkL-CD-ejU"/>
                                     <constraint firstAttribute="width" constant="73" id="zGv-nK-yCg"/>
                                 </constraints>
-                                <state key="normal" title="Capture"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Send">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="captureButton:" destination="Sfw-G4-vU1" eventType="touchUpInside" id="6bQ-IR-hUJ"/>
                                 </connections>
@@ -1277,6 +1297,7 @@
                     </view>
                     <connections>
                         <outlet property="choiceStatus" destination="USK-Br-7yU" id="GhT-ay-tNO"/>
+                        <outlet property="connectStatus" destination="euV-SF-Zaj" id="uHW-hs-GD8"/>
                         <outlet property="digitalLabel" destination="ftW-Rl-RTx" id="zrE-Th-dI6"/>
                         <outlet property="image" destination="1BL-Rn-rUH" id="PVe-HX-A3Y"/>
                         <outlet property="labelStatus" destination="56T-sl-cc8" id="Izb-aw-HML"/>
@@ -1571,9 +1592,9 @@
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uty-QK-bFv">
-                                        <rect key="frame" x="308" y="4" width="59" height="30"/>
-                                        <state key="normal" title="Connect">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uty-QK-bFv">
+                                        <rect key="frame" x="351" y="8" width="16" height="22"/>
+                                        <state key="normal" image="off">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1621,16 +1642,25 @@
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bak-PY-oAO">
                                         <rect key="frame" x="307" y="233" width="60" height="40"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="NKQ-cK-BJ4"/>
                                             <constraint firstAttribute="width" constant="60" id="S5j-cD-59o"/>
                                         </constraints>
-                                        <state key="normal" title="Button" image="send"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Send">
+                                            <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="sendButton:" destination="Nws-Ov-LAW" eventType="touchUpInside" id="J0K-eN-chz"/>
                                         </connections>
                                     </button>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HyC-EL-iMS">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HyC-EL-iMS">
                                         <rect key="frame" x="8" y="276" width="359" height="326"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="1000" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FAx-IU-3VN">
@@ -1687,6 +1717,7 @@
                         <outlet property="connectStatus" destination="Uty-QK-bFv" id="kd4-Hs-eqf"/>
                         <outlet property="imageRes" destination="bfY-il-JCQ" id="jFd-KQ-lN1"/>
                         <outlet property="imageSta" destination="dIs-UJ-ODg" id="YCP-sb-b92"/>
+                        <outlet property="scrollView" destination="HyC-EL-iMS" id="dbp-UG-qRG"/>
                         <outlet property="sendTextField" destination="ENq-ly-Aw9" id="pmG-QM-Wrc"/>
                         <outlet property="slidervalue" destination="Zwa-ja-Nul" id="0Pf-lh-aqt"/>
                         <outlet property="textChatLabel" destination="FAx-IU-3VN" id="cfp-7y-wE0"/>
@@ -1826,7 +1857,6 @@
         <image name="ic_hamburger" width="38" height="28"/>
         <image name="ic_uit" width="220" height="220"/>
         <image name="off" width="16" height="16"/>
-        <image name="send" width="600" height="296"/>
         <image name="text2.jpg" width="1000" height="1000"/>
         <image name="uncheck" width="26" height="26"/>
     </resources>

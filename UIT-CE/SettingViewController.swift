@@ -19,20 +19,21 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var textField3: UITextField!
     @IBOutlet weak var textField4: UITextField!
     @IBOutlet weak var textField5: UITextField!
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var viewContent: UIView!
+    @IBOutlet weak var onOff: UIButton!
+    @IBOutlet weak var connecTitle: UIButton!
     
     var textField: UITextField?
     var pickerData = ["192","164","128", "96", "64", "32"]
     var indicator:ProgressIndicator?
     var url: String?
+    var isConnected: Bool = false
     
     @IBAction func leftMenuButton(sender: AnyObject) {
         self.openLeft()
     }
-    @IBOutlet weak var topView: UIView!
-    @IBOutlet weak var bottomView: UIView!
-    
-    @IBOutlet weak var viewContent: UIView!
-    @IBOutlet weak var onOff: UIButton!
     
     @IBAction func onOffView(sender: AnyObject) {
         if self.onOff.titleLabel?.text == "ON" {
@@ -82,30 +83,40 @@ class SettingViewController: UIViewController {
     }
     
     @IBAction func connectButton(sender: AnyObject) {
-        indicator!.start()
         
-        socket = SocketIOClient(socketURL: NSURL(string: url!)!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
-        socket!.on("connect") {data, ack in
-            print("socket connected")
+        if isConnected == true {
+            isConnected = false
+            indicator!.start()
+            socket?.disconnect()
+            self.connecTitle.setTitle("Connect", forState: .Normal)
+            self.view.makeToast(message: "Congatulate, Disconnect Success", duration: 1.0, position: HRToastPositionCenter, image: UIImage(named: "off")!)
+            indicator!.stop()
+        } else {
             isConnected = true
-        }
-        socket!.connect()
-        
-        socket!.on("message", callback: {
-            data, ack in
-            if let msg:String = (data[0] as! String) {
-                print("data ne: \(msg)")
+            indicator!.start()
+            socket = SocketIOClient(socketURL: NSURL(string: url!)!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
+            socket!.on("connect") {data, ack in
+                self.view.makeToast(message: "Congatulate, Connect Success", duration: 1.0, position: HRToastPositionCenter, image: UIImage(named: "on")!)
+                self.indicator!.stop()
+                self.connecTitle.setTitle("Disconnect", forState: .Normal)
+                print("socket connected")
             }
-        })
-        
-        socket?.onAny({ (event) in
-            if event.event == "New_Client" {
-                print("string of event: \(event.event)")
-            }
+            socket!.connect()
             
-            self.indicator!.stop()
-        })
+            socket!.on("message", callback: {
+                data, ack in
+                if let msg:String = (data[0] as! String) {
+                    print("data ne: \(msg)")
+                }
+            })
+            
+            socket?.onAny({ (event) in
+                if event.event == "New_Client" {
+                    print("string of event: \(event.event)")
+                }
+            })
 
+        }
     }
   
     override func viewDidLoad() {
@@ -116,7 +127,7 @@ class SettingViewController: UIViewController {
         self.view.addGradientWithColor(UIColor.whiteColor())
         
         loaddingSetting()
-        indicator = ProgressIndicator(inview:self.view,loadingViewColor: UIColor.grayColor(), indicatorColor: UIColor.blackColor(), msg: "Loading..")
+        indicator = ProgressIndicator(inview:self.view,loadingViewColor: UIColor.grayColor(), indicatorColor: UIColor.blackColor(), msg: "Connecting...")
         self.view.addSubview(indicator!)
         
         picketView.dataSource = self
@@ -146,7 +157,15 @@ class SettingViewController: UIViewController {
             textField4.text = resultSet[0]["IP"]?.asString()
             textField5.text = resultSet[0]["Port"]?.asInt()?.description
         }
-
+        if DataProviding.statusConnection(connecTitle) == true {
+            self.connecTitle.setImage(UIImage(named: ""), forState: .Normal)
+            self.connecTitle.setTitle("Disconnect", forState: .Normal)
+            isConnected = true
+        } else {
+            self.connecTitle.setImage(UIImage(named: ""), forState: .Normal)
+            self.connecTitle.setTitle("Connect", forState: .Normal)
+            isConnected = false
+        }
     }
     
     func loaddingSetting() {
