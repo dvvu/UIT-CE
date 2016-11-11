@@ -22,7 +22,10 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var characterView: UIView!
     @IBOutlet weak var allView: UIView!
     @IBOutlet weak var connectStatus: UIButton!
+    @IBOutlet weak var fontSize: PaddingLabel!
+    @IBOutlet weak var pickerView: UIPickerView!
     
+    var pickerData:[Int] = []
     var imagesDirectoryPath:String!
     var isCharacter: Bool = false
     
@@ -34,14 +37,21 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
         self.topView.addGradientWithColor(Colors.primaryBlue())
         self.view.addGradientWithColor(UIColor.whiteColor())
         self.textField.delegate = self
-        self.textField.becomeFirstResponder()
         onTapView()
         DataProviding.statusConnection(connectStatus)
+        
+        for i in 7...50 {
+            pickerData.append(i)
+        }
     }
 
-    func onTapView() {        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(SettingViewController.viewTapped(_:)))
-        self.view.addGestureRecognizer(tapGesture)
+    func onTapView() {
+        self.fontSize.userInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showPickerView))
+        self.fontSize.addGestureRecognizer(tapGesture)
+        
+        let fontGesture = UITapGestureRecognizer(target: self, action: #selector(SettingViewController.viewTapped(_:)))
+        self.view.addGestureRecognizer(fontGesture)
         
         characterView.userInteractionEnabled = true
         characterImage.userInteractionEnabled = true
@@ -63,6 +73,10 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
         let tap6: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(clickView2))
         allLabel.addGestureRecognizer(tap6)
 
+    }
+    
+    func showPickerView() {
+        self.pickerView.hidden = false
     }
     
     func conditionSQLite() {
@@ -220,6 +234,47 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func connectButton(sender: AnyObject) {
+        
     }
 
 }
+
+extension DisplayTextViewController : UIPickerViewDataSource,UIPickerViewDelegate {
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerData.count
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerData[row].description
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.fontSize.text = pickerData[row].description
+//        textFieldLabel.font.fontWithSize(CGFloat(pickerData[row]))
+        textFieldLabel.font = textFieldLabel.font.fontWithSize(CGFloat(pickerData[row]))
+        pickerView.hidden = true
+    }
+    
+//    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
+//        let pickerLabel = UILabel()
+//        let titleData = pickerData[row]
+////        let myTitle = NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Georgia", size: 30)!,NSForegroundColorAttributeName:UIColor.blackColor()])
+////        pickerLabel.attributedText = myTitle
+//        let hue = CGFloat(row)/CGFloat(pickerData.count)
+//        pickerLabel.backgroundColor = UIColor(hue: hue, saturation: 1.0, brightness:1.0, alpha: 1.0)
+//        pickerLabel.textAlignment = .Center
+//        return pickerLabel
+//    }
+    
+    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 25
+    }
+    
+    func pickerView(pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+        return 60
+    }
+}
+
