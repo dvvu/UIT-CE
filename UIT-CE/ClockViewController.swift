@@ -42,6 +42,10 @@ class ClockViewController: UIViewController {
         DataProviding.statusConnection(connectStatus)
     }
     
+    @IBAction func leftMenuButton(sender: AnyObject) {
+        self.openLeft()
+    }
+    
     @IBAction func choiceButton(sender: AnyObject) {
         if choiceStatus.on {
             labelStatus.text = "Analog"
@@ -89,6 +93,9 @@ class ClockViewController: UIViewController {
                     pixels.append(black)
                 }
             }
+            let newString = (result.pixelValues?.description)!
+            let data = newString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            socket?.emit("message", data)
             image.image = DataProviding.imageFromARGB32Bitmap(pixels, width: 192, height: result.height)
         }
     }

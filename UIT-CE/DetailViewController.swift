@@ -18,7 +18,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var sliderValue: UISlider!
     @IBOutlet weak var connectStatus: UIButton!
     var vanNumber: Int = 192
-    
+    var isConnected: Bool?
     var pixels = [DataProviding.PixelData()]
     let black = DataProviding.PixelData(a: 255, r: 0, g: 0, b: 0)
     let white = DataProviding.PixelData(a: 255, r: 255, g: 255, b: 255)
@@ -28,6 +28,7 @@ class DetailViewController: UIViewController {
     var image1 = UIImage()
     var image2 = UIImage()
     var isClick: Bool = true
+    var data: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,9 +40,12 @@ class DetailViewController: UIViewController {
          image1 = UIImage(data: data!)!
          image2 = DataProviding.resizeImage(image1, newWidth: CGFloat(vanNumber))
         let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(sliderValue.value))
-        print(result.pixelValues?.count)
+        
+         let newString = (result.pixelValues?.description)!
+         self.data = newString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        imageLabel.font = UIFont(name:"Courier", size: 1)
         loadString()
-        DataProviding.statusConnection(connectStatus)
+      isConnected =  DataProviding.statusConnection(connectStatus)
     }
     
     /* Button action*/
@@ -54,12 +58,22 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func sendButton(sender: AnyObject) {
-        let refreshAlert = UIAlertController(title: "Sending...", message: "Please, Connect and check with wifi?", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-        }))
-        
-        presentViewController(refreshAlert, animated: true, completion: nil)
+        if isConnected == true {
+            socket!.emit("message", data)
+            let refreshAlert = UIAlertController(title: "Congatulate", message: "Sent success!", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+            }))
+            
+            presentViewController(refreshAlert, animated: true, completion: nil)
+        } else {
+            let refreshAlert = UIAlertController(title: "Sorry", message: "You have to connect to server before!", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+            }))
+            
+            presentViewController(refreshAlert, animated: true, completion: nil)
+        }
         
     }
     
@@ -125,24 +139,22 @@ class DetailViewController: UIViewController {
     }
     
     func loadString() {
-        
-        let attributedString = NSMutableAttributedString(string:"")
-        let string = "_"
-        
-        for i in 0..<string.characters.count {
-            let smallString = string.startIndex.advancedBy(i)
-            
-            let newString = DataProviding.createAttributedString(String(string[smallString]), fullStringColor: UIColor.blackColor(), subString: "_", subStringColor: UIColor.redColor())
-            
-            attributedString.appendAttributedString(newString)
-        }
+//        let attributedString = NSMutableAttributedString(string:"")
+//        let string = "_"
+//        
+//        for i in 0..<string.characters.count {
+//            let smallString = string.startIndex.advancedBy(i)
+//            
+//            let newString = DataProviding.createAttributedString(String(string[smallString]), fullStringColor: UIColor.blackColor(), subString: "_", subStringColor: UIColor.redColor())
+//            
+//            attributedString.appendAttributedString(newString)
+//        }
         
         let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(sliderValue.value))
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
             
             let aString: String = (result.pixelValues!.description)
-            
             let newString = aString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
             let newString2 = newString.stringByReplacingOccurrencesOfString("0", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
             
