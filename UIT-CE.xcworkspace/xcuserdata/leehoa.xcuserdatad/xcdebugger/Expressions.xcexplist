@@ -30,6 +30,9 @@
          contextName = "DetailViewController.viewDidLoad() -&gt; ():DetailViewController.swift">
          <PersistentStrings>
             <PersistentString
+               value = "imagesDirectoryPath">
+            </PersistentString>
+            <PersistentString
                value = "imageURL">
             </PersistentString>
          </PersistentStrings>

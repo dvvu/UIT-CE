@@ -191,22 +191,31 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func detailButton(sender: AnyObject) {
-//        let image = UIImage.imageWithLabel(self.textFieldLabel)
-//        var imagePath = NSDate().description
-//        imagePath = imagePath.stringByReplacingOccurrencesOfString(" ", withString: "")
-//        imagePath = self.imagesDirectoryPath.stringByAppendingString("/\(imagePath).png")
-//        let data = UIImagePNGRepresentation(image)
-//        let success = NSFileManager.defaultManager().createFileAtPath(imagePath, contents: data, attributes: nil)
-//    
-//        do{
-//            let titles = try NSFileManager.defaultManager().contentsOfDirectoryAtPath(imagesDirectoryPath)
-//            if let vc = UIStoryboard.detailViewController() {
-//                vc.imageURL = String(titles[titles.count-1]).debugDescription
-//                self.presentViewController(vc, animated: true, completion: nil)
-//            }
-//        }catch{
-//            print("Error")
-//        }
+        let image = UIImage.imageWithLabel(self.textFieldLabel)
+        var imagePath = NSDate().description
+        imagePath = imagePath.stringByReplacingOccurrencesOfString(" ", withString: "")
+        imagePath = self.imagesDirectoryPath.stringByAppendingString("/\(imagePath).png")
+        let data = UIImagePNGRepresentation(image)
+        let success = NSFileManager.defaultManager().createFileAtPath(imagePath, contents: data, attributes: nil)
+    
+        do{
+            let titles = try NSFileManager.defaultManager().contentsOfDirectoryAtPath(imagesDirectoryPath)
+            if let vc = UIStoryboard.detailViewController() {
+                vc.imageURL = "/"+String(UTF8String: titles[titles.count-1])!
+                self.presentViewController(vc, animated: true, completion: nil)
+                
+                /*Remove in directory when user don't save*/
+                do {
+                    try NSFileManager.defaultManager().removeItemAtPath(imagesDirectoryPath + "/"+String(UTF8String: titles[titles.count-1])!)
+                    print("old image has been removed")
+                } catch {
+                    print("an error during a removing")
+                }
+            }
+            
+        }catch{
+            print("Error")
+        }
         
     }
 
