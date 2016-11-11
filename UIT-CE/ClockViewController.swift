@@ -28,6 +28,7 @@ class ClockViewController: UIViewController {
     var rSeconds: String = ""
     var myTimer: NSTimer = NSTimer()
     var isStart: Bool = true
+    var isConnected: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +40,7 @@ class ClockViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.myClock.delegate = self
         self.myClock.startRealTime()
-        DataProviding.statusConnection(connectStatus)
+        isConnected = DataProviding.statusConnection(connectStatus)
     }
     
     @IBAction func leftMenuButton(sender: AnyObject) {
@@ -65,11 +66,21 @@ class ClockViewController: UIViewController {
     }
     
     func StartTimer() {
-        myTimer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(ClockViewController.updateTimer), userInfo: nil, repeats: true)
+        if isConnected == true {
+            myTimer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(ClockViewController.updateTimer), userInfo: nil, repeats: true)
+            self.view.makeToast(message: "Sending")
+        } else {
+            let refreshAlert = UIAlertController(title: "Sorry", message: "Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
+            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+            }))
+            presentViewController(refreshAlert, animated: true, completion: nil)
+        }
+        
     }
     
     func StopTimer() {
         myTimer.invalidate()
+        self.view.makeToast(message: "Stoped")
     }
     
     func updateTimer() {
