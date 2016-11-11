@@ -29,6 +29,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     
     var left: LeftMenuViewController?
     var indicator:ProgressIndicator?
+    var isConnected: Bool?
     var Image = [UIImage]()
     var ListImage = [UIImage]()
     var imagesDirectoryPath:String!
@@ -60,7 +61,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
         loaddingDataBase()
         loaddingListImageData()
         loaddingSetting()
-        DataProviding.statusConnection(conectStatus)
+        isConnected = DataProviding.statusConnection(conectStatus)
     }
     
     func loaddingSetting() {
@@ -124,6 +125,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
                     let image1 = UIImage(data: data!)
                     let image2 = DataProviding.resizeImage(image1!, newWidth: 192)
                     let result = DataProviding.intensityValuesFromImage(image2)
+                    
                     pixels = []
                     for i in 0..<Int((result.pixelValues?.count)!) {
                         if result.pixelValues![i] == 1 {
@@ -203,14 +205,32 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     }
     
     @IBAction func sendButton(sender: AnyObject) {
-    let refreshAlert = UIAlertController(title: "Sending...", message: "Please, Connect and check with wifi?", preferredStyle: UIAlertControllerStyle.Alert)
+        if isConnected == true {
+            var data: [String] = []
+            self.view.makeToast(message: "Sending...")
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
+                self.indicator?.start()
+                for image in self.ListImage {
+                    let result = DataProviding.intensityValuesFromImage(image)
+                    let temp:String = (result.pixelValues?.description)!
+                    let newString = temp.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+                    data.append(newString)
+                }
         
-        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-        }))
-        
-        presentViewController(refreshAlert, animated: true, completion: nil)
+                dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+                    socket?.emit("message", data)
+                    self.view.makeToast(message: "Suceess!")
+                    self.indicator?.stop()
+                })
+            })
+            
+        } else {
+            let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
+            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+            }))
+            presentViewController(refreshAlert, animated: true, completion: nil)
+        }
     }
-    
 }
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {

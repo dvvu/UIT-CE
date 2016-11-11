@@ -67,7 +67,7 @@ class DetailViewController: UIViewController {
             
             presentViewController(refreshAlert, animated: true, completion: nil)
         } else {
-            let refreshAlert = UIAlertController(title: "Sorry", message: "You have to connect to server before!", preferredStyle: UIAlertControllerStyle.Alert)
+            let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
             
             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
             }))
