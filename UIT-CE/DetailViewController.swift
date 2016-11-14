@@ -58,6 +58,7 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func sendButton(sender: AnyObject) {
+//        SocketManager.sharedInstance.sendMessage(data)
         if isConnected == true {
             socket!.emit("message", data)
             let refreshAlert = UIAlertController(title: "Congatulate", message: "Sent success!", preferredStyle: UIAlertControllerStyle.Alert)

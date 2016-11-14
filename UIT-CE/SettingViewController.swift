@@ -82,41 +82,48 @@ class SettingViewController: UIViewController {
         textField5.text = "8080"
     }
     
+    
     @IBAction func connectButton(sender: AnyObject) {
+//        let socket1 : TCPClient
+//        socket1 = TCPClient(addr: "192.168.0.125", port: 4000)
+//        // Connect the socket
+//        let (success, msg ) = socket1.connect(timeout: 1)
+//        print("\(msg) : \(success)")
+        SocketManager.sharedInstance.sendMessage("Hello")
         
-        if isConnected == true {
-            isConnected = false
-            indicator!.start()
-            socket?.disconnect()
-            self.connecTitle.setTitle("Connect", forState: .Normal)
-            self.view.makeToast(message: "Congatulate, Disconnect Success", duration: 1.0, position: HRToastPositionCenter, image: UIImage(named: "off")!)
-            indicator!.stop()
-        } else {
-            isConnected = true
-            indicator!.start()
-            socket = SocketIOClient(socketURL: NSURL(string: url!)!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
-            socket!.on("connect") {data, ack in
-                self.view.makeToast(message: "Congatulate, Connect Success", duration: 1.0, position: HRToastPositionCenter, image: UIImage(named: "on")!)
-                self.indicator!.stop()
-                self.connecTitle.setTitle("Disconnect", forState: .Normal)
-                print("socket connected")
-            }
-            socket!.connect()
-            
-            socket!.on("message", callback: {
-                data, ack in
-                if let msg:String = (data[0] as! String) {
-                    print("data ne: \(msg)")
-                }
-            })
-            
-            socket?.onAny({ (event) in
-                if event.event == "New_Client" {
-                    print("string of event: \(event.event)")
-                }
-            })
-
-        }
+//        if isConnected == true {
+//            isConnected = false
+//            indicator!.start()
+//            socket?.disconnect()
+//            self.connecTitle.setTitle("Connect", forState: .Normal)
+//            self.view.makeToast(message: "Congatulate, Disconnect Success", duration: 1.0, position: HRToastPositionCenter, image: UIImage(named: "off")!)
+//            indicator!.stop()
+//        } else {
+//            isConnected = true
+//            indicator!.start()
+//            socket = SocketIOClient(socketURL: NSURL(string: url!)!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
+//            socket!.on("connect") {data, ack in
+//                self.view.makeToast(message: "Congatulate, Connect Success", duration: 1.0, position: HRToastPositionCenter, image: UIImage(named: "on")!)
+//                self.indicator!.stop()
+//                self.connecTitle.setTitle("Disconnect", forState: .Normal)
+//                print("socket connected")
+//            }
+//            socket!.connect()
+//            
+//            socket!.on("message", callback: {
+//                data, ack in
+//                if let msg:String = (data[0] as! String) {
+//                    print("data ne: \(msg)")
+//                }
+//            })
+//            
+//            socket?.onAny({ (event) in
+//                if event.event == "New_Client" {
+//                    print("string of event: \(event.event)")
+//                }
+//            })
+//
+//        }
     }
   
     override func viewDidLoad() {
