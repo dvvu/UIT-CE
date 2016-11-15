@@ -29,6 +29,8 @@ class SettingViewController: UIViewController {
     var pickerData = ["192","164","128", "96", "64", "32"]
     var indicator:ProgressIndicator?
     var url: String?
+    var addr: String = "192.168.0.125"
+    var port: Int = 4000
     var isConnected: Bool = false
     
     @IBAction func leftMenuButton(sender: AnyObject) {
@@ -84,12 +86,20 @@ class SettingViewController: UIViewController {
     
     
     @IBAction func connectButton(sender: AnyObject) {
-//        let socket1 : TCPClient
-//        socket1 = TCPClient(addr: "192.168.0.125", port: 4000)
-//        // Connect the socket
-//        let (success, msg ) = socket1.connect(timeout: 1)
-//        print("\(msg) : \(success)")
-        SocketManager.sharedInstance.sendMessage("Hello")
+        
+        let (resultSet, err) = SD.executeQuery("SELECT * FROM Setting")
+        if err != nil {
+            print(" Error in loading Data")
+        } else {
+            addr =  (resultSet[0]["IP"]?.asString()!)!
+            port = (resultSet[0]["Port"]?.asInt()!)!
+        }
+        print(addr)
+        print(port)
+        socketTCP = TCPClient(addr: addr, port: port)
+        // Connect the socket
+        let (success, msg )=socketTCP!.connect(timeout: 1)
+        print("\(msg) : \(success)")
         
 //        if isConnected == true {
 //            isConnected = false

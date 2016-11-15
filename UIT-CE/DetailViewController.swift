@@ -45,7 +45,7 @@ class DetailViewController: UIViewController {
          self.data = newString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         imageLabel.font = UIFont(name:"Courier", size: 1)
         loadString()
-      isConnected =  DataProviding.statusConnection(connectStatus)
+        isConnected =  DataProviding.statusConnection(connectStatus)
     }
     
     /* Button action*/
@@ -58,23 +58,23 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func sendButton(sender: AnyObject) {
-//        SocketManager.sharedInstance.sendMessage(data)
-        if isConnected == true {
-            socket!.emit("message", data)
-            let refreshAlert = UIAlertController(title: "Congatulate", message: "Sent success!", preferredStyle: UIAlertControllerStyle.Alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-            }))
-            
-            presentViewController(refreshAlert, animated: true, completion: nil)
-        } else {
-            let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-            }))
-            
-            presentViewController(refreshAlert, animated: true, completion: nil)
-        }
+        DataProviding.sendMessage(data)
+//        if isConnected == true {
+//            socket!.emit("message", data)
+//            let refreshAlert = UIAlertController(title: "Congatulate", message: "Sent success!", preferredStyle: UIAlertControllerStyle.Alert)
+//            
+//            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+//            }))
+//            
+//            presentViewController(refreshAlert, animated: true, completion: nil)
+//        } else {
+//            let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
+//            
+//            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+//            }))
+//            
+//            presentViewController(refreshAlert, animated: true, completion: nil)
+//        }
         
     }
     

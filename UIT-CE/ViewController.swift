@@ -10,6 +10,7 @@ import UIKit
 import SlideMenuControllerSwift
 import SocketIO
 var socket: SocketIOClient?
+var socketTCP : TCPClient?
 
 class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINavigationControllerDelegate
     static let identifier = String(ViewController)
