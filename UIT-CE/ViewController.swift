@@ -9,8 +9,11 @@
 import UIKit
 import SlideMenuControllerSwift
 import SocketIO
+import Darwin
 var socket: SocketIOClient?
 var socketTCP : TCPClient?
+var isConnected: Bool = false
+
 
 class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINavigationControllerDelegate
     static let identifier = String(ViewController)
@@ -30,7 +33,6 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     
     var left: LeftMenuViewController?
     var indicator:ProgressIndicator?
-    var isConnected: Bool?
     var Image = [UIImage]()
     var ListImage = [UIImage]()
     var imagesDirectoryPath:String!
@@ -62,7 +64,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
         loaddingDataBase()
         loaddingListImageData()
         loaddingSetting()
-        isConnected = DataProviding.statusConnection(conectStatus)
+        DataProviding.statusButton(conectStatus, status: isConnected)
     }
     
     func loaddingSetting() {
@@ -209,7 +211,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
         if isConnected == true {
             var data: [String] = []
             self.view.makeToast(message: "Sending...")
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
                 self.indicator?.start()
                 for image in self.ListImage {
                     let result = DataProviding.intensityValuesFromImage(image)
@@ -218,12 +220,16 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
                     data.append(newString)
                 }
         
-                dispatch_sync(dispatch_get_main_queue(), {() -> Void in
-                    socket?.emit("message", data)
+//                dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+                    for i in 0..<data.count {
+                         DataProviding.sendMessage(data[i])
+
+                        sleep(2)
+                    }
                     self.view.makeToast(message: "Suceess!")
                     self.indicator?.stop()
-                })
-            })
+//                })
+//            })
             
         } else {
             let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)

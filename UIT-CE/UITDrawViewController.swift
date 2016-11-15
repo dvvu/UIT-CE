@@ -34,27 +34,7 @@ class UITDrawViewController: UIViewController
         super.viewDidLoad()
         self.topView.backgroundColor = Colors.primaryBlue()
         self.initialize()
-        statusConnection()
-    }
-    
-    func statusConnection() {
-        if socket?.status != nil {
-            switch socket!.status {
-            case .Connected:
-                connectStatus.setImage(UIImage(named: "on"), forState: .Normal)
-                print("status: connected")
-            case .Connecting:
-                print("status: connecting")
-            case .Disconnected:
-                connectStatus.setImage(UIImage(named: "off"), forState: .Normal)
-                print("status: disconnected")
-            case .NotConnected:
-                connectStatus.setImage(UIImage(named: "off"), forState: .Normal)
-                print("status: notconnected")
-            }
-        } else {
-            connectStatus.setImage(UIImage(named: "off"), forState: .Normal)
-        }
+        DataProviding.statusButton(connectStatus, status: isConnected)
     }
 
     @IBAction func leftMenuButton(sender: AnyObject) {

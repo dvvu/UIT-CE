@@ -38,18 +38,18 @@ class TestViewController: UIViewController {
         self.view.addSubview(indicator!)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(TestViewController.viewTapped(_:)))
         self.view.addGestureRecognizer(tapGesture)
-        
-        if DataProviding.statusConnection(connectStatus) == true {
-            socket!.on("message", callback: {
-                data, ack in
-                if let msg:String = (data[0] as! String) {
-                    print("data ne: \(msg)")
-                    self.textChat += ("Server:  \(msg)")
-                    self.textChatLabel.text = self.textChat
-                }
-            })
-
-        }
+        DataProviding.statusButton(connectStatus, status: isConnected)
+//        if DataProviding.statusConnection(connectStatus) == true {
+//            socket!.on("message", callback: {
+//                data, ack in
+//                if let msg:String = (data[0] as! String) {
+//                    print("data ne: \(msg)")
+//                    self.textChat += ("Server:  \(msg)")
+//                    self.textChatLabel.text = self.textChat
+//                }
+//            })
+//
+//        }
 //        if isConnected == true {
 //            connectStatus.setImage(UIImage(named: "on"), forState: .Normal)
 //            socket!.on("message", callback: {
@@ -104,29 +104,21 @@ class TestViewController: UIViewController {
         //newString = result.pixelValues?.description
     }
     @IBAction func sendButton(sender: AnyObject) {
-        //        let socket = SocketIOClient(socketURL: NSURL(string: "192.168.3.1:9999")!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
-        //        socket.on("connect") {data, ack in
-        //            print("socket connected")
-        //        }
-        //
-        //        socket.on("currentAmount") {data, ack in
-        //            if let cur = data[0] as? Double {
-        //                socket.emitWithAck("canUpdate", cur)(timeoutAfter: 0) {data in
-        //                    socket.emit("update", ["amount": cur + 2.50])
-        //                }
-        //
-        //                ack.with("Got your currentAmount", "dude")
-        //            }
-        //        }
-        //        socket.engineDidOpen("HELLO")
-        //        socket.connect()
-        //        let url = NSURL(string: "localhost:5000")!
-        //        let socket = SocketIOClient(socketURL: url, config: ["log": true, "forcePolling": true])
+
         if let data = sendTextField.text {
-            socket!.emit("message", data)
+           // socket!.emit("message", data)
             textChat += ("Client:  \(data) \n")
             textChatLabel.text = textChat
+            DataProviding.sendMessage(data)
         }
+        /*
+         let data = client!.read(1024*10)
+         if let d = data {
+         // Create String from response data
+         if let str = NSString(bytes: d, length: d.count, encoding: NSUTF8StringEncoding) as? String {
+         return (data: str)
+         }
+         */
 
     }
     

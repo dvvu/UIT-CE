@@ -36,6 +36,14 @@ class DataProviding {
         }
     }
     
+    static func statusButton(connectStatus : UIButton, status: Bool) {
+        if status == true {
+            connectStatus.setImage(UIImage(named: "on"), forState: .Normal)
+        } else {
+            connectStatus.setImage(UIImage(named: "off"), forState: .Normal)
+        }
+    }
+    
     static func createAttributedString(fullString: String, fullStringColor: UIColor, subString: String, subStringColor: UIColor) -> NSMutableAttributedString
     {
         let range = (fullString as NSString).rangeOfString(subString)

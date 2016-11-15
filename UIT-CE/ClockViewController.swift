@@ -28,7 +28,7 @@ class ClockViewController: UIViewController {
     var rSeconds: String = ""
     var myTimer: NSTimer = NSTimer()
     var isStart: Bool = true
-    var isConnected: Bool?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +40,7 @@ class ClockViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.myClock.delegate = self
         self.myClock.startRealTime()
-        isConnected = DataProviding.statusConnection(connectStatus)
+        DataProviding.statusButton(connectStatus, status: isConnected)
     }
     
     @IBAction func leftMenuButton(sender: AnyObject) {
@@ -106,7 +106,8 @@ class ClockViewController: UIViewController {
             }
             let newString = (result.pixelValues?.description)!
             let data = newString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            socket?.emit("message", data)
+//            socket?.emit("message", data)
+            DataProviding.sendMessage(data)
             image.image = DataProviding.imageFromARGB32Bitmap(pixels, width: 192, height: result.height)
         }
     }
