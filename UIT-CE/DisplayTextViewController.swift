@@ -38,7 +38,7 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
         self.view.addGradientWithColor(UIColor.whiteColor())
         self.textField.delegate = self
         onTapView()
-        DataProviding.statusConnection(connectStatus)
+        DataProviding.statusButton(connectStatus, status: isConnected)
         
         for i in 7...50 {
             pickerData.append(i)

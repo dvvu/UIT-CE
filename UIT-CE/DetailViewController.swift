@@ -18,7 +18,6 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var sliderValue: UISlider!
     @IBOutlet weak var connectStatus: UIButton!
     var vanNumber: Int = 192
-    var isConnected: Bool?
     var pixels = [DataProviding.PixelData()]
     let black = DataProviding.PixelData(a: 255, r: 0, g: 0, b: 0)
     let white = DataProviding.PixelData(a: 255, r: 255, g: 255, b: 255)
@@ -45,7 +44,7 @@ class DetailViewController: UIViewController {
          self.data = newString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         imageLabel.font = UIFont(name:"Courier", size: 1)
         loadString()
-      isConnected =  DataProviding.statusConnection(connectStatus)
+        DataProviding.statusButton(connectStatus, status: isConnected)
     }
     
     /* Button action*/
@@ -58,8 +57,9 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func sendButton(sender: AnyObject) {
+       
         if isConnected == true {
-            socket!.emit("message", data)
+             DataProviding.sendMessage(data)
             let refreshAlert = UIAlertController(title: "Congatulate", message: "Sent success!", preferredStyle: UIAlertControllerStyle.Alert)
             
             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
@@ -67,7 +67,7 @@ class DetailViewController: UIViewController {
             
             presentViewController(refreshAlert, animated: true, completion: nil)
         } else {
-            let refreshAlert = UIAlertController(title: "Sorry", message: "You have to connect to server before!", preferredStyle: UIAlertControllerStyle.Alert)
+            let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
             
             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
             }))

@@ -72,7 +72,7 @@ class ImportPhotoViewController: UIViewController {
                 self.indicator!.stop()
             })
         })
-        DataProviding.statusConnection(connectStatus)
+        DataProviding.statusButton(connectStatus, status: isConnected)
     }
     
     func conditionSQLite() {

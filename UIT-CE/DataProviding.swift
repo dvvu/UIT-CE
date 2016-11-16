@@ -36,6 +36,14 @@ class DataProviding {
         }
     }
     
+    static func statusButton(connectStatus : UIButton, status: Bool) {
+        if status == true {
+            connectStatus.setImage(UIImage(named: "on"), forState: .Normal)
+        } else {
+            connectStatus.setImage(UIImage(named: "off"), forState: .Normal)
+        }
+    }
+    
     static func createAttributedString(fullString: String, fullStringColor: UIColor, subString: String, subStringColor: UIColor) -> NSMutableAttributedString
     {
         let range = (fullString as NSString).rangeOfString(subString)
@@ -195,6 +203,47 @@ class DataProviding {
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image
+    }
+    
+    
+    static  func sendMessage(data: String){
+        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+        dispatch_async(backgroundQueue, {
+            let request = self.sendRequest(data, client: socketTCP)
+            print("received message: \(request)")
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                print("This is run on the main queue, after the previous code in outer block")
+            })
+            
+        })
+    }
+    
+    static  func sendRequest(data: String, client: TCPClient?) -> (String?) {
+        // It use ufter connection
+        if client != nil {
+            // Send data  (WE MUST ADD SENDING MESSAGE '\n' )
+            let (isSuccess, errorMessage) = client!.send(str: "\(data)\n")
+            if isSuccess {
+                // Read response data
+                let data = client!.read(1024*10)
+                if let d = data {
+                    // Create String from response data
+                    if let str = NSString(bytes: d, length: d.count, encoding: NSUTF8StringEncoding) as? String {
+                        return (data: str)
+                    } else {
+                        return (data: nil)
+                    }
+                } else {
+                    return (data: nil)
+                }
+            } else {
+                print(errorMessage)
+                return (data: nil)
+            }
+        } else {
+            return (data: nil)
+        }
     }
 
 }

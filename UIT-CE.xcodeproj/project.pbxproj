@@ -35,6 +35,12 @@
 		F8B8574B1D5F9767007FBA45 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8B857491D5F9767007FBA45 /* LaunchScreen.storyboard */; };
 		F8BC42A41D8164B200F8CE68 /* UITDrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BC42A31D8164B200F8CE68 /* UITDrawViewController.swift */; };
 		F8C934A41DBCE3BF00E30555 /* ClockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C934A31DBCE3BF00E30555 /* ClockViewController.swift */; };
+		F8CF200A1DD9A57700ECEC4F /* ysocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CF20051DD9A57700ECEC4F /* ysocket.swift */; };
+		F8CF200B1DD9A57700ECEC4F /* ytcpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = F8CF20061DD9A57700ECEC4F /* ytcpsocket.c */; };
+		F8CF200C1DD9A57700ECEC4F /* ytcpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CF20071DD9A57700ECEC4F /* ytcpsocket.swift */; };
+		F8CF200D1DD9A57700ECEC4F /* yudpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = F8CF20081DD9A57700ECEC4F /* yudpsocket.c */; };
+		F8CF200E1DD9A57700ECEC4F /* yudpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CF20091DD9A57700ECEC4F /* yudpsocket.swift */; };
+		F8CF20101DD9A62300ECEC4F /* SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CF200F1DD9A62300ECEC4F /* SocketManager.swift */; };
 		F8D727F71DB1E6C700CADD88 /* waterfall.gif in Resources */ = {isa = PBXBuildFile; fileRef = F8D727F61DB1E6C700CADD88 /* waterfall.gif */; };
 		F8E7A08C1DD1803C00DC3164 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E7A08B1DD1803C00DC3164 /* Colors.swift */; };
 		F8E7A08E1DD1815800DC3164 /* SwiftHEXColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E7A08D1DD1815800DC3164 /* SwiftHEXColors.swift */; };
@@ -79,6 +85,13 @@
 		F8B8574C1D5F9767007FBA45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8BC42A31D8164B200F8CE68 /* UITDrawViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITDrawViewController.swift; sourceTree = "<group>"; };
 		F8C934A31DBCE3BF00E30555 /* ClockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockViewController.swift; sourceTree = "<group>"; };
+		F8CF20041DD9A57600ECEC4F /* UIT-CE-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIT-CE-Bridging-Header.h"; sourceTree = "<group>"; };
+		F8CF20051DD9A57700ECEC4F /* ysocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ysocket.swift; sourceTree = "<group>"; };
+		F8CF20061DD9A57700ECEC4F /* ytcpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ytcpsocket.c; sourceTree = "<group>"; };
+		F8CF20071DD9A57700ECEC4F /* ytcpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ytcpsocket.swift; sourceTree = "<group>"; };
+		F8CF20081DD9A57700ECEC4F /* yudpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yudpsocket.c; sourceTree = "<group>"; };
+		F8CF20091DD9A57700ECEC4F /* yudpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = yudpsocket.swift; sourceTree = "<group>"; };
+		F8CF200F1DD9A62300ECEC4F /* SocketManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketManager.swift; sourceTree = "<group>"; };
 		F8D727F61DB1E6C700CADD88 /* waterfall.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = waterfall.gif; sourceTree = "<group>"; };
 		F8E7A08B1DD1803C00DC3164 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		F8E7A08D1DD1815800DC3164 /* SwiftHEXColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftHEXColors.swift; sourceTree = "<group>"; };
@@ -127,7 +140,7 @@
 		F8217D961DC8993500A3C4AC /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				F84460861DD3175D004D8628 /* HRToast+UIView.swift */,
+				F8CF20031DD9A56D00ECEC4F /* Socket */,
 				F89413651D697CFF00CE0216 /* FloatingButton */,
 				F8170DCC1DBEFFD000501523 /* ProgressIndicator.swift */,
 				F8721F501D9968DF00BD3A84 /* KDRearrangeableCollectionViewCell.swift */,
@@ -188,6 +201,7 @@
 		F89413651D697CFF00CE0216 /* FloatingButton */ = {
 			isa = PBXGroup;
 			children = (
+				F84460861DD3175D004D8628 /* HRToast+UIView.swift */,
 				F894135F1D697AE900CE0216 /* ActionButton.swift */,
 				F89413601D697AE900CE0216 /* ActionButtonItem.swift */,
 				F8E7A08D1DD1815800DC3164 /* SwiftHEXColors.swift */,
@@ -215,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				F8B354421D9EA9BE00518B51 /* SettingViewController.swift */,
+				F8CF200F1DD9A62300ECEC4F /* SocketManager.swift */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -256,6 +271,19 @@
 				F8C934A31DBCE3BF00E30555 /* ClockViewController.swift */,
 			);
 			name = Clock;
+			sourceTree = "<group>";
+		};
+		F8CF20031DD9A56D00ECEC4F /* Socket */ = {
+			isa = PBXGroup;
+			children = (
+				F8CF20051DD9A57700ECEC4F /* ysocket.swift */,
+				F8CF20061DD9A57700ECEC4F /* ytcpsocket.c */,
+				F8CF20071DD9A57700ECEC4F /* ytcpsocket.swift */,
+				F8CF20081DD9A57700ECEC4F /* yudpsocket.c */,
+				F8CF20091DD9A57700ECEC4F /* yudpsocket.swift */,
+				F8CF20041DD9A57600ECEC4F /* UIT-CE-Bridging-Header.h */,
+			);
+			name = Socket;
 			sourceTree = "<group>";
 		};
 		F8FD506F1D8AAD7B00898FF5 /* Socket */ = {
@@ -412,6 +440,7 @@
 				F8A63DDD1D84510000339A13 /* LeftMenuCell.swift in Sources */,
 				F8721F551D996AAB00BD3A84 /* AlbumCollectionViewCell.swift in Sources */,
 				F8B857431D5F9767007FBA45 /* ViewController.swift in Sources */,
+				F8CF20101DD9A62300ECEC4F /* SocketManager.swift in Sources */,
 				F8170DCD1DBEFFD000501523 /* ProgressIndicator.swift in Sources */,
 				F89413611D697AE900CE0216 /* ActionButton.swift in Sources */,
 				F8E7A08C1DD1803C00DC3164 /* Colors.swift in Sources */,
@@ -430,10 +459,15 @@
 				F8BC42A41D8164B200F8CE68 /* UITDrawViewController.swift in Sources */,
 				F8999F361D8D007600971723 /* ImportPhotoCell.swift in Sources */,
 				F8E7A08E1DD1815800DC3164 /* SwiftHEXColors.swift in Sources */,
+				F8CF200E1DD9A57700ECEC4F /* yudpsocket.swift in Sources */,
+				F8CF200A1DD9A57700ECEC4F /* ysocket.swift in Sources */,
+				F8CF200B1DD9A57700ECEC4F /* ytcpsocket.c in Sources */,
+				F8CF200C1DD9A57700ECEC4F /* ytcpsocket.swift in Sources */,
 				F8999F2E1D8CFCEE00971723 /* DisplayTextViewController.swift in Sources */,
 				F84460871DD3175D004D8628 /* HRToast+UIView.swift in Sources */,
 				F8B354411D9E9BF900518B51 /* KDRearrangeableCollectionViewFlowLayout.swift in Sources */,
 				F8A63DDA1D840FCA00339A13 /* LeftMenuViewController.swift in Sources */,
+				F8CF200D1DD9A57700ECEC4F /* yudpsocket.c in Sources */,
 				F8F8224F1D9F663900EC4098 /* extensionUIImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -546,6 +580,7 @@
 			baseConfigurationReference = 56517864B1F7D23DBE5A6E01 /* Pods-UIT-CE.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "UIT-CE/Info.plist";
@@ -554,6 +589,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "UIT-CE";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "UIT-CE/UIT-CE-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -562,6 +599,7 @@
 			baseConfigurationReference = 0BD30FE93E41B372F5F42881 /* Pods-UIT-CE.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "UIT-CE/Info.plist";
@@ -570,6 +608,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "UIT-CE";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "UIT-CE/UIT-CE-Bridging-Header.h";
 			};
 			name = Release;
 		};

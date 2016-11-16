@@ -28,7 +28,7 @@ class ClockViewController: UIViewController {
     var rSeconds: String = ""
     var myTimer: NSTimer = NSTimer()
     var isStart: Bool = true
-    var isConnected: Bool?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +40,7 @@ class ClockViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.myClock.delegate = self
         self.myClock.startRealTime()
-        isConnected = DataProviding.statusConnection(connectStatus)
+        DataProviding.statusButton(connectStatus, status: isConnected)
     }
     
     @IBAction func leftMenuButton(sender: AnyObject) {
@@ -58,19 +58,19 @@ class ClockViewController: UIViewController {
     @IBAction func captureButton(sender: AnyObject) {
         if isStart == true {
             StartTimer()
-            isStart = false
         } else {
             StopTimer()
-            isStart = true
         }
     }
     
     func StartTimer() {
         if isConnected == true {
+            isStart = false
             myTimer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(ClockViewController.updateTimer), userInfo: nil, repeats: true)
             self.view.makeToast(message: "Sending")
         } else {
-            let refreshAlert = UIAlertController(title: "Sorry", message: "Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
+            isStart = true
+            let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
             }))
             presentViewController(refreshAlert, animated: true, completion: nil)
@@ -106,7 +106,8 @@ class ClockViewController: UIViewController {
             }
             let newString = (result.pixelValues?.description)!
             let data = newString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            socket?.emit("message", data)
+//            socket?.emit("message", data)
+            DataProviding.sendMessage(data)
             image.image = DataProviding.imageFromARGB32Bitmap(pixels, width: 192, height: result.height)
         }
     }

@@ -29,7 +29,9 @@ class SettingViewController: UIViewController {
     var pickerData = ["192","164","128", "96", "64", "32"]
     var indicator:ProgressIndicator?
     var url: String?
-    var isConnected: Bool = false
+    var addr: String = "192.168.0.125"
+    var port: Int = 4000
+    var isConnection: Bool?
     
     @IBAction func leftMenuButton(sender: AnyObject) {
         self.openLeft()
@@ -82,45 +84,53 @@ class SettingViewController: UIViewController {
         textField5.text = "8080"
     }
     
+    
     @IBAction func connectButton(sender: AnyObject) {
         
-        if isConnected == true {
-            isConnected = false
+        if isConnection == true {
             indicator!.start()
-            socket?.disconnect()
             self.connecTitle.setTitle("Connect", forState: .Normal)
-            self.view.makeToast(message: "Congatulate, Disconnect Success", duration: 1.0, position: HRToastPositionCenter, image: UIImage(named: "off")!)
+            self.view.makeToast(message: "DisConnected", duration: 1.0, position: HRToastPositionCenter, image: UIImage(named: "off")!)
+            socketTCP = TCPClient(addr: "1", port: 0)
+            let (success, msg )=socketTCP!.connect(timeout: 1)
+            if success == false {
+                isConnected = success
+                isConnection = isConnected
+            }
             indicator!.stop()
         } else {
-            isConnected = true
             indicator!.start()
-            socket = SocketIOClient(socketURL: NSURL(string: url!)!, config: [SocketIOClientOption.Log(true), SocketIOClientOption.ForcePolling(true)])
-            socket!.on("connect") {data, ack in
-                self.view.makeToast(message: "Congatulate, Connect Success", duration: 1.0, position: HRToastPositionCenter, image: UIImage(named: "on")!)
-                self.indicator!.stop()
-                self.connecTitle.setTitle("Disconnect", forState: .Normal)
-                print("socket connected")
+           
+            let (resultSet, err) = SD.executeQuery("SELECT * FROM Setting")
+            if err != nil {
+                print(" Error in loading Data")
+            } else {
+                addr =  (resultSet[0]["IP"]?.asString()!)!
+                port = (resultSet[0]["Port"]?.asInt()!)!
             }
-            socket!.connect()
-            
-            socket!.on("message", callback: {
-                data, ack in
-                if let msg:String = (data[0] as! String) {
-                    print("data ne: \(msg)")
-                }
-            })
-            
-            socket?.onAny({ (event) in
-                if event.event == "New_Client" {
-                    print("string of event: \(event.event)")
-                }
-            })
-
+            socketTCP = TCPClient(addr: addr, port: port)
+            // Connect the socket
+            let (success, msg )=socketTCP!.connect(timeout: 1)
+            if success == true {
+                self.view.makeToast(message: "Connected", duration: 1.0, position: HRToastPositionCenter, image: UIImage(named: "on")!)
+                self.connecTitle.setTitle("DisConnect", forState: .Normal)
+                isConnected = success
+                isConnection = isConnected
+            }
+            self.indicator!.stop()
         }
+        
     }
   
     override func viewDidLoad() {
         super.viewDidLoad()
+        isConnection = isConnected
+        if isConnected == true {
+            self.connecTitle.setTitle("DisConnect", forState: .Normal)
+        } else {
+            self.connecTitle.setTitle("Connect", forState: .Normal)
+        }
+        
         self.topView.clipsToBounds = true
         self.view.clipsToBounds = true
         self.topView.addGradientWithColor(Colors.primaryBlue())
@@ -156,15 +166,6 @@ class SettingViewController: UIViewController {
             textField3.text = resultSet[0]["Value"]?.asInt()?.description
             textField4.text = resultSet[0]["IP"]?.asString()
             textField5.text = resultSet[0]["Port"]?.asInt()?.description
-        }
-        if DataProviding.statusConnection(connecTitle) == true {
-            self.connecTitle.setImage(UIImage(named: ""), forState: .Normal)
-            self.connecTitle.setTitle("Disconnect", forState: .Normal)
-            isConnected = true
-        } else {
-            self.connecTitle.setImage(UIImage(named: ""), forState: .Normal)
-            self.connecTitle.setTitle("Connect", forState: .Normal)
-            isConnected = false
         }
     }
     

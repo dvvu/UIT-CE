@@ -278,8 +278,9 @@
                                         <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Rgs-DB-RvB">
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rgs-DB-RvB">
                                         <rect key="frame" x="8" y="550" width="367" height="2"/>
+                                        <color key="progressTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </progressView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2X-TU-he2">
                                         <rect key="frame" x="8" y="144" width="110" height="30"/>
@@ -289,6 +290,18 @@
                                             <action selector="gotoSetting:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uRO-TI-FKL"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5VC-H0-a3r">
+                                        <rect key="frame" x="152" y="207" width="79" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c6d-uL-1Z6">
+                                        <rect key="frame" x="184" y="536" width="15" height="9"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="7"/>
+                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="q4c-cN-N8j">
                                         <rect key="frame" x="0.0" y="228" width="383" height="191"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -304,18 +317,6 @@
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="Qb9-Mf-IqY"/>
                                         </connections>
                                     </collectionView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5VC-H0-a3r">
-                                        <rect key="frame" x="152" y="207" width="79" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c6d-uL-1Z6">
-                                        <rect key="frame" x="184" y="536" width="15" height="9"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="7"/>
-                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -391,7 +392,10 @@
                         <outlet property="ip" destination="4bE-1R-xIZ" id="I4k-fT-nKq"/>
                         <outlet property="listImageCollectionView" destination="q4c-cN-N8j" id="ttG-1e-DSa"/>
                         <outlet property="port" destination="WQp-QK-SZo" id="A5G-4t-led"/>
+                        <outlet property="processBar" destination="Rgs-DB-RvB" id="xlV-OW-mCr"/>
+                        <outlet property="processLabel" destination="c6d-uL-1Z6" id="fyl-wO-jsU"/>
                         <outlet property="rDelay" destination="lcT-lO-bgL" id="c6M-dI-ECU"/>
+                        <outlet property="sendTitleButton" destination="Hl9-lq-Xs0" id="fRv-zM-c8C"/>
                         <outlet property="vans" destination="0DI-nU-l4k" id="KWp-nw-fh4"/>
                         <outlet property="view1" destination="8bC-Xf-vdC" id="xJG-xI-lif"/>
                         <outlet property="view2" destination="A56-1t-Stf" id="Phw-eY-mUa"/>
@@ -1553,18 +1557,18 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vh0-bk-0t0">
                                 <rect key="frame" x="0.0" y="20" width="600" height="106"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User: UIT CE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GY9-Fz-ADz">
-                                        <rect key="frame" x="101" y="42" width="490" height="21"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_uit" translatesAutoresizingMaskIntoConstraints="NO" id="pEj-kU-uGG">
                                         <rect key="frame" x="8" y="11" width="84" height="84"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="pEj-kU-uGG" secondAttribute="height" multiplier="1:1" id="EvB-tO-OGF"/>
                                         </constraints>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="User: UIT CE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GY9-Fz-ADz">
+                                        <rect key="frame" x="102" y="42" width="490" height="21"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.29624882322921869" green="0.46622744956024792" blue="0.55481107026143794" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
