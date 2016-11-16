@@ -30,6 +30,9 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     @IBOutlet weak var rDelay: UILabel!
     @IBOutlet weak var iDelay: UILabel!
     @IBOutlet weak var ip: UILabel!
+    @IBOutlet weak var processLabel: UILabel!
+    @IBOutlet weak var processBar: UIProgressView!
+    @IBOutlet weak var sendTitleButton: UIButton!
     
     var left: LeftMenuViewController?
     var indicator:ProgressIndicator?
@@ -209,28 +212,30 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     
     @IBAction func sendButton(sender: AnyObject) {
         if isConnected == true {
+           
             var data: [String] = []
-            self.view.makeToast(message: "Sending...")
-//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
-                self.indicator?.start()
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
                 for image in self.ListImage {
                     let result = DataProviding.intensityValuesFromImage(image)
                     let temp:String = (result.pixelValues?.description)!
                     let newString = temp.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
                     data.append(newString)
                 }
-        
-//                dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+                dispatch_sync(dispatch_get_main_queue(), {() -> Void in
                     for i in 0..<data.count {
-                         DataProviding.sendMessage(data[i])
-
+                        self.view.makeToast(message: "Send Sucess!", duration: 1.0, position: "bottom")
+                        self.sendTitleButton.setTitle("Seding", forState: .Normal)
+                        DataProviding.sendMessage(data[i])
                         sleep(2)
                     }
-                    self.view.makeToast(message: "Suceess!")
-                    self.indicator?.stop()
-//                })
-//            })
+               })
+               
+            })
             
+            self.view.makeToast(message: "Sending...", duration: 1.0, position: "bottom")
+            self.sendTitleButton.setTitle("Seding...", forState: .Normal)
+//            self.view.userInteractionEnabled = false
+
         } else {
             let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
@@ -239,6 +244,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
         }
     }
 }
+
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -257,10 +263,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
         let cell: ImportPhotoCell = collectionView.dequeueReusableCellWithReuseIdentifier("ImportPhotoCell", forIndexPath: indexPath) as! ImportPhotoCell
         if collectionView == listImageCollectionView {
             cell.image.image = ListImage[indexPath.row]
-            cell.frame.size = CGSize(width: self.collectionView.frame.size.width, height: self.collectionView.frame.size.height)
+//            cell.frame.size = CGSize(width: self.collectionView.frame.size.width, height: self.collectionView.frame.size.height)
         } else {
             cell.image.image = Image[indexPath.row]
-            cell.frame.size = CGSize(width: self.collectionView.frame.size.width, height: self.collectionView.frame.size.height)
+//            cell.frame.size = CGSize(width: self.collectionView.frame.size.width, height: self.collectionView.frame.size.height)
         }
         return cell
     }
@@ -272,6 +278,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
                 if let _ = SD.executeChange("INSERT INTO ListImageData (Path) VALUES (?)", withArgs: ["/\(titles[indexPath.row])"]){
                     //there was an error inserting the new row, handle it here
                 }
+                listImageCollectionView.setContentOffset(CGPoint(x: CGFloat(ListImage.count - 1)*(self.view.frame.size.width-1)/2 ,y: 0), animated: true)
             }catch{
                 print("Error")
             }

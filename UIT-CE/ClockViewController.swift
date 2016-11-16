@@ -58,18 +58,18 @@ class ClockViewController: UIViewController {
     @IBAction func captureButton(sender: AnyObject) {
         if isStart == true {
             StartTimer()
-            isStart = false
         } else {
             StopTimer()
-            isStart = true
         }
     }
     
     func StartTimer() {
         if isConnected == true {
+            isStart = false
             myTimer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(ClockViewController.updateTimer), userInfo: nil, repeats: true)
             self.view.makeToast(message: "Sending")
         } else {
+            isStart = true
             let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
             }))

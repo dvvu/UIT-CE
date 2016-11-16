@@ -57,23 +57,23 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func sendButton(sender: AnyObject) {
-        DataProviding.sendMessage(data)
-//        if isConnected == true {
-//            socket!.emit("message", data)
-//            let refreshAlert = UIAlertController(title: "Congatulate", message: "Sent success!", preferredStyle: UIAlertControllerStyle.Alert)
-//            
-//            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-//            }))
-//            
-//            presentViewController(refreshAlert, animated: true, completion: nil)
-//        } else {
-//            let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
-//            
-//            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-//            }))
-//            
-//            presentViewController(refreshAlert, animated: true, completion: nil)
-//        }
+       
+        if isConnected == true {
+             DataProviding.sendMessage(data)
+            let refreshAlert = UIAlertController(title: "Congatulate", message: "Sent success!", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+            }))
+            
+            presentViewController(refreshAlert, animated: true, completion: nil)
+        } else {
+            let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+            }))
+            
+            presentViewController(refreshAlert, animated: true, completion: nil)
+        }
         
     }
     

@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         self.window?.rootViewController = ViewController.loadLeftMenu()
         self.window?.makeKeyAndVisible()
+        UIApplication.sharedApplication().idleTimerDisabled = true
+        UIScreen.mainScreen().brightness = CGFloat(0.5)
         return true
     }
 
