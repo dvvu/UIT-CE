@@ -28,10 +28,11 @@ class ClockViewController: UIViewController {
     var rSeconds: String = ""
     var myTimer: NSTimer = NSTimer()
     var isStart: Bool = true
-    
+    var vanNumber: Int = 192
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getVanNumber() 
         self.view.clipsToBounds = true
         self.view.addGradientWithColor(UIColor.whiteColor())
         self.myClock.realTime = true
@@ -66,7 +67,7 @@ class ClockViewController: UIViewController {
     func StartTimer() {
         if isConnected == true {
             isStart = false
-            myTimer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(ClockViewController.updateTimer), userInfo: nil, repeats: true)
+            myTimer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(ClockViewController.updateTimer), userInfo: nil, repeats: true)
             self.view.makeToast(message: "Sending")
         } else {
             isStart = true
@@ -95,7 +96,7 @@ class ClockViewController: UIViewController {
             } else {
                 image1 = DataProviding.takeSnapshotOfView(digitalLabel)
             }
-            let image2 = DataProviding.resizeImage(image1,newWidth: 192)
+            let image2 = DataProviding.resizeImage(image1,newWidth: CGFloat(vanNumber))
             let result = DataProviding.intensityValuesFromImage(image2)
             for i in 0..<Int((result.pixelValues?.count)!) {
                 if result.pixelValues![i] == 1 {
@@ -106,10 +107,27 @@ class ClockViewController: UIViewController {
             }
             let newString = (result.pixelValues?.description)!
             let data = newString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-//            socket?.emit("message", data)
-            DataProviding.sendMessage(data)
-            image.image = DataProviding.imageFromARGB32Bitmap(pixels, width: 192, height: result.height)
+            let data2 = data.stringByReplacingOccurrencesOfString("[", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            let data3 = data2.stringByReplacingOccurrencesOfString("]", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+
+//            DataProviding.sendMessage(data)
+            
+            for k in 0..<data3.characters.count/self.vanNumber {
+                socketTCP?.send(str: data3[k*self.vanNumber...k*self.vanNumber+self.vanNumber-1] + "\n")
+            }
+            
+            image.image = DataProviding.imageFromARGB32Bitmap(pixels, width: vanNumber, height: result.height)
         }
+    }
+    
+    func getVanNumber() {
+        let (resultSet, err) = SD.executeQuery("SELECT * FROM Setting")
+        if err != nil {
+            print(" Error in loading Data")
+        } else {
+            vanNumber = (resultSet[0]["Van"]?.asInt())!
+        }
+
     }
        
 }

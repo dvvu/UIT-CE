@@ -21,7 +21,7 @@ extension UIImage {
     func imageWithView(view: UIView) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0)
         view.drawViewHierarchyInRect(view.bounds, afterScreenUpdates: false)
-        var snapshotImage = UIGraphicsGetImageFromCurrentImageContext()
+        let snapshotImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return snapshotImage
     }
@@ -40,6 +40,15 @@ extension UIView {
 extension String {
     func insert(string:String,ind:Int) -> String {
         return  String(self.characters.prefix(ind)) + string + String(self.characters.suffix(self.characters.count-ind))
+    }
+    
+    subscript (r: Range<Int>) -> String {
+        get {
+            let startIndex = self.startIndex.advancedBy(r.startIndex)
+            let endIndex = startIndex.advancedBy(r.endIndex - r.startIndex)
+            
+            return self[Range(start: startIndex, end: endIndex)]
+        }
     }
 }
 
