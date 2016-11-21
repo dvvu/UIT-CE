@@ -42,7 +42,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     var pixels = [DataProviding.PixelData()]
     let black = DataProviding.PixelData(a: 255, r: 0, g: 0, b: 0)
     let white = DataProviding.PixelData(a: 255, r: 255, g: 255, b: 255)
-    
+    var vanNumber: Int = 192
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         //SD.deleteTable("SampleImageTable")
@@ -76,6 +76,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
             print(" Error in loading Data")
         } else {
             print(resultSet.count)
+            vanNumber = (resultSet[0]["Van"]?.asInt())!
             vans.text = resultSet[0]["Van"]?.asInt()?.description
             rDelay.text = resultSet[0]["DRow"]?.asInt()?.description
             iDelay.text = resultSet[0]["DImage"]?.asInt()?.description
@@ -129,7 +130,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
                     let data = NSFileManager.defaultManager().contentsAtPath(imagesDirectoryPath+image)
                     
                     let image1 = UIImage(data: data!)
-                    let image2 = DataProviding.resizeImage(image1!, newWidth: 192)
+                    let image2 = DataProviding.resizeImage(image1!, newWidth: CGFloat(vanNumber))
                     let result = DataProviding.intensityValuesFromImage(image2)
                     
                     pixels = []
@@ -141,7 +142,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
                         }
                     }
                     
-                    let image3 = DataProviding.imageFromARGB32Bitmap(pixels, width: 192, height: result.height)
+                    let image3 = DataProviding.imageFromARGB32Bitmap(pixels, width: vanNumber, height: result.height)
                     ListImage.append(image3)
                 }
             }
@@ -219,13 +220,19 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
                     let result = DataProviding.intensityValuesFromImage(image)
                     let temp:String = (result.pixelValues?.description)!
                     let newString = temp.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-                    data.append(newString)
+                     let newString2 = newString.stringByReplacingOccurrencesOfString("[", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+                     let newString3 = newString2.stringByReplacingOccurrencesOfString("]", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+                    data.append(newString3)
                 }
                 dispatch_sync(dispatch_get_main_queue(), {() -> Void in
                     for i in 0..<data.count {
                         self.view.makeToast(message: "Send Sucess!", duration: 1.0, position: "bottom")
-                        self.sendTitleButton.setTitle("Seding", forState: .Normal)
-                        DataProviding.sendMessage(data[i])
+                        self.sendTitleButton.setTitle("Send", forState: .Normal)
+                        //DataProviding.sendMessage(data[i])
+                        for k in 0..<data[i].characters.count/self.vanNumber {
+                            // DataProviding.sendMessage(data)
+                            socketTCP?.send(str: data[i][k*self.vanNumber...k*self.vanNumber+self.vanNumber-1] + "\n")
+                        }
                         sleep(2)
                     }
                })
@@ -233,7 +240,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
             })
             
             self.view.makeToast(message: "Sending...", duration: 1.0, position: "bottom")
-            self.sendTitleButton.setTitle("Seding...", forState: .Normal)
+            self.sendTitleButton.setTitle("Sending...", forState: .Normal)
 //            self.view.userInteractionEnabled = false
 
         } else {

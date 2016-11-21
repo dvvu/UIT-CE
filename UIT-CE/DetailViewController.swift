@@ -39,9 +39,11 @@ class DetailViewController: UIViewController {
          image1 = UIImage(data: data!)!
          image2 = DataProviding.resizeImage(image1, newWidth: CGFloat(vanNumber))
         let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(sliderValue.value))
+        let newString = (result.pixelValues?.description)!
+        let newString2 = newString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let newString3 = newString2.stringByReplacingOccurrencesOfString("[", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        self.data = newString3.stringByReplacingOccurrencesOfString("]", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         
-         let newString = (result.pixelValues?.description)!
-         self.data = newString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         imageLabel.font = UIFont(name:"Courier", size: 1)
         loadString()
         DataProviding.statusButton(connectStatus, status: isConnected)
@@ -59,7 +61,13 @@ class DetailViewController: UIViewController {
     @IBAction func sendButton(sender: AnyObject) {
        
         if isConnected == true {
-             DataProviding.sendMessage(data)
+            
+            for i in 0..<data.characters.count/vanNumber {
+               // DataProviding.sendMessage(data)
+                socketTCP?.send(str: data[i*vanNumber...i*vanNumber+vanNumber-1] + "\n")
+            }
+            
+            
             let refreshAlert = UIAlertController(title: "Congatulate", message: "Sent success!", preferredStyle: UIAlertControllerStyle.Alert)
             
             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
