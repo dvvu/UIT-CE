@@ -590,13 +590,6 @@
                                     <action selector="detailButton:" destination="Bmq-kC-CgZ" eventType="touchUpInside" id="3Wm-gv-X8o"/>
                                 </connections>
                             </button>
-                            <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Ap-XG-TfC">
-                                <rect key="frame" x="0.0" y="583" width="375" height="84"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="Bmq-kC-CgZ" id="7f6-vA-b5k"/>
-                                    <outlet property="delegate" destination="Bmq-kC-CgZ" id="5MG-Vv-8FR"/>
-                                </connections>
-                            </pickerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hgi-Ws-Afj">
                                 <rect key="frame" x="95" y="392" width="185" height="31"/>
                                 <subviews>
@@ -643,6 +636,13 @@
                                     <constraint firstItem="rNS-Hf-SLY" firstAttribute="centerY" secondItem="Hgi-Ws-Afj" secondAttribute="centerY" id="rcb-zR-QZr"/>
                                 </constraints>
                             </view>
+                            <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Ap-XG-TfC">
+                                <rect key="frame" x="0.0" y="566" width="375" height="101"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Bmq-kC-CgZ" id="7f6-vA-b5k"/>
+                                    <outlet property="delegate" destination="Bmq-kC-CgZ" id="5MG-Vv-8FR"/>
+                                </connections>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" red="0.38738414442219538" green="0.60965346523687258" blue="0.72548815359477126" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -657,7 +657,7 @@
                             <constraint firstItem="wG8-wv-99z" firstAttribute="trailing" secondItem="BHd-MP-dSR" secondAttribute="trailingMargin" id="E9n-ba-e9m"/>
                             <constraint firstItem="V37-IX-P63" firstAttribute="top" secondItem="9iH-MD-IyV" secondAttribute="bottom" constant="7" id="HY8-ac-QhZ"/>
                             <constraint firstItem="Hgi-Ws-Afj" firstAttribute="centerX" secondItem="BHd-MP-dSR" secondAttribute="centerX" id="Hqp-HV-45d"/>
-                            <constraint firstItem="1Ap-XG-TfC" firstAttribute="height" secondItem="wG8-wv-99z" secondAttribute="height" multiplier="0.5" id="IGx-Ev-V6H"/>
+                            <constraint firstItem="1Ap-XG-TfC" firstAttribute="height" secondItem="wG8-wv-99z" secondAttribute="height" multiplier="0.6" id="IGx-Ev-V6H"/>
                             <constraint firstItem="Htd-os-vIg" firstAttribute="leading" secondItem="BHd-MP-dSR" secondAttribute="leadingMargin" id="Ij7-Ce-FS0"/>
                             <constraint firstItem="STo-z1-zc5" firstAttribute="top" secondItem="Y7W-kW-5OP" secondAttribute="bottom" constant="21" id="K66-Tq-VCr"/>
                             <constraint firstItem="9iH-MD-IyV" firstAttribute="leading" secondItem="BHd-MP-dSR" secondAttribute="leadingMargin" id="Ks6-kv-BDo"/>
@@ -719,10 +719,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="adB-p3-coP">
-                                        <rect key="frame" x="8" y="465" width="584" height="70"/>
+                                        <rect key="frame" x="8" y="445" width="584" height="90"/>
                                         <color key="backgroundColor" red="0.3921568627" green="0.61568627450000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="70" id="5VB-lc-1yN"/>
+                                            <constraint firstAttribute="height" constant="90" id="5VB-lc-1yN"/>
                                         </constraints>
                                     </pickerView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="192" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G4z-ee-6Gi" customClass="PaddingLabel" customModule="UIT_CE" customModuleProvider="target">
@@ -1161,13 +1161,13 @@
                                     <constraint firstItem="Bbt-3b-vJS" firstAttribute="top" secondItem="bPQ-Kh-2iZ" secondAttribute="topMargin" constant="11" id="taq-Dm-P0m"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time out (ms)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cbf-JA-KFN">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simulator Program" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cbf-JA-KFN">
                                 <rect key="frame" x="8" y="65" width="584" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="6rY-gQ-MgS"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>

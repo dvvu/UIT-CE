@@ -136,7 +136,7 @@ class SettingViewController: UIViewController {
         self.topView.addGradientWithColor(Colors.primaryBlue())
         self.view.addGradientWithColor(UIColor.whiteColor())
         
-        loaddingSetting()
+//        loaddingSetting()
         indicator = ProgressIndicator(inview:self.view,loadingViewColor: UIColor.grayColor(), indicatorColor: UIColor.blackColor(), msg: "Connecting...")
         self.view.addSubview(indicator!)
         
@@ -169,17 +169,17 @@ class SettingViewController: UIViewController {
         }
     }
     
-    func loaddingSetting() {
-        url = "http://"
-        let (resultSet, err) = SD.executeQuery("SELECT * FROM Setting")
-        if err != nil {
-            print(" Error in loading Data")
-        } else {
-            url =  url! + (resultSet[0]["IP"]?.asString())! + ":"
-            url = url! + (resultSet[0]["Port"]?.asInt()?.description)!
-        }
-        print(url)
-    }
+//    func loaddingSetting() {
+//        url = "http://"
+//        let (resultSet, err) = SD.executeQuery("SELECT * FROM Setting")
+//        if err != nil {
+//            print(" Error in loading Data")
+//        } else {
+//            url =  url! + (resultSet[0]["IP"]?.asString())! + ":"
+//            url = url! + (resultSet[0]["Port"]?.asInt()?.description)!
+//        }
+//        print(url)
+//    }
     
     func borderText(textField: UITextField) {
         textField.layer.borderWidth = 1.1
