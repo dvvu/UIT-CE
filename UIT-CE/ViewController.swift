@@ -43,6 +43,8 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     let black = DataProviding.PixelData(a: 255, r: 0, g: 0, b: 0)
     let white = DataProviding.PixelData(a: 255, r: 255, g: 255, b: 255)
     var vanNumber: Int = 192
+    var valueThreshold: Int = 127
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         //SD.deleteTable("SampleImageTable")
@@ -77,6 +79,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
         } else {
             print(resultSet.count)
             vanNumber = (resultSet[0]["Van"]?.asInt())!
+            valueThreshold = (resultSet[0]["Value"]?.asInt())!
             vans.text = resultSet[0]["Van"]?.asInt()?.description
             rDelay.text = resultSet[0]["DRow"]?.asInt()?.description
             iDelay.text = resultSet[0]["DImage"]?.asInt()?.description
@@ -131,7 +134,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
                     
                     let image1 = UIImage(data: data!)
                     let image2 = DataProviding.resizeImage(image1!, newWidth: CGFloat(vanNumber))
-                    let result = DataProviding.intensityValuesFromImage(image2)
+                    let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(self.valueThreshold))
                     
                     pixels = []
                     for i in 0..<Int((result.pixelValues?.count)!) {
@@ -217,7 +220,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
             var data: [String] = []
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
                 for image in self.ListImage {
-                    let result = DataProviding.intensityValuesFromImage(image)
+                    let result = DataProviding.intensityValuesFromImage1(image, value: UInt8(self.valueThreshold))
                     let temp:String = (result.pixelValues?.description)!
                     let newString = temp.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
                      let newString2 = newString.stringByReplacingOccurrencesOfString("[", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)

@@ -27,11 +27,14 @@ class UITDrawViewController: UIViewController
     weak var canvasView: Canvas?
     weak var paletteView: Palette?
     weak var toolBar: ToolBar?
+    var imagesDirectoryPath:String!
+    
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var connectStatus: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        conditionSQLite()
         self.topView.backgroundColor = Colors.primaryBlue()
         self.initialize()
         DataProviding.statusButton(connectStatus, status: isConnected)
@@ -200,6 +203,37 @@ class UITDrawViewController: UIViewController
             alert.show()
         }
     }
+    
+    func conditionSQLite() {
+        /*Condition to have path*/
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        // Get the Document directory path
+        let documentDirectorPath:String = paths[0]
+        // Create a new path for the new images folder
+        imagesDirectoryPath = documentDirectorPath.stringByAppendingString("/ImagePicker")
+        var objcBool:ObjCBool = true
+        let isExist = NSFileManager.defaultManager().fileExistsAtPath(imagesDirectoryPath, isDirectory: &objcBool)
+        // If the folder with the given path doesn't exist already, create it
+        if isExist == false{
+            do{
+                try NSFileManager.defaultManager().createDirectoryAtPath(imagesDirectoryPath, withIntermediateDirectories: true, attributes: nil)
+            }catch{
+                print("Something went wrong while creating a new folder")
+            }
+        }
+    }
+    
+    func insertData() {
+        do{
+            let titles = try NSFileManager.defaultManager().contentsOfDirectoryAtPath(imagesDirectoryPath)
+            if let err = SD.executeChange("INSERT INTO ImageData (Path) VALUES (?)", withArgs: ["/\(titles[titles.count-1])"]){
+                //there was an error inserting the new row, handle it here
+            }
+        }catch{
+            print("Error")
+        }
+    }
+    
 }
 
 
@@ -229,8 +263,27 @@ extension UITDrawViewController: CanvasDelegate
         
         // you can share your image with UIActivityViewController
         if let pngImage = image?.asPNGImage() {
-            let activityViewController = UIActivityViewController(activityItems: [pngImage], applicationActivities: nil)
-            self.presentViewController(activityViewController, animated: true, completion: nil)
+            /*Fixme: show save image into library*/
+//            let activityViewController = UIActivityViewController(activityItems: [pngImage], applicationActivities: nil)
+//            self.presentViewController(activityViewController, animated: true, completion: nil)
+            
+            let refreshAlert = UIAlertController(title: "Comfirm", message: "Would you like to save image?", preferredStyle: UIAlertControllerStyle.Alert)
+            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+                var imagePath = NSDate().description
+                imagePath = imagePath.stringByReplacingOccurrencesOfString(" ", withString: "")
+                imagePath = self.imagesDirectoryPath.stringByAppendingString("/\(imagePath).png")
+                let data = UIImagePNGRepresentation(pngImage)
+                let success = NSFileManager.defaultManager().createFileAtPath(imagePath, contents: data, attributes: nil)
+                self.insertData()
+            }))
+            
+            refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction!) in
+                print("Handle Cancel Logic here")
+            }))
+            
+            presentViewController(refreshAlert, animated: true, completion: nil)
+            
+            
         }
     }
 }
