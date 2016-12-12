@@ -133,8 +133,8 @@ class SettingViewController: UIViewController {
         
         self.topView.clipsToBounds = true
         self.view.clipsToBounds = true
-        self.topView.addGradientWithColor(Colors.primaryBlue())
-        self.view.addGradientWithColor(UIColor.whiteColor())
+        self.topView.backgroundColor = Colors.primaryTopGray()//addGradientWithColor(Colors.primaryBlue())
+        self.view.backgroundColor = Colors.primaryGray()//addGradientWithColor(UIColor.whiteColor())
         
 //        loaddingSetting()
         indicator = ProgressIndicator(inview:self.view,loadingViewColor: UIColor.grayColor(), indicatorColor: UIColor.blackColor(), msg: "Connecting...")

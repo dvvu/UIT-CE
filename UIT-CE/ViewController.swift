@@ -54,8 +54,8 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
         conditionSQLite()
         SD.deleteTable("ListImageData")
         self.view1.clipsToBounds = true
-        self.view1.addGradientWithColor(UIColor.whiteColor())
-        self.view2.backgroundColor = Colors.primaryBlue()
+        self.view1.backgroundColor = Colors.primaryGray()//addGradientWithColor(UIColor.whiteColor())
+        self.view2.backgroundColor = Colors.primaryTopGray()
         collectionView!.registerNib(UINib(nibName: "ImportPhotoCell", bundle: nil), forCellWithReuseIdentifier: "ImportPhotoCell")
         listImageCollectionView!.registerNib(UINib(nibName: "ImportPhotoCell", bundle: nil), forCellWithReuseIdentifier: "ImportPhotoCell")
         layoutCollectiobView(self.collectionView)

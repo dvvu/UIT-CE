@@ -34,8 +34,8 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
         conditionSQLite()
         self.topView.clipsToBounds = true
         self.view.clipsToBounds = true
-        self.topView.addGradientWithColor(Colors.primaryBlue())
-        self.view.addGradientWithColor(UIColor.whiteColor())
+        self.topView.backgroundColor = Colors.primaryTopGray()//addGradientWithColor(Colors.primaryBlue())
+        self.view.backgroundColor = Colors.primaryGray()//addGradientWithColor(UIColor.whiteColor())
         self.textField.delegate = self
         onTapView()
         DataProviding.statusButton(connectStatus, status: isConnected)
