@@ -35,7 +35,7 @@ class UITDrawViewController: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         conditionSQLite()
-        self.topView.backgroundColor = Colors.primaryBlue()
+        self.topView.backgroundColor = Colors.primaryTopGray()
         self.initialize()
         DataProviding.statusButton(connectStatus, status: isConnected)
     }
@@ -58,7 +58,7 @@ class UITDrawViewController: UIViewController
     }
     
     private func setupPalette() {
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = Colors.primaryGray()
         
         let paletteView = Palette()
         paletteView.delegate = self

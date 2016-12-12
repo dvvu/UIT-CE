@@ -31,15 +31,15 @@ class LeftMenuViewController: UIViewController {
 //        self.topView.clipsToBounds = true
         self.view.clipsToBounds = true
 //        self.topView.addGradientWithColor(UIColor.grayColor())
-        self.view.addGradientWithColor(UIColor.whiteColor())
+        self.view.backgroundColor = Colors.primaryGray()//addGradientWithColor(UIColor.whiteColor())
         
-        self.topView.backgroundColor = Colors.primaryBlue()
+        self.topView.backgroundColor = Colors.primaryTopGray()
         
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView!.registerNib(UINib(nibName: "LeftMenuCell", bundle: nil), forCellWithReuseIdentifier: "LeftMenuCell")
         layoutCollectiobView()
-        Titile = ["Home","Dislay Text","Clock","Import Photo","Draw Image","Setting","Test"]
+        Titile = ["Home","Display Text","Clock","Import Photo","Draw Image","Setting","Test"]
         Image = ["ic_home1","ui_dislayText","ui_clock","ui_importphto","ui_paint","setting_ic","ui_test"]
     }
     
@@ -90,6 +90,7 @@ extension LeftMenuViewController: PageDelegate {
             if let vc = UIStoryboard.loadLeftMenuDraw() {
                 vc.title = pageName
                 vc.view.layoutIfNeeded()
+                vc.updateViewConstraints()
                 vc.modalPresentationStyle = .PageSheet
                 vc.modalTransitionStyle = .CrossDissolve
                 self.presentViewController(vc, animated: true, completion: nil)
@@ -101,6 +102,7 @@ extension LeftMenuViewController: PageDelegate {
                 vc.modalPresentationStyle = .PageSheet
                 vc.modalTransitionStyle = .CrossDissolve
                 vc.view.layoutIfNeeded()
+                vc.updateViewConstraints()
                 self.presentViewController(vc, animated: true, completion: nil)
             }
         } else if pageName == "Setting" {
@@ -109,6 +111,7 @@ extension LeftMenuViewController: PageDelegate {
                 vc.modalPresentationStyle = .PageSheet
                 vc.modalTransitionStyle = .CrossDissolve
                 vc.view.layoutIfNeeded()
+                vc.updateViewConstraints()
                 self.presentViewController(vc, animated: true, completion: nil)
             }
         }
@@ -119,16 +122,18 @@ extension LeftMenuViewController: PageDelegate {
                 vc.modalPresentationStyle = .PageSheet
                 vc.modalTransitionStyle = .CrossDissolve
                 vc.view.layoutIfNeeded()
+                vc.updateViewConstraints()
                 self.presentViewController(vc, animated: true, completion: nil)
             }
         }
         
-        else if pageName == "Dislay Text" {
+        else if pageName == "Display Text" {
             if let vc = UIStoryboard.loadLeftMenuDisplayText() {
                 vc.title = pageName
                 vc.modalPresentationStyle = .PageSheet
                 vc.modalTransitionStyle = .CrossDissolve
                 vc.view.layoutIfNeeded()
+                vc.updateViewConstraints()
                 self.presentViewController(vc, animated: true, completion: nil)
             }
         }
@@ -139,6 +144,7 @@ extension LeftMenuViewController: PageDelegate {
                 vc.modalPresentationStyle = .PageSheet
                 vc.modalTransitionStyle = .CrossDissolve
                 vc.view.layoutIfNeeded()
+                vc.updateViewConstraints()
                 self.presentViewController(vc, animated: true, completion: nil)
             }
         }
@@ -149,6 +155,7 @@ extension LeftMenuViewController: PageDelegate {
                 vc.modalPresentationStyle = .PageSheet
                 vc.modalTransitionStyle = .CrossDissolve
                 vc.view.layoutIfNeeded()
+                vc.updateViewConstraints()
                 self.presentViewController(vc, animated: true, completion: nil)
             }
         }

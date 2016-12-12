@@ -105,8 +105,8 @@ class DetailViewController: UIViewController {
     /*func*/
     func layOutTap() {
         self.view.clipsToBounds = true
-        self.topView.backgroundColor = Colors.primaryBlue()
-        self.view.addGradientWithColor(UIColor.whiteColor())
+        self.topView.backgroundColor = Colors.primaryTopGray()
+        self.view.backgroundColor = Colors.primaryGray()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.viewTapped(_:)))
         self.view.addGestureRecognizer(tapGesture)

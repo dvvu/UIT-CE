@@ -34,7 +34,7 @@ class ClockViewController: UIViewController {
         super.viewDidLoad()
         getVanNumber() 
         self.view.clipsToBounds = true
-        self.view.addGradientWithColor(UIColor.whiteColor())
+        self.view.backgroundColor = Colors.primaryGray()//addGradientWithColor(UIColor.whiteColor())
         self.myClock.realTime = true
         self.myClock.currentTime = true
         self.myClock.setClockToCurrentTimeAnimated(true)

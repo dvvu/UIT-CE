@@ -13,4 +13,10 @@ class Colors {
     class func primaryBlue() -> UIColor {
         return UIColor(hexString: "#649DBA")!
     }
+    class func primaryGray() -> UIColor {
+        return UIColor(hexString: "#666")!
+    }
+    class func primaryTopGray() -> UIColor {
+        return UIColor(hexString: "#333")!
+    }
 }

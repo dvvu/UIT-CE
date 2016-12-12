@@ -55,8 +55,8 @@ class ImportPhotoViewController: UIViewController {
         self.view.addSubview(indicator!)
         self.topView.clipsToBounds = true
         self.view.clipsToBounds = true
-        self.topView.addGradientWithColor(Colors.primaryBlue())
-        self.view.addGradientWithColor(UIColor.whiteColor())
+        self.topView.backgroundColor = Colors.primaryTopGray()//addGradientWithColor(Colors.primaryBlue())
+        self.view.backgroundColor = Colors.primaryGray()//addGradientWithColor(UIColor.whiteColor())
         collectionView!.registerNib(UINib(nibName: "ImportPhotoCell", bundle: nil), forCellWithReuseIdentifier: "ImportPhotoCell")
         
         /* loading data with activity*/

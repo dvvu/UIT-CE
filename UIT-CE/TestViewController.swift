@@ -33,7 +33,7 @@ class TestViewController: UIViewController {
         super.viewDidLoad()
         scrollView.contentSize.width = 100
         loaddingSetting()
-        self.view.addGradientWithColor(UIColor.whiteColor())
+        self.view.backgroundColor = Colors.primaryGray()//addGradientWithColor(UIColor.whiteColor())
         indicator = ProgressIndicator(inview:self.view,loadingViewColor: UIColor.grayColor(), indicatorColor: UIColor.blackColor(), msg: "Loading..")
         self.view.addSubview(indicator!)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(TestViewController.viewTapped(_:)))
