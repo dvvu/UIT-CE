@@ -40,7 +40,7 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
         onTapView()
         DataProviding.statusButton(connectStatus, status: isConnected)
         
-        for i in 7...50 {
+        for i in 7...100 {
             pickerData.append(i)
         }
     }

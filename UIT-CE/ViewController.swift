@@ -24,14 +24,12 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     @IBOutlet weak var viewMain: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var listImageCollectionView: UICollectionView!
-
     @IBOutlet weak var vans: UILabel!
     @IBOutlet weak var port: UILabel!
     @IBOutlet weak var rDelay: UILabel!
     @IBOutlet weak var iDelay: UILabel!
     @IBOutlet weak var ip: UILabel!
-    @IBOutlet weak var processLabel: UILabel!
-    @IBOutlet weak var processBar: UIProgressView!
+    @IBOutlet weak var threshold: UILabel!
     @IBOutlet weak var sendTitleButton: UIButton!
     
     var left: LeftMenuViewController?
@@ -66,9 +64,23 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
         indicator = ProgressIndicator(inview:self.view,loadingViewColor: UIColor.grayColor(), indicatorColor: UIColor.blackColor(), msg: "Loading..")
         self.view.addSubview(indicator!)
         indicator!.start()
-        loaddingDataBase()
-        loaddingListImageData()
-        loaddingSetting()
+//        loaddingDataBase()
+//        loaddingListImageData()
+//        loaddingSetting()
+        self.loaddingSetting()
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
+            self.loaddingDataBase()
+            self.loaddingListImageData()
+            
+            dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+                
+               
+            })
+        })
+         self.indicator!.stop()
+        
+        
         DataProviding.statusButton(conectStatus, status: isConnected)
     }
     
@@ -83,7 +95,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
             vans.text = resultSet[0]["Van"]?.asInt()?.description
             rDelay.text = resultSet[0]["DRow"]?.asInt()?.description
             iDelay.text = resultSet[0]["DImage"]?.asInt()?.description
-            //textField3.text = resultSet[0]["Value"]?.asInt()?.description
+            threshold.text = resultSet[0]["Value"]?.asInt()?.description
             ip.text = resultSet[0]["IP"]?.asString()
             port.text = resultSet[0]["Port"]?.asInt()?.description
         }
