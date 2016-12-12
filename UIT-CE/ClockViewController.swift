@@ -135,17 +135,17 @@ class ClockViewController: UIViewController {
 extension ClockViewController: BEMAnalogClockDelegate {
     @objc(currentTimeOnClock:Hours:Minutes:Seconds:)
     func currentTimeOnClock(clock: BEMAnalogClockView!, hours: String!, minutes: String!, seconds: String!) {
-        if Int(hours) < 9 {
+        if Int(hours) <= 9 {
             rHours = "0" + hours
         } else {
             rHours = hours
         }
-        if Int(minutes) < 9 {
+        if Int(minutes) <= 9 {
             rMinutes = "0" + minutes
         } else {
             rMinutes = minutes
         }
-        if Int(seconds) < 9 {
+        if Int(seconds) <= 9 {
             rSeconds = "0" + seconds
         } else {
             rSeconds = seconds
