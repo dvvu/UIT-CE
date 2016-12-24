@@ -230,6 +230,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
         if isConnected == true {
            
             var data: [String] = []
+           
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
                 for image in self.ListImage {
                     let result = DataProviding.intensityValuesFromImage2(image, value: UInt8(valueThreshold))
@@ -237,17 +238,35 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
                     let newString = temp.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
                      let newString2 = newString.stringByReplacingOccurrencesOfString("[", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
                      let newString3 = newString2.stringByReplacingOccurrencesOfString("]", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+                    
+                    let height = (result.pixelValues!.count)/8
+                    var Array: [[UInt8]] = [[]]
+                    
+                    for j in 0..<height {
+                        var dataArray: [UInt8] = []
+                        dataArray = [UInt8](count: 8, repeatedValue: 0)
+                        for i in 0...7 {
+                            dataArray[i] = result.pixelValues![i + (height - 1 - j)*8]
+                        }
+                        Array.append(dataArray)
+                    }
+                    
+                    for a in Array {
+                        DataProviding.sendData(a)
+                        usleep(100000)
+                    }
+                    
                     data.append(newString3)
                 }
                 dispatch_sync(dispatch_get_main_queue(), {() -> Void in
                     for i in 0..<data.count {
                         self.view.makeToast(message: "Send Sucess!", duration: 1.0, position: "bottom")
                         self.sendTitleButton.setTitle("Send", forState: .Normal)
-                       
-                        for k in 0..<data[i].characters.count/valueVanNumber {
-                            socketTCP?.send(str: data[i][k*valueVanNumber...k*valueVanNumber+valueVanNumber-1] + "\n")
-                        }
-                        sleep(2)
+                        
+//                        for k in 0..<data[i].characters.count/valueVanNumber {
+//                            socketTCP?.send(str: data[i][k*valueVanNumber...k*valueVanNumber+valueVanNumber-1] + "\n")
+//                        }
+//                        sleep(2)
                     }
                })
                

@@ -76,7 +76,7 @@ class DetailViewController: UIViewController {
             }
             
             for a in Array {
-                DataProviding.sendData(a)
+                sendData(a)
                 usleep(100000)
             }
             
@@ -102,20 +102,20 @@ class DetailViewController: UIViewController {
         
     }
     
-//    let start : [UInt8] = [0x40, 0x00]
-//    let chksm: [UInt8] = [0x00, 0x00]
-//    let begin: [UInt8] = [0x42, 0x00]
-//    let size : [UInt8] = [0x00, 0x08] //8 byte
-//    
-//    func sendData(foo : [UInt8]) {
-//        socketTCP?.send(data: start)
-//        socketTCP?.send(data: chksm)
-//        socketTCP?.send(data: begin)
-//        socketTCP?.send(data: size)
-//       // usleep(1) // co
-//        socketTCP?.send(data: foo)
-//        socketTCP?.send(data: chksm)
-//    }
+    let start : [UInt8] = [0x40, 0x00]
+    let chksm: [UInt8] = [0x00, 0x00]
+    let begin: [UInt8] = [0x42, 0x00]
+    let size : [UInt8] = [0x00, 0x08] //8 byte
+    
+    func sendData(foo : [UInt8]) {
+        socketTCP?.send(data: start)
+        socketTCP?.send(data: chksm)
+        socketTCP?.send(data: begin)
+        socketTCP?.send(data: size)
+       // usleep(1) // co
+        socketTCP?.send(data: foo)
+        socketTCP?.send(data: chksm)
+    }
     
     @IBAction func demoButton(sender: AnyObject) {
         if isClick == true {
