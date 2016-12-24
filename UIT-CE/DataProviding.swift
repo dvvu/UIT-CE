@@ -55,7 +55,7 @@ class DataProviding {
     
     static func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {
         let scale = newWidth / image.size.width
-        let newHeight = image.size.height * scale
+        let newHeight = CGFloat(image.size.height) * scale
         UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight))
         image.drawInRect(CGRectMake(0, 0, newWidth, newHeight))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -152,13 +152,52 @@ class DataProviding {
             }
         }
         
-        //        let aString: String = (pixelValues?.description)!
-        //        let newString = aString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        //        let string2 = newString.stringByReplacingOccurrencesOfString("0", withString: "∙", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        //        let string3 = string2.stringByReplacingOccurrencesOfString("1", withString: "💧", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        //        print(string3)
-        //        print(pixelValues?.count)
         return (pixelValues, width, height)
+    }
+    
+    static func intensityValuesFromImage2(image: UIImage?, value: UInt8) -> (data: [UInt8]?, pixelValues: [UInt8]?, width: Int, height: Int) {
+        var width = 0
+        var height = 0
+        var pixelValues: [UInt8]?
+        var pixelValues1: [UInt8]?
+        if (image != nil) {
+            let imageRef = image!.CGImage
+            width = CGImageGetWidth(imageRef)
+            height = CGImageGetHeight(imageRef)
+            
+            let bytesPerPixel = 1
+           
+            let bytesPerRow = bytesPerPixel * width
+            let bitsPerComponent = 8
+            let totalBytes = width * height * bytesPerPixel
+            
+            let colorSpace = CGColorSpaceCreateDeviceGray()
+            pixelValues = [UInt8](count: totalBytes, repeatedValue: 0)
+            
+            pixelValues1 = [UInt8](count: (width * height)/8, repeatedValue: 0)
+            
+            let contextRef = CGBitmapContextCreate(&pixelValues!, width, height, bitsPerComponent, bytesPerRow, colorSpace, 0)
+            CGContextDrawImage(contextRef, CGRectMake(0.0, 0.0, CGFloat(width), CGFloat(height)), imageRef)
+        }
+        
+        for i in 0..<Int((pixelValues?.count)!) {
+            
+            let byteIndex = i >> 3; // devide by 8
+            let bitShift = i & 7;   // i modulo 8
+            
+            if pixelValues![i] < value {
+                pixelValues![i] = 0
+                let mask: UInt8 = (0x01 << UInt8(bitShift))
+                pixelValues1![byteIndex] = pixelValues1![byteIndex] | mask
+            } else {
+                pixelValues![i] = 1
+                
+                let mask: UInt8 = (~(0x01 << UInt8(bitShift)))// (0xFE << bitShift);
+                pixelValues1![byteIndex] = (pixelValues1![byteIndex] & mask)
+            }
+        }
+        
+        return (pixelValues,pixelValues1, width, height)
     }
     
     struct PixelData {
@@ -244,6 +283,22 @@ class DataProviding {
         } else {
             return (data: nil)
         }
+    }
+    
+    
+    static let start : [UInt8] = [0x40, 0x00]
+    static let chksm: [UInt8] = [0x00, 0x00]
+    static let begin: [UInt8] = [0x42, 0x00]
+    static let size : [UInt8] = [0x00, 0x08] //8 byte
+    
+    static func sendData(foo : [UInt8]) {
+        socketTCP?.send(data: start)
+        socketTCP?.send(data: chksm)
+        socketTCP?.send(data: begin)
+        socketTCP?.send(data: size)
+        // usleep(1) // co
+        socketTCP?.send(data: foo)
+        socketTCP?.send(data: chksm)
     }
 
 }

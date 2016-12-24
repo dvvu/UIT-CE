@@ -13,7 +13,8 @@ import Darwin
 var socket: SocketIOClient?
 var socketTCP : TCPClient?
 var isConnected: Bool = false
-
+var valueVanNumber: Int = 192
+var valueThreshold: Int = 127
 
 class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINavigationControllerDelegate
     static let identifier = String(ViewController)
@@ -40,8 +41,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     var pixels = [DataProviding.PixelData()]
     let black = DataProviding.PixelData(a: 255, r: 0, g: 0, b: 0)
     let white = DataProviding.PixelData(a: 255, r: 255, g: 255, b: 255)
-    var vanNumber: Int = 192
-    var valueThreshold: Int = 127
+    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -90,7 +90,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
             print(" Error in loading Data")
         } else {
             print(resultSet.count)
-            vanNumber = (resultSet[0]["Van"]?.asInt())!
+            valueVanNumber = (resultSet[0]["Van"]?.asInt())!
             valueThreshold = (resultSet[0]["Value"]?.asInt())!
             vans.text = resultSet[0]["Van"]?.asInt()?.description
             rDelay.text = resultSet[0]["DRow"]?.asInt()?.description
@@ -145,19 +145,19 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
                     let data = NSFileManager.defaultManager().contentsAtPath(imagesDirectoryPath+image)
                     
                     let image1 = UIImage(data: data!)
-                    let image2 = DataProviding.resizeImage(image1!, newWidth: CGFloat(vanNumber))
-                    let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(self.valueThreshold))
+                    let image2 = DataProviding.resizeImage(image1!, newWidth: CGFloat(valueVanNumber))
+                    let result = DataProviding.intensityValuesFromImage2(image2, value: UInt8(valueThreshold))
                     
                     pixels = []
-                    for i in 0..<Int((result.pixelValues?.count)!) {
-                        if result.pixelValues![i] == 1 {
+                    for i in 0..<Int((result.data?.count)!) {
+                        if result.data![i] == 1 {
                             pixels.append(white)
                         } else {
                             pixels.append(black)
                         }
                     }
                     
-                    let image3 = DataProviding.imageFromARGB32Bitmap(pixels, width: vanNumber, height: result.height)
+                    let image3 = DataProviding.imageFromARGB32Bitmap(pixels, width: valueVanNumber, height: result.height)
                     ListImage.append(image3)
                 }
             }
@@ -232,8 +232,8 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
             var data: [String] = []
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
                 for image in self.ListImage {
-                    let result = DataProviding.intensityValuesFromImage1(image, value: UInt8(self.valueThreshold))
-                    let temp:String = (result.pixelValues?.description)!
+                    let result = DataProviding.intensityValuesFromImage2(image, value: UInt8(valueThreshold))
+                    let temp:String = (result.data?.description)!
                     let newString = temp.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
                      let newString2 = newString.stringByReplacingOccurrencesOfString("[", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
                      let newString3 = newString2.stringByReplacingOccurrencesOfString("]", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
@@ -243,10 +243,9 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
                     for i in 0..<data.count {
                         self.view.makeToast(message: "Send Sucess!", duration: 1.0, position: "bottom")
                         self.sendTitleButton.setTitle("Send", forState: .Normal)
-                        //DataProviding.sendMessage(data[i])
-                        for k in 0..<data[i].characters.count/self.vanNumber {
-                            // DataProviding.sendMessage(data)
-                            socketTCP?.send(str: data[i][k*self.vanNumber...k*self.vanNumber+self.vanNumber-1] + "\n")
+                       
+                        for k in 0..<data[i].characters.count/valueVanNumber {
+                            socketTCP?.send(str: data[i][k*valueVanNumber...k*valueVanNumber+valueVanNumber-1] + "\n")
                         }
                         sleep(2)
                     }
@@ -285,10 +284,8 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
         let cell: ImportPhotoCell = collectionView.dequeueReusableCellWithReuseIdentifier("ImportPhotoCell", forIndexPath: indexPath) as! ImportPhotoCell
         if collectionView == listImageCollectionView {
             cell.image.image = ListImage[indexPath.row]
-//            cell.frame.size = CGSize(width: self.collectionView.frame.size.width, height: self.collectionView.frame.size.height)
         } else {
             cell.image.image = Image[indexPath.row]
-//            cell.frame.size = CGSize(width: self.collectionView.frame.size.width, height: self.collectionView.frame.size.height)
         }
         return cell
     }

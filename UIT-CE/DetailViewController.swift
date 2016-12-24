@@ -17,7 +17,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var demoString: UIButton!
     @IBOutlet weak var sliderValue: UISlider!
     @IBOutlet weak var connectStatus: UIButton!
-    var vanNumber: Int = 192
+    
     var pixels = [DataProviding.PixelData()]
     let black = DataProviding.PixelData(a: 255, r: 0, g: 0, b: 0)
     let white = DataProviding.PixelData(a: 255, r: 255, g: 255, b: 255)
@@ -28,6 +28,7 @@ class DetailViewController: UIViewController {
     var image2 = UIImage()
     var isClick: Bool = true
     var data: String = ""
+    var dataSendding: [UInt8]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,21 +38,21 @@ class DetailViewController: UIViewController {
         
         let data = NSFileManager.defaultManager().contentsAtPath(imagesDirectoryPath+imageURL!)
          image1 = UIImage(data: data!)!
-         image2 = DataProviding.resizeImage(image1, newWidth: CGFloat(vanNumber))
-        let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(sliderValue.value))
-        let newString = (result.pixelValues?.description)!
+         image2 = DataProviding.resizeImage(image1, newWidth: CGFloat(valueVanNumber))
+        let result = DataProviding.intensityValuesFromImage2(image2, value: UInt8(sliderValue.value))
+        let newString = (result.data?.description)!
         let newString2 = newString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         let newString3 = newString2.stringByReplacingOccurrencesOfString("[", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         self.data = newString3.stringByReplacingOccurrencesOfString("]", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        
+        dataSendding = result.pixelValues
         imageLabel.font = UIFont(name:"Courier", size: 1)
-        loadString()
+        loadString(self.data)
         DataProviding.statusButton(connectStatus, status: isConnected)
     }
     
     /* Button action*/
     @IBAction func slider(sender: AnyObject) {
-        loadString()
+//        loadString()
     }
     
     @IBAction func backButton(sender: AnyObject) {
@@ -61,12 +62,28 @@ class DetailViewController: UIViewController {
     @IBAction func sendButton(sender: AnyObject) {
        
         if isConnected == true {
+//            let result1 = DataProviding.intensityValuesFromImage2(image2, value: UInt8(sliderValue.value))
+            let height = (dataSendding!.count)/8
+            var Array: [[UInt8]] = [[]]
             
-            for i in 0..<data.characters.count/vanNumber {
-               // DataProviding.sendMessage(data)
-                socketTCP?.send(str: data[i*vanNumber...i*vanNumber+vanNumber-1] + "\n")
+            for j in 0..<height {
+                var dataArray: [UInt8] = []
+                dataArray = [UInt8](count: 8, repeatedValue: 0)
+                for i in 0...7 {
+                    dataArray[i] = dataSendding![i + (height - 1 - j)*8]
+                }
+                Array.append(dataArray)
             }
             
+            for a in Array {
+                DataProviding.sendData(a)
+                usleep(100000)
+            }
+            
+//            for i in 0..<data.characters.count/vanNumber {
+//               // DataProviding.sendMessage(data)
+//                socketTCP?.send(str: data[i*vanNumber...i*vanNumber+vanNumber-1] + "\n")
+//            }
             
             let refreshAlert = UIAlertController(title: "Congatulate", message: "Sent success!", preferredStyle: UIAlertControllerStyle.Alert)
             
@@ -84,6 +101,21 @@ class DetailViewController: UIViewController {
         }
         
     }
+    
+//    let start : [UInt8] = [0x40, 0x00]
+//    let chksm: [UInt8] = [0x00, 0x00]
+//    let begin: [UInt8] = [0x42, 0x00]
+//    let size : [UInt8] = [0x00, 0x08] //8 byte
+//    
+//    func sendData(foo : [UInt8]) {
+//        socketTCP?.send(data: start)
+//        socketTCP?.send(data: chksm)
+//        socketTCP?.send(data: begin)
+//        socketTCP?.send(data: size)
+//       // usleep(1) // co
+//        socketTCP?.send(data: foo)
+//        socketTCP?.send(data: chksm)
+//    }
     
     @IBAction func demoButton(sender: AnyObject) {
         if isClick == true {
@@ -142,37 +174,21 @@ class DetailViewController: UIViewController {
         if err != nil {
             print(" Error in loading Data")
         } else {
-            vanNumber = (resultSet[0]["Van"]?.asInt())!
+            valueVanNumber = (resultSet[0]["Van"]?.asInt())!
         }
     }
     
-    func loadString() {
-//        let attributedString = NSMutableAttributedString(string:"")
-//        let string = "_"
-//        
-//        for i in 0..<string.characters.count {
-//            let smallString = string.startIndex.advancedBy(i)
-//            
-//            let newString = DataProviding.createAttributedString(String(string[smallString]), fullStringColor: UIColor.blackColor(), subString: "_", subStringColor: UIColor.redColor())
-//            
-//            attributedString.appendAttributedString(newString)
-//        }
-        
-        let result = DataProviding.intensityValuesFromImage1(image2, value: UInt8(sliderValue.value))
-        
+    func loadString(aString: String) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
-            
-            let aString: String = (result.pixelValues!.description)
-            let newString = aString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            let newString2 = newString.stringByReplacingOccurrencesOfString("0", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            let newString2 = aString.stringByReplacingOccurrencesOfString("0", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
             
             let aString11: NSMutableString = NSMutableString(string: newString2)
             
-            let lineNumber = aString11.length/self.vanNumber
+            let lineNumber = aString11.length/valueVanNumber
             if lineNumber > 0 {
                 for i in 1...lineNumber+1 {
-                    if (self.vanNumber*i + i) < aString11.length {
-                        aString11.insertString("\n", atIndex: self.vanNumber*i + i)
+                    if (valueVanNumber*i + i) < aString11.length {
+                        aString11.insertString("\n", atIndex: valueVanNumber*i + i)
                     }
                 }
             }

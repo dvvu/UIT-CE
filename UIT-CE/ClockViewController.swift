@@ -65,18 +65,19 @@ class ClockViewController: UIViewController {
     }
     
     func StartTimer() {
-        if isConnected == true {
-            isStart = false
-            myTimer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(ClockViewController.updateTimer), userInfo: nil, repeats: true)
-            self.view.makeToast(message: "Sending")
-        } else {
-            isStart = true
-            let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
-            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-            }))
-            presentViewController(refreshAlert, animated: true, completion: nil)
-        }
-        
+//        myTimer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(ClockViewController.updateTimer), userInfo: nil, repeats: true)
+//        if isConnected == true {
+//            isStart = false
+////            myTimer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(ClockViewController.updateTimer), userInfo: nil, repeats: true)
+//            self.view.makeToast(message: "Sending")
+//        } else {
+//            isStart = true
+//            let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
+//            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+//            }))
+//            presentViewController(refreshAlert, animated: true, completion: nil)
+//        }
+        updateTimer()
     }
     
     func StopTimer() {
@@ -97,24 +98,38 @@ class ClockViewController: UIViewController {
                 image1 = DataProviding.takeSnapshotOfView(digitalLabel)
             }
             let image2 = DataProviding.resizeImage(image1,newWidth: CGFloat(vanNumber))
-            let result = DataProviding.intensityValuesFromImage(image2)
-            for i in 0..<Int((result.pixelValues?.count)!) {
-                if result.pixelValues![i] == 1 {
+            let result = DataProviding.intensityValuesFromImage2(image2, value: UInt8(valueThreshold))
+            for i in 0..<Int((result.data?.count)!) {
+                if result.data![i] == 1 {
                     pixels.append(white)
                 } else {
                     pixels.append(black)
                 }
             }
-            let newString = (result.pixelValues?.description)!
-            let data = newString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            let data2 = data.stringByReplacingOccurrencesOfString("[", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            let data3 = data2.stringByReplacingOccurrencesOfString("]", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+//            let newString = (result.data?.description)!
+//            let data = newString.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+//            let data2 = data.stringByReplacingOccurrencesOfString("[", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+//            let data3 = data2.stringByReplacingOccurrencesOfString("]", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
 
-//            DataProviding.sendMessage(data)
-            
-            for k in 0..<data3.characters.count/self.vanNumber {
-                socketTCP?.send(str: data3[k*self.vanNumber...k*self.vanNumber+self.vanNumber-1] + "\n")
+            if isConnected == true {
+                isStart = false
+//                for k in 0..<data3.characters.count/self.vanNumber {
+//                    socketTCP?.send(str: data3[k*self.vanNumber...k*self.vanNumber+self.vanNumber-1] + "\n")
+//                }
+                self.view.makeToast(message: "Sending")
+                myTimer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(ClockViewController.updateTimer), userInfo: nil, repeats: true)
+            } else {
+                isStart = true
+                let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
+                refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+                }))
+                StopTimer()
+                presentViewController(refreshAlert, animated: true, completion: nil)
             }
+            
+//            for k in 0..<data3.characters.count/self.vanNumber {
+//                socketTCP?.send(str: data3[k*self.vanNumber...k*self.vanNumber+self.vanNumber-1] + "\n")
+//            }
             
             image.image = DataProviding.imageFromARGB32Bitmap(pixels, width: vanNumber, height: result.height)
         }
