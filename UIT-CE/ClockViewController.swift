@@ -117,21 +117,21 @@ class ClockViewController: UIViewController {
 //                    socketTCP?.send(str: data3[k*self.vanNumber...k*self.vanNumber+self.vanNumber-1] + "\n")
 //                }
                 
-                let height = (result.pixelValues!.count)/8
+                let height = (result.pixelValues!.count)/(valueVanNumber/8)
                 var Array: [[UInt8]] = [[]]
                 
                 for j in 0..<height {
                     var dataArray: [UInt8] = []
-                    dataArray = [UInt8](count: 8, repeatedValue: 0)
+                    dataArray = [UInt8](count: (valueVanNumber/8), repeatedValue: 0)
                     for i in 0...7 {
-                        dataArray[i] = result.pixelValues![i + (height - 1 - j)*8]
+                        dataArray[i] = result.pixelValues![i + (height - 1 - j)*(valueVanNumber/8)]
                     }
                     Array.append(dataArray)
                 }
                 
                 for a in Array {
                     DataProviding.sendData(a)
-                    usleep(100000)
+                    usleep(UInt32(valueRowDelay)*1000)
                 }
                 
                 

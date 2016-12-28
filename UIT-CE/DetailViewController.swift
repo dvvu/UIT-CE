@@ -62,28 +62,16 @@ class DetailViewController: UIViewController {
     @IBAction func sendButton(sender: AnyObject) {
        
         if isConnected == true {
-//            let result1 = DataProviding.intensityValuesFromImage2(image2, value: UInt8(sliderValue.value))
-            let height = (dataSendding!.count)/8
-            var Array: [[UInt8]] = [[]]
-            
+            let height = (dataSendding!.count)/(valueVanNumber/8)
             for j in 0..<height {
                 var dataArray: [UInt8] = []
-                dataArray = [UInt8](count: 8, repeatedValue: 0)
+                dataArray = [UInt8](count: (valueVanNumber/8), repeatedValue: 0)
                 for i in 0...7 {
-                    dataArray[i] = dataSendding![i + (height - 1 - j)*8]
+                    dataArray[i] = dataSendding![i + (height - 1 - j)*(valueVanNumber/8)]
                 }
-                Array.append(dataArray)
+                sendData(dataArray)
+                usleep(UInt32(valueRowDelay)*1000)
             }
-            
-            for a in Array {
-                sendData(a)
-                usleep(100000)
-            }
-            
-//            for i in 0..<data.characters.count/vanNumber {
-//               // DataProviding.sendMessage(data)
-//                socketTCP?.send(str: data[i*vanNumber...i*vanNumber+vanNumber-1] + "\n")
-//            }
             
             let refreshAlert = UIAlertController(title: "Congatulate", message: "Sent success!", preferredStyle: UIAlertControllerStyle.Alert)
             

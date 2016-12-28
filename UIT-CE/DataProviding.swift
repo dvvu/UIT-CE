@@ -289,9 +289,25 @@ class DataProviding {
     static let start : [UInt8] = [0x40, 0x00]
     static let chksm: [UInt8] = [0x00, 0x00]
     static let begin: [UInt8] = [0x42, 0x00]
-    static let size : [UInt8] = [0x00, 0x08] //8 byte
+    static var size : [UInt8] = [0x00, sizeBytes] //8 byte
     
     static func sendData(foo : [UInt8]) {
+        
+        switch valueVanNumber {
+        case 192:
+            size = [0x00, 0x18]
+        case 128:
+            size = [0x00, 0x10]
+        case 96:
+            size = [0x00, 0x0C]
+        case 64:
+            size = [0x00, 0x08]
+        case 32:
+            size = [0x00, 0x04]
+        default:
+            size = [0x00, 0x08]
+        }
+        
         socketTCP?.send(data: start)
         socketTCP?.send(data: chksm)
         socketTCP?.send(data: begin)
