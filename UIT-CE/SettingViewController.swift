@@ -26,7 +26,7 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var connecTitle: UIButton!
     
     var textField: UITextField?
-    var pickerData = ["192","164","128", "96", "64", "32"]
+    var pickerData = ["192","128", "96", "64", "32"]
     var indicator:ProgressIndicator?
     var url: String?
     var addr: String = "192.168.0.125"
@@ -67,6 +67,22 @@ class SettingViewController: UIViewController {
             
             valueVanNumber = van!
             valueThreshold = value!
+            valueRowDelay = dRow!
+            
+            switch valueVanNumber {
+            case 192:
+                sizeBytes = 0x18
+            case 128:
+                sizeBytes = 0x10
+            case 96:
+                sizeBytes = 0x0C
+            case 64:
+                sizeBytes = 0x08
+            case 32:
+                sizeBytes = 0x04
+            default:
+                sizeBytes = 0x08
+            }
         }
         
         let refreshAlert = UIAlertController(title: "Infomation", message: "Setting is changed.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -86,7 +102,6 @@ class SettingViewController: UIViewController {
         textField4.text = "192.168.0.1"
         textField5.text = "8080"
     }
-    
     
     @IBAction func connectButton(sender: AnyObject) {
         

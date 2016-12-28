@@ -116,6 +116,25 @@ class ClockViewController: UIViewController {
 //                for k in 0..<data3.characters.count/self.vanNumber {
 //                    socketTCP?.send(str: data3[k*self.vanNumber...k*self.vanNumber+self.vanNumber-1] + "\n")
 //                }
+                
+                let height = (result.pixelValues!.count)/(valueVanNumber/8)
+                var Array: [[UInt8]] = [[]]
+                
+                for j in 0..<height {
+                    var dataArray: [UInt8] = []
+                    dataArray = [UInt8](count: (valueVanNumber/8), repeatedValue: 0)
+                    for i in 0...7 {
+                        dataArray[i] = result.pixelValues![i + (height - 1 - j)*(valueVanNumber/8)]
+                    }
+                    Array.append(dataArray)
+                }
+                
+                for a in Array {
+                    DataProviding.sendData(a)
+                    usleep(UInt32(valueRowDelay)*1000)
+                }
+                
+                
                 self.view.makeToast(message: "Sending")
                 myTimer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(ClockViewController.updateTimer), userInfo: nil, repeats: true)
             } else {

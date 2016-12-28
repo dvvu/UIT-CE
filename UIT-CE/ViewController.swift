@@ -15,6 +15,8 @@ var socketTCP : TCPClient?
 var isConnected: Bool = false
 var valueVanNumber: Int = 192
 var valueThreshold: Int = 127
+var valueRowDelay: Int = 100
+var sizeBytes: UInt8 = 0x08
 
 class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINavigationControllerDelegate
     static let identifier = String(ViewController)
@@ -92,6 +94,23 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
             print(resultSet.count)
             valueVanNumber = (resultSet[0]["Van"]?.asInt())!
             valueThreshold = (resultSet[0]["Value"]?.asInt())!
+            valueRowDelay = (resultSet[0]["DRow"]?.asInt())!
+            
+            switch valueVanNumber {
+            case 192:
+                sizeBytes = 0x18
+            case 128:
+                sizeBytes = 0x10
+            case 96:
+                sizeBytes = 0x0C
+            case 64:
+                sizeBytes = 0x08
+            case 32:
+                sizeBytes = 0x04
+            default:
+                sizeBytes = 0x08
+            }
+            
             vans.text = resultSet[0]["Van"]?.asInt()?.description
             rDelay.text = resultSet[0]["DRow"]?.asInt()?.description
             iDelay.text = resultSet[0]["DImage"]?.asInt()?.description
@@ -228,35 +247,25 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
     
     @IBAction func sendButton(sender: AnyObject) {
         if isConnected == true {
-           
-            var data: [String] = []
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {() -> Void in
-                for image in self.ListImage {
-                    let result = DataProviding.intensityValuesFromImage2(image, value: UInt8(valueThreshold))
-                    let temp:String = (result.data?.description)!
-                    let newString = temp.stringByReplacingOccurrencesOfString(", ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-                     let newString2 = newString.stringByReplacingOccurrencesOfString("[", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-                     let newString3 = newString2.stringByReplacingOccurrencesOfString("]", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-                    data.append(newString3)
-                }
-                dispatch_sync(dispatch_get_main_queue(), {() -> Void in
-                    for i in 0..<data.count {
-                        self.view.makeToast(message: "Send Sucess!", duration: 1.0, position: "bottom")
-                        self.sendTitleButton.setTitle("Send", forState: .Normal)
-                       
-                        for k in 0..<data[i].characters.count/valueVanNumber {
-                            socketTCP?.send(str: data[i][k*valueVanNumber...k*valueVanNumber+valueVanNumber-1] + "\n")
-                        }
-                        sleep(2)
-                    }
-               })
-               
-            })
-            
             self.view.makeToast(message: "Sending...", duration: 1.0, position: "bottom")
             self.sendTitleButton.setTitle("Sending...", forState: .Normal)
-//            self.view.userInteractionEnabled = false
-
+                for image in self.ListImage {
+                    let result = DataProviding.intensityValuesFromImage2(image, value: UInt8(valueThreshold))
+                    let height = (result.pixelValues!.count)/8
+                    for j in 0..<height {
+                        var dataArray: [UInt8] = []
+                        dataArray = [UInt8](count: 8, repeatedValue: 0)
+                        for i in 0...7 {
+                            dataArray[i] = result.pixelValues![i + (height - 1 - j)*8]
+                        }
+                        DataProviding.sendData(dataArray)
+                        usleep(UInt32(valueRowDelay)*1000)
+                    }
+                    usleep(100000)
+                }
+            
+            self.view.makeToast(message: "Send Sucess!", duration: 1.0, position: "bottom")
+            self.sendTitleButton.setTitle("Send", forState: .Normal)
         } else {
             let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
