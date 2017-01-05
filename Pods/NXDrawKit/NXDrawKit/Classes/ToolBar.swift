@@ -43,21 +43,25 @@ public class ToolBar: UIView
         self.addSubview(lineView)
         self.lineView = lineView
         
-        var button: UIButton = self.button("Clear")
+        var button: UIButton = self.button("CLEAR")
         self.addSubview(button)
         self.clearButton = button
         
         button = self.button(iconName: "undo")
-        button.setImage(UIImage(named: "undo"), forState: .Normal)
+        button = self.button("UNDO")
+//        button.setImage(UIImage(named: "UNDO"), forState: .Normal)
+//        button.setTitle("UNDO", forState: .Normal)
         self.addSubview(button)
         self.undoButton = button
         
         button = self.button(iconName: "redo")
-        button.setImage(UIImage(named: "redo"), forState: .Normal)
+        button = self.button("REDO")
+//        button.setImage(UIImage(named: "REDO"), forState: .Normal)
+//        button.setTitle("REDO", forState: .Normal)
         self.addSubview(button)
         self.redoButton = button
         
-        button = self.button("Save")
+        button = self.button("SAVE")
         self.addSubview(button)
         self.saveButton = button
         
@@ -73,14 +77,14 @@ public class ToolBar: UIView
         })
         
         self.undoButton?.snp_makeConstraints(closure: { (make) in
-            make.left.equalTo(self).offset(15)
+            make.left.equalTo(self).offset(10)
             make.centerY.equalTo(self)
-            make.width.equalTo(self).multipliedBy(0.15)
+            make.width.equalTo(self).multipliedBy(0.17)
             make.height.equalTo(self.undoButton!.snp_width)
         })
         
         self.redoButton?.snp_makeConstraints(closure: { (make) in
-            make.left.equalTo(self.undoButton!.snp_right).offset(20)
+            make.left.equalTo(self.undoButton!.snp_right).offset(15)
             make.centerY.equalTo(self)
             make.width.equalTo(self).multipliedBy(0.15)
             make.height.equalTo(self.redoButton!.snp_width)

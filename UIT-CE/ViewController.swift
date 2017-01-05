@@ -255,7 +255,7 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
                     for j in 0..<height {
                         var dataArray: [UInt8] = []
                         dataArray = [UInt8](count: 8, repeatedValue: 0)
-                        for i in 0...7 {
+                        for i in 0..<(valueVanNumber/8) {
                             dataArray[i] = result.pixelValues![i + (height - 1 - j)*8]
                         }
                         DataProviding.sendData(dataArray)

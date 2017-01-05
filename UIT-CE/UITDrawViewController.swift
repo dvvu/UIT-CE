@@ -78,7 +78,7 @@ class UITDrawViewController: UIViewController
         toolBar.loadButton?.addTarget(self, action: #selector(UITDrawViewController.onClickLoadButton), forControlEvents: .TouchUpInside)
         toolBar.saveButton?.addTarget(self, action: #selector(UITDrawViewController.onClickSaveButton), forControlEvents: .TouchUpInside)
         // default title is "Save"
-        toolBar.saveButton?.setTitle("Save", forState: .Normal)
+        toolBar.saveButton?.setTitle("SAVE", forState: .Normal)
         toolBar.clearButton?.addTarget(self, action: #selector(UITDrawViewController.onClickClearButton), forControlEvents: .TouchUpInside)
         toolBar.loadButton?.enabled = true
         self.view.addSubview(toolBar)
