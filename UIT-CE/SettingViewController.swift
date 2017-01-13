@@ -301,8 +301,8 @@ extension SettingViewController: UITextFieldDelegate {
             setBackground(15,newLength: newLength,textStr: textStr as String, string: string)
             return newLength <= 15
         } else {
-            setBackground(4,newLength: newLength,textStr: textStr as String, string: string)
-            return newLength <= 4
+            setBackground(5,newLength: newLength,textStr: textStr as String, string: string)
+            return newLength <= 5
         }
     }
     

@@ -15,12 +15,7 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var textFieldLabel: UILabel!
     @IBOutlet weak var topView: UIView!
-    @IBOutlet weak var characterLabel: UILabel!
-    @IBOutlet weak var allLabel: UILabel!
-    @IBOutlet weak var characterImage: UIImageView!
-    @IBOutlet weak var allImage: UIImageView!
-    @IBOutlet weak var characterView: UIView!
-    @IBOutlet weak var allView: UIView!
+
     @IBOutlet weak var connectStatus: UIButton!
     @IBOutlet weak var fontSize: PaddingLabel!
     @IBOutlet weak var pickerView: UIPickerView!
@@ -52,26 +47,6 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
         
         let fontGesture = UITapGestureRecognizer(target: self, action: #selector(SettingViewController.viewTapped(_:)))
         self.view.addGestureRecognizer(fontGesture)
-        
-        characterView.userInteractionEnabled = true
-        characterImage.userInteractionEnabled = true
-        characterLabel.userInteractionEnabled = true
-        let tap1: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(clickView1))
-        characterView.addGestureRecognizer(tap1)
-        let tap2: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(clickView1))
-        allImage.addGestureRecognizer(tap2)
-        let tap3: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(clickView1))
-        allLabel.addGestureRecognizer(tap3)
-        
-        allView.userInteractionEnabled = true
-        allImage.userInteractionEnabled = true
-        allLabel.userInteractionEnabled = true
-        let tap4: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(clickView2))
-        allView.addGestureRecognizer(tap4)
-        let tap5: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(clickView2))
-        allImage.addGestureRecognizer(tap5)
-        let tap6: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(clickView2))
-        allLabel.addGestureRecognizer(tap6)
 
     }
     
@@ -108,22 +83,7 @@ class DisplayTextViewController: UIViewController, UITextFieldDelegate {
             print("Error")
         }
     }
-    
-    func clickView1() {
-        if isCharacter == false {
-            allImage.image = UIImage(named: "uncheck")
-            characterImage.image = UIImage(named: "checked")
-            isCharacter = true
-        }
-    }
-    func clickView2() {
-        if isCharacter == true {
-            allImage.image = UIImage(named: "checked")
-            characterImage.image = UIImage(named: "uncheck")
-            isCharacter = false
-        }
-    }
-    
+        
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let textStr:NSString = textField.text as String!
         
