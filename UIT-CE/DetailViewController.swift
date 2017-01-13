@@ -62,6 +62,7 @@ class DetailViewController: UIViewController {
     @IBAction func sendButton(sender: AnyObject) {
        
         if isConnected == true {
+            self.view.makeToast(message: "Sending...", duration: 1.0, position: "bottom")
             let height = (dataSendding!.count)/(valueVanNumber/8)
             for j in 0..<height {
                 var dataArray: [UInt8] = []
@@ -73,7 +74,7 @@ class DetailViewController: UIViewController {
                 usleep(UInt32(valueRowDelay)*1000)
             }
             
-            let refreshAlert = UIAlertController(title: "Congatulate", message: "Sent success!", preferredStyle: UIAlertControllerStyle.Alert)
+            let refreshAlert = UIAlertController(title: "Congratulate", message: "Sent success!", preferredStyle: UIAlertControllerStyle.Alert)
             
             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
             }))

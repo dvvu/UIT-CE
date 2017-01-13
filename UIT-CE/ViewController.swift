@@ -264,8 +264,14 @@ class ViewController: UIViewController { //UIImagePickerControllerDelegate, UINa
                     usleep(100000)
                 }
             
-            self.view.makeToast(message: "Send Sucess!", duration: 1.0, position: "bottom")
+//            self.view.makeToast(message: "Sent Sucess!", duration: 1.0, position: "bottom")
             self.sendTitleButton.setTitle("Send", forState: .Normal)
+            let refreshAlert = UIAlertController(title: "Congratulate", message: "Sent success!", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+            }))
+            
+            presentViewController(refreshAlert, animated: true, completion: nil)
         } else {
             let refreshAlert = UIAlertController(title: "Failed", message: "Sorry, Please connect to Server and try again!", preferredStyle: UIAlertControllerStyle.Alert)
             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
